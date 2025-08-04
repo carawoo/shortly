@@ -5,6 +5,15 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log('Make.com webhook 호출 - 받은 데이터:', body);
 
+    // Vercel 배포 URL 또는 환경 변수에서 가져오기
+    const callbackUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}/api/summarize`
+      : process.env.NEXT_PUBLIC_APP_URL 
+      ? `${process.env.NEXT_PUBLIC_APP_URL}/api/summarize`
+      : 'https://de2603302e12.ngrok-free.app/api/summarize'; // fallback
+
+    console.log('사용할 callback URL:', callbackUrl);
+
     // Make.com webhook 호출
     const result = await fetch(process.env.MAKE_WEBHOOK_URL!, {
       method: 'POST',
@@ -13,7 +22,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({ 
         youtubeUrl: body.url,
-        callbackUrl: 'https://de2603302e12.ngrok-free.app/api/summarize'
+        callbackUrl: callbackUrl
       }),
     });
 
@@ -53,6 +62,9 @@ export async function GET() {
     message: 'Make.com webhook 호출 API',
     version: '1.0.0',
     status: 'active',
-    webhook_url: process.env.MAKE_WEBHOOK_URL
+    webhook_url: process.env.MAKE_WEBHOOK_URL,
+    callback_url: process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}/api/summarize`
+      : 'Not set'
   });
 } 
