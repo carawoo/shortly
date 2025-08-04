@@ -49,7 +49,7 @@ export default function Home() {
   const pollForResult = async () => {
     console.time('polling-total');
     let attempts = 0;
-    const maxAttempts = 60; // 60초 대기 (30초 → 60초)
+    const maxAttempts = 10; // 10회 시도 (10회 × 300ms = 3초)
     
     const poll = async () => {
       if (attempts >= maxAttempts) {
@@ -65,7 +65,7 @@ export default function Home() {
         const data = await res.json();
         console.timeEnd(`poll-attempt-${attempts + 1}`);
         
-        console.log(`[폴링 ${attempts + 1}] 응답:`, data);
+        console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
         
         if (data.success && data.result) {
           console.timeEnd('polling-total');
@@ -73,15 +73,15 @@ export default function Home() {
           setSummary(data.result);
           return;
         } else {
-          console.log(`[폴링 ${attempts + 1}] 아직 결과 없음:`, data.message);
+          console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 아직 결과 없음:`, data.message);
         }
       } catch (err) {
         console.timeEnd(`poll-attempt-${attempts + 1}`);
-        console.error(`[폴링 ${attempts + 1}] 오류:`, err);
+        console.error(`[폴링 ${attempts + 1}/${maxAttempts}] 오류:`, err);
       }
 
       attempts++;
-      setTimeout(poll, 2000); // 2초마다 재시도 (1초 → 2초)
+      setTimeout(poll, 300); // 300ms마다 재시도 (2초 → 300ms)
     };
 
     poll();

@@ -28,31 +28,27 @@ export async function POST(req: Request) {
     console.log('[POST] 처리된 요약 결과:', summaryResult);
     console.log('[POST] 비디오 URL:', videoUrl);
     
+    // ✅ 즉시 결과 저장 (동기화)
+    if (videoUrl) {
+      summaryResults.set(videoUrl, {
+        summary: summaryResult,
+        timestamp: new Date().toISOString()
+      });
+      console.log('[POST] 결과 즉시 저장 완료:', {
+        url: videoUrl,
+        summary: summaryResult,
+        total_stored: summaryResults.size
+      });
+    } else {
+      console.warn('[POST] videoUrl이 없어서 저장하지 않음');
+    }
+    
     // ✅ 즉시 응답 보내기
     const response = NextResponse.json({
       success: true,
-      message: '요약 결과 수신 완료',
+      message: '요약 결과 수신 및 저장 완료',
       timestamp: new Date().toISOString()
     });
-    
-    // ✅ 백그라운드에서 결과 저장
-    (async () => {
-      try {
-        if (videoUrl) {
-          summaryResults.set(videoUrl, {
-            summary: summaryResult,
-            timestamp: new Date().toISOString()
-          });
-          console.log('[POST] 백그라운드에서 결과 저장 완료:', {
-            url: videoUrl,
-            summary: summaryResult,
-            total_stored: summaryResults.size
-          });
-        }
-      } catch (error) {
-        console.error('[POST] 백그라운드 처리 오류:', error);
-      }
-    })();
     
     console.timeEnd('summary-processing');
     return response;
