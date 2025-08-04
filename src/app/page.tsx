@@ -27,8 +27,8 @@ export default function Home() {
       });
 
       const triggerData = await triggerRes.json();
-      
-      if (triggerData.success === false) {
+
+      if (!triggerData.success) {
         setError(triggerData.error || '요약 요청 중 오류가 발생했습니다.');
         setLoading(false);
         return;
@@ -36,47 +36,43 @@ export default function Home() {
 
       setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
 
-      // 2. 간단한 폴링 로직
-      const pollForResult = async (url: string, maxAttempts = 10, interval = 3000) => {
-        let attempts = 0;
+      // 2. 폴링으로 결과 대기
+      const summaryText = await pollForResult(url);
+      setSummary(summaryText);
+      setLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '요약 처리 중 오류가 발생했습니다.');
+      setLoading(false);
+      console.error(err);
+    }
+  };
 
-        while (attempts < maxAttempts) {
-          try {
-            const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
-            const data = await res.json();
+  // 간단한 폴링 로직
+  const pollForResult = async (url: string, maxAttempts = 10, interval = 3000) => {
+    let attempts = 0;
 
-            console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
+    while (attempts < maxAttempts) {
+      try {
+        const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
+        const data = await res.json();
 
-            if (data.success && data.summary) {
-              console.log('[폴링 성공] 결과 찾음:', data.summary);
-              setSummary(data.summary);
-              setLoading(false);
-              return;
-            }
+        console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
 
-            await new Promise(resolve => setTimeout(resolve, interval));
-            attempts++;
-          } catch (err) {
-            console.error(`[폴링 ${attempts + 1}/${maxAttempts}] 오류:`, err);
-            attempts++;
-          }
+        if (data.success && data.summary) {
+          console.log('[폴링 성공] 결과 찾음:', data.summary);
+          return data.summary;
         }
 
-        // 모든 시도 실패
-        setSummary('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
-        setLoading(false);
-      };
-
-      // 15초 후 폴링 시작
-      setTimeout(() => {
-        pollForResult(url, 10, 3000); // 10회 시도, 3초 간격 (총 30초)
-      }, 15000);
-
-    } catch (err) {
-      setError('요약 요청 중 오류가 발생했습니다.');
-      console.error(err);
-      setLoading(false);
+        await new Promise(resolve => setTimeout(resolve, interval));
+        attempts++;
+      } catch (err) {
+        console.error(`[폴링 ${attempts + 1}/${maxAttempts}] 오류:`, err);
+        attempts++;
+      }
     }
+
+    // 모든 시도 실패
+    throw new Error('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
   };
 
   return (
