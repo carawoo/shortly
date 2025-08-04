@@ -36,38 +36,40 @@ export default function Home() {
 
       setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
 
-      // 2. polling
-      let retries = 20; // 20회 × 1.5초 = 30초
-      const poll = setInterval(async () => {
-        try {
-          const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
-          const data = await res.json();
+      // 2. polling - 초기 15초 대기 후 시작
+      setTimeout(() => {
+        let retries = 6; // 6회 시도 (6회 × 5초 = 30초)
+        const poll = setInterval(async () => {
+          try {
+            const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
+            const data = await res.json();
 
-          console.log(`[폴링 ${21 - retries}/20] 응답:`, data);
+            console.log(`[폴링 ${7 - retries}/6] 응답:`, data);
 
-          if (data.success) {
-            clearInterval(poll);
-            console.log('[폴링 성공] 결과 찾음:', data.summary);
-            setSummary(data.summary);
-            setLoading(false);
-          } else {
+            if (data.success) {
+              clearInterval(poll);
+              console.log('[폴링 성공] 결과 찾음:', data.summary);
+              setSummary(data.summary);
+              setLoading(false);
+            } else {
+              retries--;
+              if (retries <= 0) {
+                clearInterval(poll);
+                setSummary('요약 시간이 초과되었습니다. 다시 시도해주세요.');
+                setLoading(false);
+              }
+            }
+          } catch (err) {
+            console.error('[폴링 오류]:', err);
             retries--;
             if (retries <= 0) {
               clearInterval(poll);
-              setSummary('요약 시간이 초과되었습니다. 다시 시도해주세요.');
+              setSummary('요약 처리 중 오류가 발생했습니다.');
               setLoading(false);
             }
           }
-        } catch (err) {
-          console.error('[폴링 오류]:', err);
-          retries--;
-          if (retries <= 0) {
-            clearInterval(poll);
-            setSummary('요약 처리 중 오류가 발생했습니다.');
-            setLoading(false);
-          }
-        }
-      }, 1500); // 1.5초 간격
+        }, 5000); // 5초 간격
+      }, 15000); // 15초 초기 대기
 
     } catch (err) {
       setError('요약 요청 중 오류가 발생했습니다.');
