@@ -158,3 +158,4 @@ MIT License
 - [ ] 다양한 비디오 플랫폼 지원
 - [ ] 다국어 지원
 - [ ] PWA 기능 추가
+# Environment variable test
