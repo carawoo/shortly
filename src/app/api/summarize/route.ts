@@ -71,7 +71,7 @@ export async function GET(req: Request) {
     message: 'Shortly 비디오 요약 API',
     version: '1.0.0',
     status: 'active',
-    webhook_url: 'https://de2603302e12.ngrok-free.app/api/summarize',
+    webhook_url: 'https://shortly-omega-olive.vercel.app/api/summarize',
     stored_results: summaryResults.size
   });
 } 
