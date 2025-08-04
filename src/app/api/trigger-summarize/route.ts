@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       ? `https://${process.env.VERCEL_URL}/api/summarize`
       : process.env.NEXT_PUBLIC_APP_URL 
       ? `${process.env.NEXT_PUBLIC_APP_URL}/api/summarize`
-      : 'https://de2603302e12.ngrok-free.app/api/summarize'; // fallback
+      : 'https://shortly-omega-olive.vercel.app/api/summarize'; // fallback
 
     console.log('사용할 callback URL:', callbackUrl);
 
