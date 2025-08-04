@@ -33,7 +33,7 @@ export default function Home() {
       if (data.success === false) {
         setError(data.error || '요약 요청 중 오류가 발생했습니다.');
       } else {
-        setSummary('요약 요청이 전송되었습니다. 결과를 기다리는 중...');
+        setSummary('요약 요청이 전송되었습니다. AI가 영상을 분석하고 있습니다...');
         // 실제 요약 결과를 기다리는 로직 추가
         pollForResult();
       }
@@ -49,7 +49,7 @@ export default function Home() {
   const pollForResult = async () => {
     console.time('polling-total');
     let attempts = 0;
-    const maxAttempts = 30; // 30초 대기
+    const maxAttempts = 60; // 60초 대기 (30초 → 60초)
     
     const poll = async () => {
       if (attempts >= maxAttempts) {
@@ -76,7 +76,7 @@ export default function Home() {
       }
 
       attempts++;
-      setTimeout(poll, 1000); // 1초마다 재시도
+      setTimeout(poll, 2000); // 2초마다 재시도 (1초 → 2초)
     };
 
     poll();
