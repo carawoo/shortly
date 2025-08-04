@@ -67,10 +67,10 @@ export default function Home() {
         
         console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
         
-        if (data.success && data.result) {
+        if (data.success && data.summary) {
           console.timeEnd('polling-total');
-          console.log('[폴링 성공] 결과 찾음:', data.result);
-          setSummary(data.result);
+          console.log('[폴링 성공] 결과 찾음:', data.summary);
+          setSummary(data.summary);
           return;
         } else {
           console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 아직 결과 없음:`, data.message);
