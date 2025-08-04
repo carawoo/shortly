@@ -36,8 +36,10 @@ export default function Home() {
 
       setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
 
-      // 2. 폴링으로 결과 대기
-      const summaryText = await pollForResult(url);
+      // 2. 폴링으로 결과 대기 (15초 초기 대기 후 시작)
+      await new Promise(resolve => setTimeout(resolve, 15000)); // 15초 대기
+      
+      const summaryText = await pollForResult(url, 30000, 2000); // 30초 타임아웃, 2초 간격
       setSummary(summaryText);
       setLoading(false);
     } catch (err) {
@@ -48,15 +50,19 @@ export default function Home() {
   };
 
   // 간단한 폴링 로직
-  const pollForResult = async (url: string, maxAttempts = 10, interval = 3000) => {
+  const pollForResult = async (url: string, timeout = 30000, interval = 2000): Promise<string> => {
+    const start = Date.now();
     let attempts = 0;
 
-    while (attempts < maxAttempts) {
+    console.log('[폴링 시작] URL:', url, '타임아웃:', timeout, '간격:', interval);
+
+    while (Date.now() - start < timeout) {
       try {
         const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
         const data = await res.json();
 
-        console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
+        attempts++;
+        console.log(`[폴링 ${attempts}] 응답:`, data);
 
         if (data.success && data.summary) {
           console.log('[폴링 성공] 결과 찾음:', data.summary);
@@ -64,14 +70,13 @@ export default function Home() {
         }
 
         await new Promise(resolve => setTimeout(resolve, interval));
-        attempts++;
       } catch (err) {
-        console.error(`[폴링 ${attempts + 1}/${maxAttempts}] 오류:`, err);
-        attempts++;
+        console.error(`[폴링 ${attempts}] 오류:`, err);
+        await new Promise(resolve => setTimeout(resolve, interval));
       }
     }
 
-    // 모든 시도 실패
+    // 타임아웃
     throw new Error('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
   };
 
