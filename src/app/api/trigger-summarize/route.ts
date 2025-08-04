@@ -1,0 +1,58 @@
+import { NextResponse } from 'next/server';
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    console.log('Make.com webhook 호출 - 받은 데이터:', body);
+
+    // Make.com webhook 호출
+    const result = await fetch(process.env.MAKE_WEBHOOK_URL!, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        youtubeUrl: body.url,
+        callbackUrl: 'https://de2603302e12.ngrok-free.app/api/summarize'
+      }),
+    });
+
+    console.log('Make.com webhook 응답 상태:', result.status);
+    console.log('Make.com webhook 응답 헤더:', Object.fromEntries(result.headers.entries()));
+
+    // Make.com 응답 처리
+    const contentType = result.headers.get('content-type');
+    console.log('Content-Type:', contentType);
+    
+    let data;
+    
+    if (contentType && contentType.includes('application/json')) {
+      data = await result.json();
+      console.log('JSON 응답 데이터:', data);
+    } else {
+      const text = await result.text();
+      data = { message: text };
+      console.log('텍스트 응답 데이터:', data);
+    }
+    
+    console.log('최종 반환 데이터:', data);
+    return NextResponse.json(data);
+    
+  } catch (error) {
+    console.error('Make.com webhook 호출 오류:', error);
+    return NextResponse.json({
+      success: false,
+      error: 'Make.com webhook 호출 중 오류가 발생했습니다.',
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    message: 'Make.com webhook 호출 API',
+    version: '1.0.0',
+    status: 'active',
+    webhook_url: process.env.MAKE_WEBHOOK_URL
+  });
+} 
