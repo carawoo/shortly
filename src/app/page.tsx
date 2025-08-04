@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -8,8 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // 요약 요청 함수
-  const handleSubmit = async () => {
+  const handleSummarize = async () => {
     if (!url.trim()) {
       setError('YouTube URL을 입력해주세요.');
       return;
@@ -20,71 +19,61 @@ export default function Home() {
     setSummary('');
 
     try {
-      const res = await fetch('/api/trigger-summarize', {
+      // 1. 요약 트리거
+      const triggerRes = await fetch('/api/trigger-summarize', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ url })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
       });
 
-      const data = await res.json();
+      const triggerData = await triggerRes.json();
       
-      if (data.success === false) {
-        setError(data.error || '요약 요청 중 오류가 발생했습니다.');
-      } else {
-        setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
-        // 실제 요약 결과를 기다리는 로직 추가
-        pollForResult();
-      }
-    } catch (err) {
-      setError('요약 요청 중 오류가 발생했습니다.');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 결과 폴링 함수
-  const pollForResult = async () => {
-    console.time('polling-total');
-    let attempts = 0;
-    const maxAttempts = 10; // 10회 시도 (10회 × 300ms = 3초)
-    
-    const poll = async () => {
-      if (attempts >= maxAttempts) {
-        console.timeEnd('polling-total');
-        setSummary('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
+      if (triggerData.success === false) {
+        setError(triggerData.error || '요약 요청 중 오류가 발생했습니다.');
+        setLoading(false);
         return;
       }
 
-      try {
-        console.time(`poll-attempt-${attempts + 1}`);
-        // GET 요청으로 저장된 결과 조회
-        const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
-        const data = await res.json();
-        console.timeEnd(`poll-attempt-${attempts + 1}`);
-        
-        console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 응답:`, data);
-        
-        if (data.success && data.summary) {
-          console.timeEnd('polling-total');
-          console.log('[폴링 성공] 결과 찾음:', data.summary);
-          setSummary(data.summary);
-          return;
-        } else {
-          console.log(`[폴링 ${attempts + 1}/${maxAttempts}] 아직 결과 없음:`, data.message);
+      setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
+
+      // 2. polling
+      let retries = 20; // 20회 × 1.5초 = 30초
+      const poll = setInterval(async () => {
+        try {
+          const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
+          const data = await res.json();
+
+          console.log(`[폴링 ${21 - retries}/20] 응답:`, data);
+
+          if (data.success) {
+            clearInterval(poll);
+            console.log('[폴링 성공] 결과 찾음:', data.summary);
+            setSummary(data.summary);
+            setLoading(false);
+          } else {
+            retries--;
+            if (retries <= 0) {
+              clearInterval(poll);
+              setSummary('요약 시간이 초과되었습니다. 다시 시도해주세요.');
+              setLoading(false);
+            }
+          }
+        } catch (err) {
+          console.error('[폴링 오류]:', err);
+          retries--;
+          if (retries <= 0) {
+            clearInterval(poll);
+            setSummary('요약 처리 중 오류가 발생했습니다.');
+            setLoading(false);
+          }
         }
-      } catch (err) {
-        console.timeEnd(`poll-attempt-${attempts + 1}`);
-        console.error(`[폴링 ${attempts + 1}/${maxAttempts}] 오류:`, err);
-      }
+      }, 1500); // 1.5초 간격
 
-      attempts++;
-      setTimeout(poll, 300); // 300ms마다 재시도 (2초 → 300ms)
-    };
-
-    poll();
+    } catch (err) {
+      setError('요약 요청 중 오류가 발생했습니다.');
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -119,7 +108,7 @@ export default function Home() {
             </div>
             
             <button 
-              onClick={handleSubmit} 
+              onClick={handleSummarize} 
               disabled={loading || !url.trim()}
               className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
             >
@@ -129,7 +118,7 @@ export default function Home() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  요약 요청 중...
+                  요약 중...
                 </span>
               ) : (
                 '🎯 요약하기'
