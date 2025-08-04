@@ -33,7 +33,7 @@ export default function Home() {
       if (data.success === false) {
         setError(data.error || '요약 요청 중 오류가 발생했습니다.');
       } else {
-        setSummary('요약 요청이 성공적으로 전송되었습니다. AI가 영상을 분석하고 있습니다...');
+        setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
         // 실제 요약 결과를 기다리는 로직 추가
         pollForResult();
       }
