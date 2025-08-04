@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
+  console.time('trigger-summarize');
   try {
     const body = await req.json();
     console.log('Make.com webhook 호출 - 받은 데이터:', body);
@@ -10,6 +11,7 @@ export async function POST(req: Request) {
     
     if (!process.env.MAKE_WEBHOOK_URL) {
       console.error('MAKE_WEBHOOK_URL 환경 변수가 설정되지 않았습니다!');
+      console.timeEnd('trigger-summarize');
       return NextResponse.json({
         success: false,
         error: 'MAKE_WEBHOOK_URL 환경 변수가 설정되지 않았습니다.',
@@ -27,6 +29,7 @@ export async function POST(req: Request) {
     console.log('사용할 callback URL:', callbackUrl);
 
     // Make.com webhook 호출
+    console.time('make-webhook-call');
     const result = await fetch(process.env.MAKE_WEBHOOK_URL!, {
       method: 'POST',
       headers: {
@@ -37,6 +40,7 @@ export async function POST(req: Request) {
         callbackUrl: callbackUrl
       }),
     });
+    console.timeEnd('make-webhook-call');
 
     console.log('Make.com webhook 응답 상태:', result.status);
     console.log('Make.com webhook 응답 헤더:', Object.fromEntries(result.headers.entries()));
@@ -57,9 +61,11 @@ export async function POST(req: Request) {
     }
     
     console.log('최종 반환 데이터:', data);
+    console.timeEnd('trigger-summarize');
     return NextResponse.json(data);
     
   } catch (error) {
+    console.timeEnd('trigger-summarize');
     console.error('Make.com webhook 호출 오류:', error);
     return NextResponse.json({
       success: false,

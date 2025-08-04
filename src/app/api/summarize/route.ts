@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 const summaryResults = new Map();
 
 export async function POST(req: Request) {
+  console.time('summary-processing');
   try {
     const body = await req.json();
     console.log('Make.com에서 받은 요약 데이터:', body);
@@ -35,6 +36,7 @@ export async function POST(req: Request) {
       });
     }
     
+    console.timeEnd('summary-processing');
     return NextResponse.json({
       success: true,
       result: summaryResult,
@@ -43,6 +45,7 @@ export async function POST(req: Request) {
     });
     
   } catch (error) {
+    console.timeEnd('summary-processing');
     console.error('API 처리 오류:', error);
     return NextResponse.json({
       success: false,

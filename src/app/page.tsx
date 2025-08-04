@@ -47,25 +47,31 @@ export default function Home() {
 
   // 결과 폴링 함수
   const pollForResult = async () => {
+    console.time('polling-total');
     let attempts = 0;
     const maxAttempts = 30; // 30초 대기
     
     const poll = async () => {
       if (attempts >= maxAttempts) {
+        console.timeEnd('polling-total');
         setSummary('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
         return;
       }
 
       try {
+        console.time(`poll-attempt-${attempts + 1}`);
         // GET 요청으로 저장된 결과 조회
         const res = await fetch(`/api/summarize?url=${encodeURIComponent(url)}`);
         const data = await res.json();
+        console.timeEnd(`poll-attempt-${attempts + 1}`);
         
         if (data.success && data.result) {
+          console.timeEnd('polling-total');
           setSummary(data.result);
           return;
         }
       } catch (err) {
+        console.timeEnd(`poll-attempt-${attempts + 1}`);
         console.error('폴링 오류:', err);
       }
 
