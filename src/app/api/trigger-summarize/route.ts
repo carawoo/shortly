@@ -5,6 +5,18 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log('Make.com webhook 호출 - 받은 데이터:', body);
 
+    // 환경 변수 디버깅
+    console.log('MAKE_WEBHOOK_URL 환경 변수:', process.env.MAKE_WEBHOOK_URL);
+    
+    if (!process.env.MAKE_WEBHOOK_URL) {
+      console.error('MAKE_WEBHOOK_URL 환경 변수가 설정되지 않았습니다!');
+      return NextResponse.json({
+        success: false,
+        error: 'MAKE_WEBHOOK_URL 환경 변수가 설정되지 않았습니다.',
+        timestamp: new Date().toISOString()
+      }, { status: 500 });
+    }
+
     // Vercel 배포 URL 또는 환경 변수에서 가져오기
     const callbackUrl = process.env.VERCEL_URL 
       ? `https://${process.env.VERCEL_URL}/api/summarize`
@@ -62,7 +74,7 @@ export async function GET() {
     message: 'Make.com webhook 호출 API',
     version: '1.0.0',
     status: 'active',
-    webhook_url: process.env.MAKE_WEBHOOK_URL,
+    webhook_url: process.env.MAKE_WEBHOOK_URL || 'NOT_SET',
     callback_url: process.env.VERCEL_URL 
       ? `https://${process.env.VERCEL_URL}/api/summarize`
       : 'Not set'
