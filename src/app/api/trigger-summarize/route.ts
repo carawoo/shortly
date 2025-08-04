@@ -31,6 +31,7 @@ export async function POST(req: Request) {
     // 2. GPT로 요약 요청
     console.time('openai-call');
     console.log('[POST] OpenAI API 호출 시작...');
+    console.log('[POST] OpenAI API 키 존재 여부:', !!process.env.OPENAI_API_KEY);
     
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
     
     console.timeEnd('openai-call');
     console.log('[POST] OpenAI API 응답 상태:', res.status);
+    console.log('[POST] OpenAI API 응답 헤더:', Object.fromEntries(res.headers.entries()));
 
     if (!res.ok) {
       console.error('[POST] OpenAI API 오류:', res.status, res.statusText);

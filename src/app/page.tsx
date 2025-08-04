@@ -39,7 +39,7 @@ export default function Home() {
       // 2. 폴링으로 결과 대기 (15초 초기 대기 후 시작)
       await new Promise(resolve => setTimeout(resolve, 15000)); // 15초 대기
       
-      const summaryText = await pollForResult(url, 30000, 2000); // 30초 타임아웃, 2초 간격
+      const summaryText = await pollForResult(url, 45000, 3000); // 45초 타임아웃, 3초 간격
       setSummary(summaryText);
       setLoading(false);
     } catch (err) {
