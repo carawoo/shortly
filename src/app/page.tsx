@@ -65,14 +65,19 @@ export default function Home() {
         const data = await res.json();
         console.timeEnd(`poll-attempt-${attempts + 1}`);
         
+        console.log(`[폴링 ${attempts + 1}] 응답:`, data);
+        
         if (data.success && data.result) {
           console.timeEnd('polling-total');
+          console.log('[폴링 성공] 결과 찾음:', data.result);
           setSummary(data.result);
           return;
+        } else {
+          console.log(`[폴링 ${attempts + 1}] 아직 결과 없음:`, data.message);
         }
       } catch (err) {
         console.timeEnd(`poll-attempt-${attempts + 1}`);
-        console.error('폴링 오류:', err);
+        console.error(`[폴링 ${attempts + 1}] 오류:`, err);
       }
 
       attempts++;

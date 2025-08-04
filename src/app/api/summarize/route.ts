@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   console.time('summary-processing');
   try {
     const body = await req.json();
-    console.log('Make.com에서 받은 요약 데이터:', body);
+    console.log('[POST] Make.com에서 받은 요약 데이터:', body);
 
     // Make.com에서 보낸 요약 결과 처리
     let summaryResult = '';
@@ -25,8 +25,8 @@ export async function POST(req: Request) {
 
     videoUrl = body.videoUrl || body.url || '';
 
-    console.log('처리된 요약 결과:', summaryResult);
-    console.log('비디오 URL:', videoUrl);
+    console.log('[POST] 처리된 요약 결과:', summaryResult);
+    console.log('[POST] 비디오 URL:', videoUrl);
     
     // ✅ 즉시 응답 보내기
     const response = NextResponse.json({
@@ -43,10 +43,14 @@ export async function POST(req: Request) {
             summary: summaryResult,
             timestamp: new Date().toISOString()
           });
-          console.log('백그라운드에서 결과 저장 완료:', videoUrl);
+          console.log('[POST] 백그라운드에서 결과 저장 완료:', {
+            url: videoUrl,
+            summary: summaryResult,
+            total_stored: summaryResults.size
+          });
         }
       } catch (error) {
-        console.error('백그라운드 처리 오류:', error);
+        console.error('[POST] 백그라운드 처리 오류:', error);
       }
     })();
     
@@ -55,7 +59,7 @@ export async function POST(req: Request) {
     
   } catch (error) {
     console.timeEnd('summary-processing');
-    console.error('API 처리 오류:', error);
+    console.error('[POST] API 처리 오류:', error);
     return NextResponse.json({
       success: false,
       error: '요약 처리 중 오류가 발생했습니다.',
@@ -66,11 +70,23 @@ export async function POST(req: Request) {
 
 // GET 요청으로 저장된 결과 조회
 export async function GET(req: Request) {
+  console.time('get-summarize');
   const { searchParams } = new URL(req.url);
   const url = searchParams.get('url');
   
+  console.log('[GET] summarize 요청 들어옴:', url);
+  console.log('[GET] 현재 저장된 결과 개수:', summaryResults.size);
+  console.log('[GET] 저장된 URL들:', Array.from(summaryResults.keys()));
+  
   if (url && summaryResults.has(url)) {
     const result = summaryResults.get(url);
+    console.log('[GET] 결과 찾음:', {
+      url: url,
+      summary: result.summary,
+      timestamp: result.timestamp
+    });
+    
+    console.timeEnd('get-summarize');
     return NextResponse.json({
       success: true,
       result: result.summary,
@@ -79,11 +95,12 @@ export async function GET(req: Request) {
     });
   }
   
+  console.log('[GET] 결과 없음 - 아직 처리 안됨');
+  console.timeEnd('get-summarize');
   return NextResponse.json({
-    message: 'Shortly 비디오 요약 API',
-    version: '1.0.0',
-    status: 'active',
-    webhook_url: 'https://shortly-omega-olive.vercel.app/api/summarize',
-    stored_results: summaryResults.size
+    success: false,
+    message: '아직 처리 안됨',
+    stored_results: summaryResults.size,
+    requested_url: url
   });
 } 
