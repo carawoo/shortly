@@ -669,6 +669,15 @@ body {
   white-space: pre-wrap;
 }
 
+.summary-text h1 {
+  color: var(--primary-purple);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  margin: var(--space-xl) 0 var(--space) 0;
+  border-bottom: 3px solid rgba(99, 102, 241, 0.3);
+  padding-bottom: var(--space);
+}
+
 .summary-text h2 {
   color: var(--primary-purple);
   font-size: 1.25rem;
@@ -678,7 +687,18 @@ body {
   padding-bottom: var(--space-sm);
 }
 
-.summary-text h2:first-child {
+.summary-text h3 {
+  color: var(--primary-purple);
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-medium);
+  margin: var(--space) 0 var(--space-sm) 0;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+  padding-bottom: var(--space-xs);
+}
+
+.summary-text h1:first-child,
+.summary-text h2:first-child,
+.summary-text h3:first-child {
   margin-top: 0;
 }
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fix-hero-section-margins-css-syntax-' + Date.now();
+const CACHE_BUSTER = 'enhanced-markdown-parser-flexible-spacing-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -60,17 +60,19 @@ export default function Home() {
         continue;
       }
       
-      if (line.startsWith('## ')) {
-        // 제목 처리
+      if (/^#{1,3}\s*/.test(line)) {
+        // 제목 처리 (#, ##, ### 지원, 띄어쓰기 유연하게 처리)
         if (currentList.length > 0) {
           result.push('<ul>' + currentList.join('') + '</ul>');
           currentList = [];
         }
-        const title = line.replace('## ', '');
-        result.push(`<h2>${title}</h2>`);
-      } else if (line.startsWith('- ')) {
-        // 리스트 항목 처리
-        const item = line.replace('- ', '');
+        const hashCount = line.match(/^#+/)[0].length;
+        const title = line.replace(/^#+\s*/, '').trim();
+        const tag = hashCount === 1 ? 'h1' : hashCount === 2 ? 'h2' : 'h3';
+        result.push(`<${tag}>${title}</${tag}>`);
+      } else if (/^[-*+]\s*/.test(line)) {
+        // 리스트 항목 처리 (-, *, + 지원, 띄어쓰기 유연하게 처리)
+        const item = line.replace(/^[-*+]\s*/, '').trim();
         const boldItem = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         currentList.push(`<li>${boldItem}</li>`);
       } else {
