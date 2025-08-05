@@ -631,6 +631,36 @@ body {
   padding: var(--space-xl);
 }
 
+/* Hashtag chips */
+.hashtag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.hashtag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space);
+  background-color: #eaeaea;
+  color: #555555;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  border-radius: 10px;
+  border: none;
+  transition: all 0.2s var(--ease-out);
+  cursor: default;
+  user-select: none;
+}
+
+.hashtag-chip:hover {
+  background-color: #d5d5d5;
+  transform: translateY(-1px);
+}
+
 .summary-text {
   color: #333333;
   line-height: 1.75;
@@ -918,5 +948,15 @@ body {
   
   .header-content {
     padding: 0 var(--space);
+  }
+  
+  /* Hashtag chips mobile */
+  .hashtag-chips {
+    gap: var(--space-xs);
+  }
+  
+  .hashtag-chip {
+    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-sm);
   }
 }

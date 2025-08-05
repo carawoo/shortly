@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'advanced-features-thumbnails-timestamps-' + Date.now();
+const CACHE_BUSTER = 'hashtag-chips-keywords-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -25,6 +25,13 @@ export default function Home() {
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[7].length === 11) ? match[7] : null;
+  };
+
+  // 해시태그 추출 함수
+  const extractHashtags = (text: string): string[] => {
+    const hashtagRegex = /#[가-힣a-zA-Z0-9_]+/g;
+    const hashtags = text.match(hashtagRegex);
+    return hashtags ? hashtags.slice(0, 8) : []; // 최대 8개
   };
 
   const handleSummarize = async () => {
@@ -284,10 +291,28 @@ export default function Home() {
                     </h2>
                   </div>
                                      <div className="summary-content">
+                     {/* 해시태그 칩 표시 */}
+                     {(() => {
+                       const hashtags = extractHashtags(summary);
+                       return hashtags.length > 0 ? (
+                         <div className="hashtag-chips">
+                           {hashtags.map((hashtag, index) => (
+                             <span key={index} className="hashtag-chip">
+                               {hashtag}
+                             </span>
+                           ))}
+                         </div>
+                       ) : null;
+                     })()}
+                     
                      <div 
                        className="summary-text"
                        dangerouslySetInnerHTML={{
                          __html: summary
+                           // 해시태그 섹션 제거 (🏷️ 핵심 키워드 섹션 전체 제거)
+                           .replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '')
+                           // 해시태그 라인만 제거하는 방식으로 대체
+                           .replace(/#[가-힣a-zA-Z0-9_\s]+/g, '')
                            .replace(/## (.*)/g, '<h2>$1</h2>')
                            .replace(/- (.*)/g, '<li>$1</li>')
                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
