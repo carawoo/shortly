@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'v2-material3-design-' + Date.now();
+const CACHE_BUSTER = 'v3-pure-css-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -96,155 +96,143 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="app-container">
       {/* 배경 패턴 */}
-      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
+      <div className="background-pattern"></div>
       
       {/* 헤더 */}
-      <header className="relative z-20 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-slate-900 dark:text-white">Shortly</h1>
-                <p className="text-sm text-slate-600 dark:text-slate-400">AI YouTube 요약</p>
-                <p className="text-xs text-blue-500 dark:text-blue-400">Material 3 v2</p>
-              </div>
+      <header className="header">
+        <div className="header-content">
+          <div className="header-left">
+            <div className="logo-container">
+              <svg className="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-slate-600 dark:text-slate-400">온라인</span>
+            <div>
+              <h1 className="app-title">Shortly</h1>
+              <p className="app-subtitle">AI YouTube 요약</p>
+              <p className="app-version">Material 3 v3 (Pure CSS)</p>
             </div>
+          </div>
+          <div className="online-status">
+            <div className="status-dot"></div>
+            <span className="status-text">온라인</span>
           </div>
         </div>
       </header>
 
-      <main className="relative z-10 min-h-screen p-6 pt-8">
-        <div className="max-w-6xl mx-auto">
+      <main className="main-content">
+        <div className="main-container">
           {/* 메인 헤더 */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl mb-8 shadow-2xl">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="hero-section">
+            <div className="hero-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent mb-6">
+            <h1 className="hero-title">
               YouTube AI 요약
             </h1>
-            <div className="inline-flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
-              <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-              Material 3 디자인 적용됨
+            <div className="status-badge">
+              <span className="status-badge-dot"></span>
+              Material 3 디자인 적용됨 (Pure CSS)
             </div>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="hero-description">
               AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다. 
               복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="content-grid">
             {/* 메인 입력 섹션 */}
-            <div className="lg:col-span-2">
+            <div>
               {/* 입력 폼 */}
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8 border border-white/20 dark:border-slate-700/50">
-                <div className="space-y-6">
-                  <div>
-                    <label htmlFor="url" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
-                      YouTube URL
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <svg className="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <input
-                        id="url"
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        placeholder="https://www.youtube.com/watch?v=..."
-                        className="w-full pl-12 pr-4 py-4 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:ring-blue-400/20 dark:focus:border-blue-400 transition-all duration-200 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
-                        disabled={loading}
-                      />
+              <div className="input-form">
+                <div className="form-group">
+                  <label htmlFor="url" className="form-label">
+                    YouTube URL
+                  </label>
+                  <div className="input-container">
+                    <div className="input-icon">
+                      <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
                     </div>
+                    <input
+                      id="url"
+                      type="text"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      placeholder="https://www.youtube.com/watch?v=..."
+                      className="url-input"
+                      disabled={loading}
+                    />
                   </div>
-                  
-                  <button 
-                    onClick={handleSummarize} 
-                    disabled={loading || !url.trim()}
-                    className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
-                  >
-                    {loading ? (
-                      <span className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                        AI가 분석 중입니다...
-                      </span>
-                    ) : (
-                      <span className="flex items-center justify-center">
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        요약 시작하기
-                      </span>
-                    )}
-                  </button>
                 </div>
+                
+                <button 
+                  onClick={handleSummarize} 
+                  disabled={loading || !url.trim()}
+                  className="submit-button"
+                >
+                  {loading ? (
+                    <>
+                      <div className="loading-spinner"></div>
+                      AI가 분석 중입니다...
+                    </>
+                  ) : (
+                    <>
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      요약 시작하기
+                    </>
+                  )}
+                </button>
               </div>
 
               {/* 에러 메시지 */}
               {error && (
-                <div className="bg-red-50/80 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6 mb-8 backdrop-blur-xl">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-red-800 dark:text-red-200 font-medium">{error}</p>
-                    </div>
+                <div className="error-message">
+                  <div className="error-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
+                  <div className="error-text">{error}</div>
                 </div>
               )}
 
               {/* 요약 결과 */}
               {summary && (
-                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20 dark:border-slate-700/50">
-                  <div className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 px-8 py-6">
-                    <h2 className="text-xl font-semibold text-white flex items-center">
-                      <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="summary-result">
+                  <div className="summary-header">
+                    <h2 className="summary-title">
+                      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                       AI 요약 결과
                     </h2>
                   </div>
-                  <div className="p-8">
-                    <div className="prose prose-lg max-w-none dark:prose-invert">
-                      <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap text-lg">
-                        {summary}
-                      </p>
+                  <div className="summary-content">
+                    <div className="summary-text">
+                      {summary}
                     </div>
                     
                     {/* 추가 정보 */}
-                    <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          {new Date().toLocaleString('ko-KR')}
-                        </div>
-                        <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                          </svg>
-                          AI 생성
-                        </div>
+                    <div className="summary-footer">
+                      <div>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {new Date().toLocaleString('ko-KR')}
+                      </div>
+                      <div>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                        AI 생성
                       </div>
                     </div>
                   </div>
@@ -253,14 +241,12 @@ export default function Home() {
 
               {/* 로딩 상태 */}
               {loading && summary.includes('기다리는 중') && (
-                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mt-8 border border-white/20 dark:border-slate-700/50">
-                  <div className="flex items-center justify-center space-x-4">
-                    <div className="relative">
-                      <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-200 border-t-blue-600"></div>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-slate-700 dark:text-slate-300 font-medium">AI가 영상을 분석하고 있습니다...</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">잠시만 기다려주세요</p>
+                <div className="input-form">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                    <div className="loading-spinner"></div>
+                    <div style={{ textAlign: 'center' }}>
+                      <p style={{ color: 'var(--slate-700)', fontWeight: '500' }}>AI가 영상을 분석하고 있습니다...</p>
+                      <p style={{ fontSize: '0.875rem', color: 'var(--slate-500)', marginTop: '0.25rem' }}>잠시만 기다려주세요</p>
                     </div>
                   </div>
                 </div>
@@ -268,36 +254,36 @@ export default function Home() {
             </div>
 
             {/* 사이드바 */}
-            <div className="space-y-6">
+            <div className="sidebar">
               {/* 통계 카드 */}
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 dark:border-slate-700/50">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">통계</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">총 요약</span>
-                    <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{recentSummaries.length}</span>
+              <div className="sidebar-card">
+                <h3 className="sidebar-title">통계</h3>
+                <div className="stats-grid">
+                  <div className="stat-item">
+                    <span className="stat-label">총 요약</span>
+                    <span className="stat-value">{recentSummaries.length}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">성공률</span>
-                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">100%</span>
+                  <div className="stat-item">
+                    <span className="stat-label">성공률</span>
+                    <span className="stat-value" style={{ color: 'var(--green-500)' }}>100%</span>
                   </div>
                 </div>
               </div>
 
               {/* 최근 요약 */}
               {recentSummaries.length > 0 && (
-                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-6 border border-white/20 dark:border-slate-700/50">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">최근 요약</h3>
-                  <div className="space-y-4">
+                <div className="sidebar-card">
+                  <h3 className="sidebar-title">최근 요약</h3>
+                  <div className="recent-summaries">
                     {recentSummaries.map((item, index) => (
-                      <div key={index} className="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-2 line-clamp-1">
+                      <div key={index} className="recent-item">
+                        <p className="recent-url">
                           {item.url}
                         </p>
-                        <p className="text-sm text-slate-900 dark:text-white line-clamp-3">
+                        <p className="recent-summary">
                           {item.summary}
                         </p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                        <p className="recent-timestamp">
                           {new Date(item.timestamp).toLocaleString('ko-KR')}
                         </p>
                       </div>
@@ -307,20 +293,20 @@ export default function Home() {
               )}
 
               {/* 기능 안내 */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-xl rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">기능</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="text-sm text-slate-700 dark:text-slate-300">AI 기반 요약</span>
+              <div className="sidebar-card" style={{ background: 'linear-gradient(135deg, var(--blue-100), var(--primary-indigo))', borderColor: 'rgba(59, 130, 246, 0.3)' }}>
+                <h3 className="sidebar-title">기능</h3>
+                <div className="features-list">
+                  <div className="feature-item">
+                    <div className="feature-dot blue"></div>
+                    <span className="feature-text">AI 기반 요약</span>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-slate-700 dark:text-slate-300">실시간 처리</span>
+                  <div className="feature-item">
+                    <div className="feature-dot green"></div>
+                    <span className="feature-text">실시간 처리</span>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span className="text-sm text-slate-700 dark:text-slate-300">다크 모드 지원</span>
+                  <div className="feature-item">
+                    <div className="feature-dot purple"></div>
+                    <span className="feature-text">다크 모드 지원</span>
                   </div>
                 </div>
               </div>
@@ -330,15 +316,15 @@ export default function Home() {
       </main>
 
       {/* 플로팅 액션 버튼 */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <div className="relative">
-          <button className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform duration-200">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="floating-button">
+        <div className="floating-button-container">
+          <button className="floating-button-main">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           </button>
-          <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-            <span className="text-xs text-white font-bold">v2</span>
+          <div className="floating-button-badge">
+            <span className="floating-button-badge-text">v3</span>
           </div>
         </div>
       </div>
