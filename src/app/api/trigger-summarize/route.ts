@@ -155,6 +155,8 @@ export async function GET() {
     status: 'active',
     stored_results: summaryResults.size,
     openai_key_exists: !!process.env.OPENAI_API_KEY,
-    openai_key_length: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0
+    openai_key_length: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0,
+    supabase_url_exists: !!process.env.SUPABASE_URL,
+    supabase_key_exists: !!process.env.SUPABASE_SERVICE_ROLE_KEY
   });
 } 
