@@ -1634,3 +1634,113 @@ body {
   }
 }
 
+/* 저장 버튼 스타일 */
+.save-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.save-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(var(--primary-500-rgb), 0.2);
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--primary-500-rgb), 0.3);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(var(--primary-500-rgb), 0.2);
+}
+
+.save-btn svg {
+  flex-shrink: 0;
+}
+
+/* 이미지 저장 버튼 */
+.save-btn-image {
+  background: linear-gradient(135deg, var(--accent-green), #10b981);
+}
+
+.save-btn-image:hover {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* PDF 저장 버튼 */
+.save-btn-pdf {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.save-btn-pdf:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+}
+
+/* 요약 헤더 레이아웃 개선 */
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md) 0;
+  border-bottom: 2px solid var(--slate-200);
+}
+
+.summary-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--slate-800);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 저장할 콘텐츠 영역 스타일 */
+.summary-content-wrapper {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin: var(--space-md) 0;
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 모바일 저장 버튼 최적화 */
+@media (max-width: 768px) {
+  .summary-header {
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+  
+  .save-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .save-btn {
+    flex: 1;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .summary-content-wrapper {
+    padding: var(--space-md);
+  }
+}
+

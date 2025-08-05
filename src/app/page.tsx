@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 // 캐시 무효화를 위한 강제 변경사항
 const CACHE_BUSTER = 'fix-typescript-null-error-' + Date.now();
@@ -267,6 +269,87 @@ export default function Home() {
     }
     
     return result.join('');
+  };
+
+  // 이미지로 저장하는 함수
+  const saveAsImage = async () => {
+    const element = document.getElementById('summary-content');
+    if (!element) {
+      alert('저장할 내용을 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(element, {
+        backgroundColor: '#ffffff',
+        scale: 2, // 고화질을 위해 스케일 2배
+        useCORS: true,
+        allowTaint: true,
+        foreignObjectRendering: true,
+        logging: false
+      });
+
+      // 캔버스를 이미지로 변환하여 다운로드
+      const link = document.createElement('a');
+      link.download = `YouTube_요약_${new Date().toISOString().slice(0, 10)}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('이미지 저장 오류:', error);
+      alert('이미지 저장 중 오류가 발생했습니다.');
+    }
+  };
+
+  // PDF로 저장하는 함수
+  const saveAsPDF = async () => {
+    const element = document.getElementById('summary-content');
+    if (!element) {
+      alert('저장할 내용을 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(element, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        foreignObjectRendering: true,
+        logging: false
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      // A4 크기에 맞게 이미지 크기 조정
+      const imgWidth = 210; // A4 너비 (mm)
+      const pageHeight = 297; // A4 높이 (mm)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      // 첫 페이지에 이미지 추가
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 여러 페이지가 필요한 경우 페이지 추가
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save(`YouTube_요약_${new Date().toISOString().slice(0, 10)}.pdf`);
+    } catch (error) {
+      console.error('PDF 저장 오류:', error);
+      alert('PDF 저장 중 오류가 발생했습니다.');
+    }
   };
 
   // 로컬 스토리지 키
@@ -636,7 +719,72 @@ export default function Home() {
                       </svg>
                       AI 요약 결과
                     </h2>
+                    
+                    {/* 저장 버튼들 */}
+                    <div className="save-buttons">
+                      <button 
+                        onClick={saveAsImage}
+                        className="save-btn save-btn-image"
+                        title="이미지로 저장"
+                      >
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        이미지 저장
+                      </button>
+                      
+                      <button 
+                        onClick={saveAsPDF}
+                        className="save-btn save-btn-pdf"
+                        title="PDF로 저장"
+                      >
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        PDF 저장
+                      </button>
+                    </div>
                   </div>
+
+                  {/* 저장할 요약 콘텐츠 영역 */}
+                  <div id="summary-content" className="summary-content-wrapper">
+                    {/* 영상 정보 카드 */}
+                    {videoInfo && (
+                      <div className="summary-card">
+                        <h3 className="summary-card-title">
+                          <span className="card-number">1</span>
+                          **영상 정보**
+                        </h3>
+                        <div className="summary-card-content">
+                          <div className="video-info-card">
+                            <div className="video-title">{videoInfo.title}</div>
+                            <div className="video-channel">📺 {videoInfo.channelName}</div>
+                            <div className="video-stats">
+                              <div className="video-stat">
+                                <span>👀 조회수</span>
+                                <span>{formatViewCount(videoInfo.viewCount)}</span>
+                              </div>
+                              <div className="video-stat">
+                                <span>📅 업로드</span>
+                                <span>{formatUploadDate(videoInfo.uploadDate)}</span>
+                              </div>
+                              <div className="video-stat">
+                                <span>⏱️ 길이</span>
+                                <span>{formatDuration(videoInfo.duration)}</span>
+                              </div>
+                            </div>
+                            {videoInfo.description && (
+                              <div className="video-description">
+                                {videoInfo.description.length > 200 
+                                  ? `${videoInfo.description.substring(0, 200)}...` 
+                                  : videoInfo.description
+                                }
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                   {/* 핵심 포인트 요약 */}
                   {(() => {
@@ -766,6 +914,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
+                  </div> {/* summary-content-wrapper 끝 */}
                 </div>
               )}
 
