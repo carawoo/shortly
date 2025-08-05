@@ -768,81 +768,9 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-/* Floating action button - Babytalk Style */
+/* Floating action button - REMOVED */
 .floating-button {
-  position: fixed;
-  bottom: var(--space-2xl);
-  right: var(--space);
-  z-index: 50;
-}
-
-.floating-button-container {
-  position: relative;
-}
-
-.floating-button-main {
-  width: 3.5rem;
-  height: 3.5rem;
-  background: var(--gradient-accent);
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 8px 25px rgba(244, 114, 182, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s var(--ease-out);
-  position: relative;
-  overflow: hidden;
-}
-
-.floating-button-main::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.3s var(--ease-out);
-}
-
-.floating-button-main:hover {
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: var(--shadow-2xl);
-}
-
-.floating-button-main:hover::before {
-  opacity: 1;
-}
-
-.floating-button-main:active {
-  transform: translateY(-2px) scale(1.05);
-  transition: all 0.1s var(--ease-in);
-}
-
-.floating-button-main svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.floating-button-badge {
-  position: absolute;
-  top: -0.5rem;
-  right: -0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: var(--primary-emerald);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.floating-button-badge-text {
-  font-size: 0.75rem;
-  color: white;
-  font-weight: var(--font-weight-bold);
+  display: none;
 }
 
 /* Enhanced Animations */
@@ -876,98 +804,96 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Dark mode support */
+/* Force Light Mode Only - No Dark Mode */
 @media (prefers-color-scheme: dark) {
   body {
-    color: var(--gray-100);
-    background: var(--gray-900);
+    color: var(--gray-800) !important;
+    background: var(--gradient-main) !important;
   }
   
   .header {
-    background: rgba(31, 41, 55, 0.95);
-    border-bottom-color: rgba(55, 65, 81, 0.5);
+    background: var(--primary-purple) !important;
   }
   
   .app-title {
-    color: var(--gray-100);
+    color: var(--white) !important;
   }
   
   .app-subtitle {
-    color: var(--gray-400);
+    color: rgba(255, 255, 255, 0.8) !important;
   }
   
   .status-text {
-    color: var(--gray-400);
+    color: rgba(255, 255, 255, 0.9) !important;
   }
   
   .input-form {
-    background: rgba(31, 41, 55, 0.95);
-    border-color: rgba(55, 65, 81, 0.5);
+    background: var(--white) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
   }
   
   .form-label {
-    color: var(--gray-300);
+    color: var(--primary-purple) !important;
   }
   
   .url-input {
-    background: rgba(55, 65, 81, 0.5);
-    border-color: var(--gray-600);
-    color: var(--gray-100);
+    background: var(--gray-50) !important;
+    border-color: var(--light-purple) !important;
+    color: var(--gray-800) !important;
   }
   
   .url-input::placeholder {
-    color: var(--gray-400);
+    color: var(--gray-500) !important;
   }
   
   .summary-result {
-    background: rgba(31, 41, 55, 0.95);
-    border-color: rgba(55, 65, 81, 0.5);
+    background: var(--white) !important;
   }
   
   .summary-text {
-    color: var(--gray-300);
+    color: var(--gray-700) !important;
   }
   
   .summary-footer {
-    border-top-color: var(--gray-700);
-    color: var(--gray-400);
+    border-top-color: var(--gray-200) !important;
+    color: var(--gray-500) !important;
   }
   
   .sidebar-card {
-    background: rgba(31, 41, 55, 0.95);
-    border-color: rgba(55, 65, 81, 0.5);
+    background: var(--white) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
   }
   
   .sidebar-title {
-    color: var(--gray-100);
+    color: var(--primary-purple) !important;
   }
   
   .stat-label {
-    color: var(--gray-400);
+    color: var(--gray-700) !important;
   }
   
   .recent-item {
-    background: rgba(55, 65, 81, 0.5);
+    background: var(--light-purple) !important;
   }
   
   .recent-url {
-    color: var(--gray-400);
+    color: var(--primary-purple) !important;
   }
   
   .recent-summary {
-    color: var(--gray-100);
+    color: var(--gray-800) !important;
   }
   
   .recent-timestamp {
-    color: var(--gray-400);
+    color: var(--gray-600) !important;
   }
   
   .feature-text {
-    color: var(--gray-300);
+    color: var(--gray-800) !important;
   }
   
   .hero-description {
-    color: var(--gray-400);
+    color: rgba(255, 255, 255, 0.9) !important;
   }
 }
 
