@@ -14,6 +14,23 @@ export default function Home() {
   const [urlValid, setUrlValid] = useState(true);
   const [currentVideoId, setCurrentVideoId] = useState('');
   const [expandedSummary, setExpandedSummary] = useState<number | null>(null);
+  const [videoInfo, setVideoInfo] = useState<{
+    title: string;
+    description: string;
+    uploadDate: string;
+    viewCount: number;
+    channelName: string;
+    duration: number;
+    thumbnails: {
+      default: string;
+      medium: string;
+      high: string;
+      standard: string;
+      maxres: string;
+    };
+  } | null>(null);
+  const [videoInfoLoading, setVideoInfoLoading] = useState(false);
+
 
   // 유튜브 URL 검증 함수
   const isValidYouTubeUrl = (url: string): boolean => {
@@ -33,6 +50,71 @@ export default function Home() {
     const hashtagRegex = /#[가-힣a-zA-Z0-9_]+/g;
     const hashtags = text.match(hashtagRegex);
     return hashtags ? hashtags.slice(0, 8) : []; // 최대 8개
+  };
+
+  // 시간 포맷팅 함수 (초를 시:분:초로 변환)
+  const formatDuration = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    } else {
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+  };
+
+  // 조회수 포맷팅 함수
+  const formatViewCount = (count: number): string => {
+    if (count >= 1000000) {
+      return `${(count / 1000000).toFixed(1)}M`;
+    } else if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}K`;
+    } else {
+      return count.toString();
+    }
+  };
+
+  // 업로드 날짜 포맷팅 함수
+  const formatUploadDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return '오늘';
+    } else if (diffDays === 1) {
+      return '어제';
+    } else if (diffDays < 7) {
+      return `${diffDays}일 전`;
+    } else if (diffDays < 30) {
+      return `${Math.floor(diffDays / 7)}주 전`;
+    } else if (diffDays < 365) {
+      return `${Math.floor(diffDays / 30)}개월 전`;
+    } else {
+      return `${Math.floor(diffDays / 365)}년 전`;
+    }
+  };
+
+  // 비디오 정보 가져오기 함수
+  const fetchVideoInfo = async (videoUrl: string) => {
+    setVideoInfoLoading(true);
+    try {
+      const response = await fetch(`/api/video-info?url=${encodeURIComponent(videoUrl)}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setVideoInfo(data);
+      } else {
+        console.warn('비디오 정보 가져오기 실패:', data.message);
+      }
+    } catch (err) {
+      console.error('비디오 정보 가져오기 오류:', err);
+    } finally {
+      setVideoInfoLoading(false);
+    }
   };
 
   // 마크다운을 HTML로 변환하는 함수
@@ -163,6 +245,9 @@ export default function Home() {
     setLoading(true);
     setError('');
     setSummary('');
+    
+    // 비디오 정보 가져오기 (병렬 처리)
+    fetchVideoInfo(url);
 
     try {
       // 1. 요약 트리거
@@ -175,12 +260,12 @@ export default function Home() {
       const triggerData = await triggerRes.json();
 
       if (!triggerData.success) {
-        setError(triggerData.error || '요약 요청 중 오류가 발생했습니다.');
+        setError(triggerData.error || '요약이 실패했어요. 다시 시도해 주세요. ');
         setLoading(false);
         return;
       }
 
-      setSummary('요약 요청이 성공적으로 처리되었습니다. AI가 영상을 분석하고 있습니다...');
+      setSummary('요약을 진행 중입니다! 잠시만 기다려주세요.');
 
       // 2. 폴링으로 결과 대기 (15초 초기 대기 후 시작)
       await new Promise(resolve => setTimeout(resolve, 15000)); // 15초 대기
@@ -242,6 +327,8 @@ export default function Home() {
     // 타임아웃
     throw new Error('요약 처리 시간이 초과되었습니다. 다시 시도해주세요.');
   };
+
+
 
   return (
     <div className="app-container">
@@ -359,12 +446,21 @@ export default function Home() {
                       title="YouTube에서 영상 보기"
                     >
                       <img 
-                        src={`https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`}
+                        src={videoInfo?.thumbnails?.maxres || `https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`}
                         alt="YouTube 썸네일"
                         className="thumbnail-image"
                         onError={(e) => {
-                          // 고품질 썸네일이 없으면 기본 썸네일로 대체
-                          e.currentTarget.src = `https://img.youtube.com/vi/${currentVideoId}/mqdefault.jpg`;
+                          // 고화질 썸네일이 없으면 차선책들로 대체
+                          const fallbacks = [
+                            `https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`,
+                            `https://img.youtube.com/vi/${currentVideoId}/mqdefault.jpg`,
+                            `https://img.youtube.com/vi/${currentVideoId}/default.jpg`
+                          ];
+                          const currentSrc = e.currentTarget.src;
+                          const currentIndex = fallbacks.findIndex(url => currentSrc.includes(url.split('/').pop() || ''));
+                          if (currentIndex < fallbacks.length - 1) {
+                            e.currentTarget.src = fallbacks[currentIndex + 1];
+                          }
                         }}
                       />
                       <div className="thumbnail-overlay">
@@ -373,7 +469,66 @@ export default function Home() {
                             <path d="M8 5v14l11-7z"/>
                           </svg>
                         </div>
+                        {videoInfo?.duration && (
+                          <div className="video-duration">
+                            {formatDuration(videoInfo.duration)}
+                          </div>
+                        )}
                       </div>
+                    </div>
+                  )}
+                  
+                  {/* 비디오 정보 카드 */}
+                  {videoInfo && (
+                    <div className="video-info-card">
+                      <div className="video-info-main">
+                        <h3 className="video-title">{videoInfo.title}</h3>
+                        <div className="video-channel">
+                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                          </svg>
+                          {videoInfo.channelName}
+                        </div>
+                      </div>
+                      
+                      <div className="video-stats">
+                        {videoInfo.viewCount && (
+                          <div className="video-stat">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            </svg>
+                            조회수 {formatViewCount(videoInfo.viewCount)}회
+                          </div>
+                        )}
+                        
+                        {videoInfo.duration && (
+                          <div className="video-stat">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                            {formatDuration(videoInfo.duration)}
+                          </div>
+                        )}
+                        
+                        {videoInfo.uploadDate && (
+                          <div className="video-stat">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                            </svg>
+                            {formatUploadDate(videoInfo.uploadDate)}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {videoInfo.description && (
+                        <div className="video-description">
+                          <p>{videoInfo.description.length > 150 ? 
+                            `${videoInfo.description.substring(0, 150)}...` : 
+                            videoInfo.description}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                   
@@ -422,9 +577,12 @@ export default function Home() {
                         AI 생성
                       </div>
                     </div>
+
                   </div>
                 </div>
               )}
+
+
 
               {/* 로딩 상태 */}
               {loading && summary.includes('기다리는 중') && (
