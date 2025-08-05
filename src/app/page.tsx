@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fix-white-text-to-dark-' + Date.now();
+const CACHE_BUSTER = 'fix-markdown-rendering-bullets-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -368,17 +368,25 @@ export default function Home() {
                            .replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '')
                            // 해시태그 라인만 제거하는 방식으로 대체
                            .replace(/#[가-힣a-zA-Z0-9_\s]+/g, '')
-                           .replace(/## (.*)/g, '<h2>$1</h2>')
-                           .replace(/- (.*)/g, '<li>$1</li>')
+                           // 먼저 ## 제목을 h2로 변환
+                           .replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>')
+                           // - 리스트를 li로 변환 (줄바꿈 고려)
+                           .replace(/^- (.*)$/gm, '<li>$1</li>')
+                           // ** 볼드 텍스트 변환
                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                           .replace(/\n\n/g, '</p><p>')
-                           .replace(/^(.)/g, '<p>$1')
-                           .replace(/(.)$/g, '$1</p>')
-                           .replace(/<p><h2>/g, '<h2>')
-                           .replace(/<\/h2><\/p>/g, '</h2>')
-                           .replace(/<p><li>/g, '<ul><li>')
-                           .replace(/<\/li><\/p>/g, '</li></ul>')
-                           .replace(/<\/ul><ul>/g, '')
+                           // 연속된 li들을 ul로 감싸기
+                           .replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/g, function(match) {
+                             return '<ul>' + match + '</ul>';
+                           })
+                           // 나머지 텍스트를 p 태그로 변환 (빈 줄 기준으로 분할)
+                           .split('\n\n')
+                           .map(paragraph => {
+                             const trimmed = paragraph.trim();
+                             if (!trimmed) return '';
+                             if (trimmed.startsWith('<h2>') || trimmed.startsWith('<ul>')) return trimmed;
+                             return `<p>${trimmed}</p>`;
+                           })
+                           .join('')
                        }}
                      />
                     

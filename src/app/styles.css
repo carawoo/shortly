@@ -682,23 +682,16 @@ body {
 }
 
 .summary-text ul {
-  list-style: none;
-  padding-left: 0;
+  list-style: disc;
+  padding-left: var(--space-xl);
   margin: var(--space) 0;
+  color: var(--primary-purple);
 }
 
 .summary-text li {
   margin: var(--space-sm) 0;
-  padding-left: var(--space-lg);
-  position: relative;
-}
-
-.summary-text li::before {
-  content: "•";
-  color: var(--primary-purple);
-  font-weight: var(--font-weight-bold);
-  position: absolute;
-  left: 0;
+  padding-left: var(--space-sm);
+  color: #333333;
 }
 
 .summary-text p {
