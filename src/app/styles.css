@@ -863,7 +863,7 @@ body {
 .stat-value {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
-  color: var(--accent-);
+  color: var(--accent-purple);
 }
 
 /* Stats header */

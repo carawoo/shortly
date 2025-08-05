@@ -846,7 +846,7 @@ export default function Home() {
                     ))}
                   </div>
                   
-                  {/* 더보기/접기 버튼을 맨 아래로 이동 */}
+                  {/* 더보기/접기 버튼 */}
                   <div className="expand-toggle-container">
                     <button 
                       className="expand-toggle-btn-bottom"
