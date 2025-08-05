@@ -39,8 +39,12 @@ export default function Home() {
       // 2. 폴링으로 결과 대기 (15초 초기 대기 후 시작)
       await new Promise(resolve => setTimeout(resolve, 15000)); // 15초 대기
       
-      const summaryText = await pollForResult(url, 45000, 3000); // 45초 타임아웃, 3초 간격
-      setSummary(summaryText);
+      try {
+        const summaryText = await pollForResult(url, 60000, 3000); // 1분까지 대기
+        setSummary(summaryText);
+      } catch (e) {
+        setError('요약 결과를 가져오지 못했습니다. 다시 시도해주세요.');
+      }
       setLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : '요약 처리 중 오류가 발생했습니다.');
