@@ -1056,7 +1056,7 @@ body {
 .video-info-card {
   background: linear-gradient(135deg, var(--slate-50) 0%, var(--slate-100) 100%);
   border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  padding: var(--space-lg) 20px;
   margin-bottom: var(--space-lg);
   border: 1px solid var(--slate-200);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -1149,7 +1149,7 @@ body {
 /* 비디오 정보 카드 모바일 최적화 */
 @media (max-width: 768px) {
   .video-info-card {
-    padding: var(--space-md);
+    padding: var(--space-md) 20px;
     margin-bottom: var(--space-md);
   }
   
@@ -1211,7 +1211,7 @@ body {
 }
 
 .summary-card-content {
-  padding: var(--space-lg);
+  padding: var(--space-lg) 20px;
 }
 
 /* 키워드 및 콘텐츠 섹션 스타일 */
@@ -1647,7 +1647,7 @@ body {
   }
   
   .summary-card-content {
-    padding: var(--space-md);
+    padding: var(--space-md) 20px;
   }
   
   .card-number {
