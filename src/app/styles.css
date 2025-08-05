@@ -646,7 +646,7 @@ body {
   align-items: center;
   padding: var(--space-sm) var(--space);
   background-color: #eaeaea;
-  color: #555555;
+  color: #333333;
   font-size: 0.875rem;
   font-weight: var(--font-weight-medium);
   border-radius: 10px;
