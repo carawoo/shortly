@@ -863,7 +863,7 @@ body {
 .stat-value {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
-  color: var(--accent-green);
+  color: var(--accent-);
 }
 
 /* Stats header */
@@ -1568,23 +1568,7 @@ body {
   pointer-events: none;
 }
 
-/* 더 많은 아이템 표시 인디케이터 */
-.more-items-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-md);
-  margin-top: var(--space-sm);
-  background: linear-gradient(135deg, var(--slate-50) 0%, var(--slate-100) 100%);
-  border-radius: var(--radius-md);
-  border: 1px dashed var(--slate-300);
-}
 
-.more-items-indicator span {
-  font-size: 0.85rem;
-  color: var(--slate-500);
-  font-weight: 500;
-}
 
 /* 최근 요약 애니메이션 */
 .recent-summaries {
@@ -1615,10 +1599,6 @@ body {
   
   .recent-item.half-visible {
     max-height: 100px;
-  }
-  
-  .more-items-indicator {
-    padding: var(--space-sm);
   }
   
   .expand-toggle-container {

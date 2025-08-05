@@ -848,11 +848,6 @@ export default function Home() {
                   
                   {/* 더보기/접기 버튼을 맨 아래로 이동 */}
                   <div className="expand-toggle-container">
-                    {!isRecentSummariesExpanded && recentSummaries.length > 3 && (
-                      <div className="more-items-indicator">
-                        <span>+{recentSummaries.length - 3}개 더</span>
-                      </div>
-                    )}
                     <button 
                       className="expand-toggle-btn-bottom"
                       onClick={() => setIsRecentSummariesExpanded(!isRecentSummariesExpanded)}
