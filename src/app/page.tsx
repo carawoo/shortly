@@ -335,9 +335,6 @@ export default function Home() {
       {/* 배경 패턴 */}
       <div className="background-pattern"></div>
       
-      {/* 헤더 */}
-
-
       <main className="main-content">
         <div className="main-container">
           {/* 메인 헤더 */}
