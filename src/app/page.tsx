@@ -189,7 +189,7 @@ export default function Home() {
       /⭐\s*(.+?)(?=\n|$)/g
     ];
     
-    const keyPoints = [];
+    const keyPoints: string[] = [];
     
     for (const pattern of keyPointPatterns) {
       let match;
