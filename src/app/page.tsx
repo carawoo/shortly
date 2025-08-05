@@ -117,6 +117,92 @@ export default function Home() {
     }
   };
 
+  // 타임스탬프 추출 및 파싱 함수
+  const parseTimestamps = (text: string) => {
+    const timestampRegex = /(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]?\s*(.+?)(?=\n|$)/g;
+    const sections = [];
+    let match;
+    
+    while ((match = timestampRegex.exec(text)) !== null) {
+      const [, timestamp, content] = match;
+      sections.push({
+        timestamp,
+        content: content.trim(),
+        seconds: convertTimestampToSeconds(timestamp)
+      });
+    }
+    
+    return sections;
+  };
+
+  // 타임스탬프를 초 단위로 변환
+  const convertTimestampToSeconds = (timestamp: string): number => {
+    const parts = timestamp.split(':').map(Number);
+    if (parts.length === 2) {
+      return parts[0] * 60 + parts[1]; // MM:SS
+    } else if (parts.length === 3) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2]; // HH:MM:SS
+    }
+    return 0;
+  };
+
+  // YouTube 링크에 타임스탬프 추가
+  const getYouTubeTimestampUrl = (videoId: string, seconds: number): string => {
+    return `https://www.youtube.com/watch?v=${videoId}&t=${seconds}s`;
+  };
+
+  // 요약 내용을 섹션별로 분리
+  const parseSummaryIntoSections = (text: string) => {
+    const sections = [];
+    
+    // 주요 섹션 헤더 패턴
+    const sectionRegex = /##\s*(.+?)(?=\n)/g;
+    const parts = text.split(/##\s*(.+?)(?=\n)/);
+    
+    for (let i = 1; i < parts.length; i += 2) {
+      const title = parts[i]?.trim();
+      const content = parts[i + 1]?.trim();
+      
+      if (title && content) {
+        // 이 섹션에서 타임스탬프 찾기
+        const timestamps = parseTimestamps(content);
+        
+        sections.push({
+          title,
+          content,
+          timestamps,
+          isKeySection: title.includes('핵심') || title.includes('주요') || title.includes('요약')
+        });
+      }
+    }
+    
+    return sections;
+  };
+
+  // 핵심 포인트 추출
+  const extractKeyPoints = (text: string): string[] => {
+    const keyPointPatterns = [
+      /[•·▪▫-]\s*(.+?)(?=\n|$)/g,
+      /\d+\.\s*(.+?)(?=\n|$)/g,
+      /✓\s*(.+?)(?=\n|$)/g,
+      /⭐\s*(.+?)(?=\n|$)/g
+    ];
+    
+    const keyPoints = [];
+    
+    for (const pattern of keyPointPatterns) {
+      let match;
+      while ((match = pattern.exec(text)) !== null) {
+        const point = match[1]?.trim();
+        if (point && point.length > 10 && !keyPoints.includes(point)) {
+          keyPoints.push(point);
+        }
+      }
+    }
+    
+    return keyPoints.slice(0, 5); // 최대 5개 핵심 포인트
+  };
+
   // 마크다운을 HTML로 변환하는 함수
   const convertMarkdownToHtml = (text: string): string => {
     // 해시태그 섹션 제거
@@ -537,7 +623,84 @@ export default function Home() {
                       AI 요약 결과
                     </h2>
                   </div>
-                                     <div className="summary-content">
+
+                  {/* 핵심 포인트 요약 */}
+                  {(() => {
+                    const keyPoints = extractKeyPoints(summary);
+                    return keyPoints.length > 0 ? (
+                      <div className="key-points-section">
+                        <h3 className="key-points-title">
+                          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                          🎯 핵심 포인트
+                        </h3>
+                        <div className="key-points-list">
+                          {keyPoints.map((point, index) => (
+                            <div key={index} className="key-point-item">
+                              <span className="key-point-number">{index + 1}</span>
+                              <span className="key-point-text">{point}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null;
+                  })()}
+
+                  {/* 섹션별 요약 */}
+                  {(() => {
+                    const sections = parseSummaryIntoSections(summary);
+                    return sections.length > 0 ? (
+                      <div className="sections-container">
+                        <h3 className="sections-title">
+                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                          </svg>
+                          📚 섹션별 내용
+                        </h3>
+                        <div className="sections-list">
+                          {sections.map((section, index) => (
+                            <div key={index} className={`section-item ${section.isKeySection ? 'key-section' : ''}`}>
+                              <div className="section-header">
+                                <h4 className="section-title">{section.title}</h4>
+                                {section.timestamps.length > 0 && (
+                                  <span className="timestamps-count">
+                                    {section.timestamps.length}개 구간
+                                  </span>
+                                )}
+                              </div>
+                              
+                              {section.timestamps.length > 0 && (
+                                <div className="timestamps-list">
+                                  {section.timestamps.map((ts, tsIndex) => (
+                                    <div key={tsIndex} className="timestamp-item">
+                                      <button
+                                        className="timestamp-link"
+                                        onClick={() => window.open(getYouTubeTimestampUrl(currentVideoId, ts.seconds), '_blank')}
+                                        title="YouTube에서 해당 구간 보기"
+                                      >
+                                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                        {ts.timestamp}
+                                      </button>
+                                      <span className="timestamp-content">{ts.content}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                              
+                              <div className="section-content">
+                                <p>{section.content.replace(/\d{1,2}:\d{2}(?::\d{2})?\s*[-–—]?\s*.+/g, '').trim()}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null;
+                  })()}
+
+                  <div className="summary-content">
                      {/* 해시태그 칩 표시 */}
                      {(() => {
                        const hashtags = extractHashtags(summary);
