@@ -305,7 +305,7 @@ body {
   z-index: 10;
   min-height: 100vh;
   padding: var(--space) var(--space);
-  padding-top: var(--space);
+  padding-top: var(--space-2xl);
 }
 
 .main-container {
@@ -316,7 +316,8 @@ body {
 /* Hero section - Babytalk Style */
 .hero-section {
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-top: 32px;
+  margin-bottom: 10px;
   padding: var(--space-2xl) 0;
 }
 
