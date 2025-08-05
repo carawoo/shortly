@@ -14,6 +14,7 @@ export default function Home() {
   const [urlValid, setUrlValid] = useState(true);
   const [currentVideoId, setCurrentVideoId] = useState('');
   const [expandedSummary, setExpandedSummary] = useState<number | null>(null);
+  const [isRecentSummariesExpanded, setIsRecentSummariesExpanded] = useState(false);
   const [videoInfo, setVideoInfo] = useState<{
     title: string;
     description: string;
@@ -799,10 +800,31 @@ export default function Home() {
               {/* 최근 요약 */}
               {recentSummaries.length > 0 && (
                 <div className="sidebar-card">
-                  <h3 className="sidebar-title">최근 요약</h3>
-                  <div className="recent-summaries">
-                    {recentSummaries.map((item, index) => (
-                      <div key={index} className="recent-item">
+                  <div className="sidebar-header">
+                    <h3 className="sidebar-title">최근 요약</h3>
+                    <button 
+                      className="expand-toggle-btn"
+                      onClick={() => setIsRecentSummariesExpanded(!isRecentSummariesExpanded)}
+                      title={isRecentSummariesExpanded ? '접기' : '전체 보기'}
+                    >
+                      <svg 
+                        width="16" 
+                        height="16" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        className={`expand-icon ${isRecentSummariesExpanded ? 'expanded' : ''}`}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span className="expand-text">
+                        {isRecentSummariesExpanded ? '접기' : '더보기'}
+                      </span>
+                    </button>
+                  </div>
+                  <div className={`recent-summaries ${isRecentSummariesExpanded ? 'expanded' : 'collapsed'}`}>
+                    {(isRecentSummariesExpanded ? recentSummaries : recentSummaries.slice(0, 3)).map((item, index) => (
+                      <div key={index} className={`recent-item ${!isRecentSummariesExpanded && index === 2 ? 'half-visible' : ''}`}>
                         <p 
                           className="recent-url"
                           onClick={() => window.open(item.url, '_blank')}
@@ -831,6 +853,11 @@ export default function Home() {
                         </p>
                       </div>
                     ))}
+                    {!isRecentSummariesExpanded && recentSummaries.length > 3 && (
+                      <div className="more-items-indicator">
+                        <span>+{recentSummaries.length - 3}개 더</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
