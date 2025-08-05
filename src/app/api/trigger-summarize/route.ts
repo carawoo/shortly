@@ -5,7 +5,13 @@ const summaryResults = new Map();
 
 export async function POST(req: Request) {
   console.time('trigger-summarize');
+  console.log('=== /api/trigger-summarize 시작 ===');
+  
   try {
+    // 1. 환경 변수 확인
+    console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "✅ 존재" : "❌ 없음");
+    console.log("OPENAI_API_KEY 길이:", process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0);
+    
     const body = await req.json();
     const { url: youtubeUrl } = body;
     
@@ -20,7 +26,7 @@ export async function POST(req: Request) {
       }, { status: 400 });
     }
 
-    // 1. 유튜브 영상 정보 추출 (여기선 dummy 사용)
+    // 2. 유튜브 영상 정보 추출 (여기선 dummy 사용)
     const dummyTranscript = `이 영상은 AI 서비스에 대한 설명입니다. 
     사용자들이 AI를 활용하여 다양한 작업을 수행할 수 있도록 도와주는 서비스입니다. 
     특히 자연어 처리와 이미지 생성 기능이 뛰어나며, 많은 기업과 개인들이 활용하고 있습니다. 
@@ -28,10 +34,9 @@ export async function POST(req: Request) {
 
     console.log('[POST] 더미 트랜스크립트 생성 완료');
 
-    // 2. GPT로 요약 요청
+    // 3. GPT로 요약 요청
     console.time('openai-call');
     console.log('[POST] OpenAI API 호출 시작...');
-    console.log('[POST] OpenAI API 키 존재 여부:', !!process.env.OPENAI_API_KEY);
     
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -59,20 +64,26 @@ export async function POST(req: Request) {
     console.log('[POST] OpenAI API 응답 헤더:', Object.fromEntries(res.headers.entries()));
 
     if (!res.ok) {
+      const errorText = await res.text();
       console.error('[POST] OpenAI API 오류:', res.status, res.statusText);
+      console.error('[POST] OpenAI API 오류 내용:', errorText);
       return NextResponse.json({
         success: false,
-        error: 'OpenAI API 호출 중 오류가 발생했습니다.',
+        error: `OpenAI API 호출 중 오류가 발생했습니다. (${res.status})`,
         timestamp: new Date().toISOString()
       }, { status: 500 });
     }
 
     const data = await res.json();
+    console.log('[POST] OpenAI API 응답 데이터:', data);
+    
     const summary = data.choices?.[0]?.message?.content || "요약 실패";
+    console.log('[POST] 추출된 요약 결과:', summary);
 
-    console.log('[POST] OpenAI 요약 결과:', summary);
-
-    // 3. 메모리에 결과 저장
+    // 4. 메모리에 결과 저장
+    console.log('[POST] 저장 직전 summary:', summary);
+    console.log('[POST] 저장할 URL:', youtubeUrl);
+    
     summaryResults.set(youtubeUrl, {
       summary: summary,
       timestamp: new Date().toISOString()
@@ -85,6 +96,8 @@ export async function POST(req: Request) {
     });
 
     console.timeEnd('trigger-summarize');
+    console.log('=== /api/trigger-summarize 완료 ===');
+    
     return NextResponse.json({
       success: true,
       message: '요약 요청이 성공적으로 처리되었습니다.',
@@ -94,6 +107,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.timeEnd('trigger-summarize');
     console.error('[POST] 요약 처리 오류:', error);
+    console.log('=== /api/trigger-summarize 오류 종료 ===');
     return NextResponse.json({
       success: false,
       error: '요약 처리 중 오류가 발생했습니다.',
