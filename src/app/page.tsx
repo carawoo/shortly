@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'local-storage-persistence-' + Date.now();
+const CACHE_BUSTER = 'improved-markdown-natural-tone-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -223,8 +223,8 @@ export default function Home() {
               YouTube AI 요약
             </h1>
             <p className="hero-description">
-              AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다. 
-              복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
+              요약합니다.<br />
+              다음 줄바꿈으로 변경해줘.
             </p>
           </div>
 
