@@ -10,8 +10,10 @@
   --accent-pink: #f472b6;
   --accent-blue: #60a5fa;
   
-  /* Neutral Colors */
+  /* Neutral Colors - Optimized for readability */
   --white: #ffffff;
+  --light-gray: #efefef;
+  --text-dark: #222222;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -20,7 +22,7 @@
   --gray-500: #6b7280;
   --gray-600: #4b5563;
   --gray-700: #374151;
-  --gray-800: #1f2937;
+  --gray-800: #222222;
   --gray-900: #111827;
   
   /* Semantic Colors */
@@ -109,7 +111,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
-  color: var(--gray-900);
+  color: var(--text-dark);
   background: var(--gray-50);
   font-weight: var(--font-weight-normal);
   -webkit-font-smoothing: antialiased;
@@ -426,11 +428,11 @@ body {
 .url-input {
   width: 100%;
   padding: 1.25rem var(--space) 1.25rem 3rem;
-  background: var(--gray-50);
+  background: var(--light-gray);
   border: 2px solid var(--light-purple);
   border-radius: var(--radius-xl);
   font-size: 1rem;
-  color: var(--gray-800);
+  color: var(--text-dark);
   transition: all 0.3s var(--ease-out);
   font-weight: var(--font-weight-medium);
   line-height: 1.5;
@@ -446,6 +448,7 @@ body {
   border-color: var(--primary-purple);
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
   background: var(--white);
+  color: var(--text-dark);
   transform: translateY(-1px);
 }
 
@@ -672,7 +675,7 @@ body {
 .sidebar-title {
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold);
-  color: var(--primary-purple);
+  color: var(--text-dark);
   margin-bottom: var(--space);
 }
 
@@ -690,7 +693,7 @@ body {
 }
 
 .stat-label {
-  color: var(--gray-700);
+  color: var(--text-dark);
   font-weight: var(--font-weight-medium);
 }
 
@@ -725,7 +728,7 @@ body {
 
 .recent-summary {
   font-size: 0.875rem;
-  color: var(--gray-800);
+  color: var(--text-dark);
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -735,7 +738,7 @@ body {
 
 .recent-timestamp {
   font-size: 0.75rem;
-  color: var(--gray-600);
+  color: var(--gray-500);
   margin-top: var(--space-sm);
 }
 
@@ -764,7 +767,7 @@ body {
 
 .feature-text {
   font-size: 0.875rem;
-  color: var(--gray-800);
+  color: var(--text-dark);
   font-weight: var(--font-weight-medium);
 }
 
@@ -807,7 +810,7 @@ body {
 /* Force Light Mode Only - No Dark Mode */
 @media (prefers-color-scheme: dark) {
   body {
-    color: var(--gray-800) !important;
+    color: var(--text-dark) !important;
     background: var(--gradient-main) !important;
   }
   
@@ -837,9 +840,9 @@ body {
   }
   
   .url-input {
-    background: var(--gray-50) !important;
+    background: var(--light-gray) !important;
     border-color: var(--light-purple) !important;
-    color: var(--gray-800) !important;
+    color: var(--text-dark) !important;
   }
   
   .url-input::placeholder {
@@ -865,11 +868,11 @@ body {
   }
   
   .sidebar-title {
-    color: var(--primary-purple) !important;
+    color: var(--text-dark) !important;
   }
   
   .stat-label {
-    color: var(--gray-700) !important;
+    color: var(--text-dark) !important;
   }
   
   .recent-item {
@@ -881,15 +884,15 @@ body {
   }
   
   .recent-summary {
-    color: var(--gray-800) !important;
+    color: var(--text-dark) !important;
   }
   
   .recent-timestamp {
-    color: var(--gray-600) !important;
+    color: var(--gray-500) !important;
   }
   
   .feature-text {
-    color: var(--gray-800) !important;
+    color: var(--text-dark) !important;
   }
   
   .hero-description {
