@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fix-hashtag-text-color-' + Date.now();
+const CACHE_BUSTER = 'local-storage-persistence-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -33,6 +33,54 @@ export default function Home() {
     const hashtagRegex = /#[가-힣a-zA-Z0-9_]+/g;
     const hashtags = text.match(hashtagRegex);
     return hashtags ? hashtags.slice(0, 8) : []; // 최대 8개
+  };
+
+  // 로컬 스토리지 키
+  const STORAGE_KEY = 'shortly_recent_summaries';
+
+  // 로컬 스토리지에서 데이터 로드
+  const loadFromStorage = (): Array<{url: string, summary: string, timestamp: string}> => {
+    if (typeof window === 'undefined') return [];
+    
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('로컬 스토리지 로드 오류:', error);
+      return [];
+    }
+  };
+
+  // 로컬 스토리지에 데이터 저장
+  const saveToStorage = (summaries: Array<{url: string, summary: string, timestamp: string}>) => {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(summaries));
+    } catch (error) {
+      console.error('로컬 스토리지 저장 오류:', error);
+    }
+  };
+
+  // 컴포넌트 마운트 시 로컬 스토리지에서 데이터 로드
+  useEffect(() => {
+    const savedSummaries = loadFromStorage();
+    setRecentSummaries(savedSummaries);
+  }, []);
+
+  // recentSummaries 변경 시 로컬 스토리지에 저장
+  useEffect(() => {
+    if (recentSummaries.length > 0) {
+      saveToStorage(recentSummaries);
+    }
+  }, [recentSummaries]);
+
+  // 전체 요약 기록 삭제
+  const clearAllSummaries = () => {
+    if (confirm('모든 요약 기록을 삭제하시겠습니까?')) {
+      setRecentSummaries([]);
+      localStorage.removeItem(STORAGE_KEY);
+    }
   };
 
   const handleSummarize = async () => {
@@ -82,12 +130,18 @@ export default function Home() {
         const summaryText = await pollForResult(url, 60000, 3000); // 1분까지 대기
         setSummary(summaryText);
         
-        // 최근 요약에 추가
-        setRecentSummaries(prev => [{
-          url,
-          summary: summaryText,
-          timestamp: new Date().toISOString()
-        }, ...prev.slice(0, 4)]);
+        // 최근 요약에 추가 (중복 제거 및 최대 10개 제한)
+        setRecentSummaries(prev => {
+          // 동일한 URL이 있으면 제거
+          const filteredPrev = prev.filter(item => item.url !== url);
+          
+          // 새 항목을 맨 앞에 추가하고 최대 10개까지만 유지
+          return [{
+            url,
+            summary: summaryText,
+            timestamp: new Date().toISOString()
+          }, ...filteredPrev].slice(0, 10);
+        });
       } catch (e) {
         setError('요약 결과를 가져오지 못했습니다. 다시 시도해주세요.');
       }
@@ -365,7 +419,20 @@ export default function Home() {
             <div className="sidebar">
               {/* 통계 카드 */}
               <div className="sidebar-card">
-                <h3 className="sidebar-title">통계</h3>
+                <div className="stats-header">
+                  <h3 className="sidebar-title">통계</h3>
+                  {recentSummaries.length > 0 && (
+                    <button 
+                      className="clear-all-btn"
+                      onClick={clearAllSummaries}
+                      title="모든 기록 삭제"
+                    >
+                      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
                 <div className="stats-grid">
                   <div className="stat-item">
                     <span className="stat-label">총 요약</span>
