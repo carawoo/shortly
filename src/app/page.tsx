@@ -442,7 +442,7 @@ export default function Home() {
             </h1>
             <p className="hero-description">
               🤖 AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다.<br />
-              ✨ 복잡한 내용을 간단하고 이해하기 쉽게 만들어드릴게요.<br />
+              ✨ 복잡한 내용을 간단하고 이해하기 쉽게 만들어드릴게요.
             </p>
           </div>
 
