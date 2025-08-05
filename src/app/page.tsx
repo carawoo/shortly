@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'enhanced-summary-' + Date.now();
+const CACHE_BUSTER = 'modern-design-full-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
