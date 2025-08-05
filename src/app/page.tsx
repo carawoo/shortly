@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'v4-enhanced-ux-' + Date.now();
+const CACHE_BUSTER = 'clean-design-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -109,10 +109,9 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <div>
+                        <div>
               <h1 className="app-title">Shortly</h1>
               <p className="app-subtitle">AI YouTube 요약</p>
-                             <p className="app-version">Material 3 v4 (Enhanced UX)</p>
             </div>
           </div>
           <div className="online-status">
@@ -131,13 +130,9 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h1 className="hero-title">
+                        <h1 className="hero-title">
               YouTube AI 요약
             </h1>
-                         <div className="status-badge">
-               <span className="status-badge-dot"></span>
-               Enhanced UX Material 3 디자인 ✨
-             </div>
             <p className="hero-description">
               AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다. 
               복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
@@ -318,14 +313,11 @@ export default function Home() {
       {/* 플로팅 액션 버튼 */}
       <div className="floating-button">
         <div className="floating-button-container">
-          <button className="floating-button-main">
+                    <button className="floating-button-main">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           </button>
-                     <div className="floating-button-badge">
-             <span className="floating-button-badge-text">v4</span>
-           </div>
         </div>
       </div>
     </div>
