@@ -62,7 +62,10 @@ export default function Home() {
   };
 
   // 시간 포맷팅 함수 (초를 시:분:초로 변환)
-  const formatDuration = (seconds: number): string => {
+  const formatDuration = (seconds: number | null | undefined): string => {
+    if (!seconds || seconds === null || seconds === undefined || isNaN(seconds)) {
+      return '정보 없음';
+    }
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
@@ -75,7 +78,10 @@ export default function Home() {
   };
 
   // 조회수 포맷팅 함수
-  const formatViewCount = (count: number): string => {
+  const formatViewCount = (count: number | null | undefined): string => {
+    if (!count || count === null || count === undefined) {
+      return '정보 없음';
+    }
     if (count >= 1000000) {
       return `${(count / 1000000).toFixed(1)}M`;
     } else if (count >= 1000) {
@@ -86,8 +92,14 @@ export default function Home() {
   };
 
   // 업로드 날짜 포맷팅 함수
-  const formatUploadDate = (dateString: string): string => {
+  const formatUploadDate = (dateString: string | null | undefined): string => {
+    if (!dateString) {
+      return '정보 없음';
+    }
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return '정보 없음';
+    }
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
