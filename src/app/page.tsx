@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fix-text-colors-white-on-dark-bg-' + Date.now();
+const CACHE_BUSTER = 'remove-top-header-section-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -247,25 +247,7 @@ export default function Home() {
       <div className="background-pattern"></div>
       
       {/* 헤더 */}
-      <header className="header">
-        <div className="header-content">
-          <div className="header-left">
-            <div className="logo-container">
-              <svg className="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-            </div>
-                        <div>
-              <h1 className="app-title">Shortly</h1>
-              <p className="app-subtitle">AI YouTube 요약</p>
-            </div>
-          </div>
-          <div className="online-status">
-            <div className="status-dot"></div>
-            <span className="status-text">온라인</span>
-          </div>
-        </div>
-      </header>
+
 
       <main className="main-content">
         <div className="main-container">
