@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'remove-top-header-section-' + Date.now();
+const CACHE_BUSTER = 'fix-horizontal-margins-balance-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');

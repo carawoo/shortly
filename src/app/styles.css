@@ -304,8 +304,8 @@ body {
   position: relative;
   z-index: 10;
   min-height: 100vh;
-  padding: var(--space-xl) var(--space);
-  padding-top: var(--space-xl);
+  padding: var(--space) var(--space);
+  padding-top: var(--space);
 }
 
 .main-container {
@@ -317,7 +317,7 @@ body {
 .hero-section {
   text-align: center;
   margin-bottom: var(--space-2xl);
-  padding: var(--space-xl) 0;
+  padding: var(--space-2xl) 0;
 }
 
 .hero-icon {
@@ -372,8 +372,8 @@ body {
   background: var(--white);
   border-radius: var(--radius-2xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-  padding: var(--space-2xl);
-  margin: 0 var(--space) var(--space-xl) var(--space);
+  padding: var(--space-xl);
+  margin: 0 0 var(--space-xl) 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   position: relative;
   transition: all 0.3s var(--ease-out);
@@ -610,7 +610,7 @@ body {
   box-shadow: var(--shadow-2xl);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  margin: 0 var(--space) var(--space-xl) var(--space);
+  margin: 0 0 var(--space-xl) 0;
 }
 
 .summary-header {
@@ -787,7 +787,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
-  margin: 0 var(--space);
+  margin: 0;
 }
 
 .sidebar-card {
@@ -988,7 +988,7 @@ body {
   }
   
   .input-form {
-    padding: var(--space-lg);
+    padding: var(--space-xl);
   }
   
   .main-content {
