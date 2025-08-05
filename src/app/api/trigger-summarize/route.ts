@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 // 메모리 기반 결과 저장
 const summaryResults = new Map();
+
+// Supabase 클라이언트 생성
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function POST(req: Request) {
   console.time('trigger-summarize');
@@ -11,6 +18,8 @@ export async function POST(req: Request) {
     // 1. 환경 변수 확인
     console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "✅ 존재" : "❌ 없음");
     console.log("OPENAI_API_KEY 길이:", process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0);
+    console.log("SUPABASE_URL:", process.env.SUPABASE_URL ? "✅ 존재" : "❌ 없음");
+    console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ 존재" : "❌ 없음");
     
     const body = await req.json();
     const { url: youtubeUrl } = body;
@@ -89,11 +98,34 @@ export async function POST(req: Request) {
       timestamp: new Date().toISOString()
     });
 
-    console.log('[POST] 결과 저장 완료:', {
+    console.log('[POST] 메모리 저장 완료:', {
       url: youtubeUrl,
       summary: summary,
       total_stored: summaryResults.size
     });
+
+    // 5. Supabase에 결과 저장
+    try {
+      console.log('[POST] Supabase 저장 시작...');
+      const { data, error } = await supabase
+        .from('summaries')
+        .insert([
+          { 
+            url: youtubeUrl, 
+            summary: summary, 
+            status: 'done',
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) {
+        console.error('[POST] Supabase 저장 오류:', error);
+      } else {
+        console.log('[POST] Supabase 저장 성공:', data);
+      }
+    } catch (supabaseError) {
+      console.error('[POST] Supabase 저장 중 예외 발생:', supabaseError);
+    }
 
     console.timeEnd('trigger-summarize');
     console.log('=== /api/trigger-summarize 완료 ===');
