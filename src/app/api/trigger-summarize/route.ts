@@ -107,6 +107,8 @@ export async function GET() {
     message: 'YouTube 요약 API',
     version: '1.0.0',
     status: 'active',
-    stored_results: summaryResults.size
+    stored_results: summaryResults.size,
+    openai_key_exists: !!process.env.OPENAI_API_KEY,
+    openai_key_length: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0
   });
 } 
