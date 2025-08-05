@@ -1,6 +1,54 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// YouTube Video ID 추출 함수
+function extractVideoId(url: string): string | null {
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[7].length === 11) ? match[7] : null;
+}
+
+// YouTube 비디오 데이터 가져오기 함수 (YouTube Data API 사용)
+async function fetchYouTubeVideoData(videoId: string) {
+  try {
+    // YouTube Data API가 없는 경우 oEmbed API를 사용하여 기본 정보 가져오기
+    const oembedResponse = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
+    );
+    
+    if (!oembedResponse.ok) {
+      throw new Error('YouTube oEmbed API 호출 실패');
+    }
+    
+    const oembedData = await oembedResponse.json();
+    
+    // 추가로 YouTube 페이지를 스크래핑하여 더 많은 정보 가져오기
+    const pageResponse = await fetch(`https://www.youtube.com/watch?v=${videoId}`);
+    if (!pageResponse.ok) {
+      throw new Error('YouTube 페이지 접근 실패');
+    }
+    
+    const pageHtml = await pageResponse.text();
+    
+    // 메타데이터 추출
+    const titleMatch = pageHtml.match(/<meta property="og:title" content="([^"]*)">/);
+    const descriptionMatch = pageHtml.match(/<meta property="og:description" content="([^"]*)">/);
+    const channelMatch = pageHtml.match(/"ownerChannelName":"([^"]*)"/) || pageHtml.match(/"author":"([^"]*)"/);
+    
+    return {
+      title: titleMatch ? titleMatch[1] : oembedData.title || '제목을 가져올 수 없습니다',
+      description: descriptionMatch ? descriptionMatch[1] : '설명을 가져올 수 없습니다',
+      channelTitle: channelMatch ? channelMatch[1] : oembedData.author_name || '채널명을 가져올 수 없습니다',
+      duration: '정보 없음',
+      viewCount: '정보 없음'
+    };
+    
+  } catch (error) {
+    console.error('YouTube 데이터 가져오기 실패:', error);
+    throw error;
+  }
+}
+
 // 메모리 기반 결과 저장
 const summaryResults = new Map();
 
@@ -37,15 +85,48 @@ export async function POST(req: Request) {
       }, { status: 400 });
     }
 
-    // 2. 유튜브 영상 정보 추출 (여기선 dummy 사용)
-    const transcript = `이 영상은 AI 서비스에 대한 설명입니다. 
-    사용자들이 AI를 활용하여 다양한 작업을 수행할 수 있도록 도와주는 서비스입니다. 
-    특히 자연어 처리와 이미지 생성 기능이 뛰어나며, 많은 기업과 개인들이 활용하고 있습니다. 
-    이 서비스는 지속적으로 업데이트되어 더욱 강력한 기능을 제공하고 있습니다.`;
+    // 2. 유튜브 영상 정보 추출
+    console.log('[POST] YouTube 영상 정보 추출 시작...');
+    
+    let videoContent = '';
+    
+    try {
+      // YouTube Video ID 추출
+      const videoId = extractVideoId(youtubeUrl);
+      if (!videoId) {
+        throw new Error('유효하지 않은 YouTube URL입니다.');
+      }
+      
+      console.log('[POST] Video ID:', videoId);
+      
+      // YouTube 영상 메타데이터 가져오기
+      const videoData = await fetchYouTubeVideoData(videoId);
+      
+      // 영상 제목과 설명을 조합하여 컨텐츠 생성
+      videoContent = `제목: ${videoData.title}
+
+설명: ${videoData.description}
+
+채널: ${videoData.channelTitle}
+길이: ${videoData.duration}
+조회수: ${videoData.viewCount}`;
+
+      console.log('[POST] YouTube 메타데이터 추출 완료');
+      console.log('[POST] 제목:', videoData.title);
+      console.log('[POST] 채널:', videoData.channelTitle);
+      
+    } catch (error) {
+      console.error('[POST] YouTube 정보 추출 실패:', error);
+      // 실패 시 URL 기반으로 일반적인 메시지 생성
+      videoContent = `YouTube 영상 URL: ${youtubeUrl}
+
+이 영상의 상세 정보를 가져올 수 없어 URL을 기반으로 요약을 시도합니다.
+실제 영상 내용을 분석하려면 영상이 공개되어 있고 접근 가능한지 확인해주세요.`;
+    }
 
     console.log("YouTube URL:", youtubeUrl);
-    console.log("Transcript:", transcript);
-    console.log('[POST] 더미 트랜스크립트 생성 완료');
+    console.log("Video Content:", videoContent.substring(0, 200) + '...');
+    console.log('[POST] 영상 콘텐츠 준비 완료');
 
     // 3. GPT로 요약 요청
     console.time('openai-call');
@@ -87,7 +168,7 @@ export async function POST(req: Request) {
           },
           {
             role: "user",
-            content: transcript,
+            content: videoContent,
           },
         ],
       }),

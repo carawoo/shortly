@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'youtube-url-validation-' + Date.now();
+const CACHE_BUSTER = 'real-youtube-content-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
