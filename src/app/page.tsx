@@ -432,7 +432,7 @@ export default function Home() {
               </svg>
             </div>
                         <h1 className="hero-title">
-              <p>Shortly</p>
+                         <p>Shortly</p>
             </h1>
             <p className="hero-description">
               🤖 AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다.<br />
@@ -716,26 +716,33 @@ export default function Home() {
                       **해외 SNS에서 인기 있는 영상은 주로 짧고 강렬한 메시지를 전달하는 콘텐츠예요.**
                     </h3>
                     <div className="summary-card-content">
-                       {/* 해시태그 칩 표시 */}
+                       {/* 핵심 키워드 섹션 */}
                        {(() => {
                          const hashtags = extractHashtags(summary);
                          return hashtags.length > 0 ? (
-                           <div className="hashtag-chips">
-                             {hashtags.map((hashtag, index) => (
-                               <span key={index} className="hashtag-chip">
-                                 {hashtag}
-                               </span>
-                             ))}
+                           <div className="keyword-section">
+                             <h3 className="keyword-title">🏷️ 핵심 키워드</h3>
+                             <div className="hashtag-chips">
+                               {hashtags.map((hashtag, index) => (
+                                 <span key={index} className="hashtag-chip">
+                                   {hashtag}
+                                 </span>
+                               ))}
+                             </div>
                            </div>
                          ) : null;
                        })()}
                        
-                       <div 
-                         className="summary-text"
-                         dangerouslySetInnerHTML={{
-                           __html: convertMarkdownToHtml(summary)
-                         }}
-                       />
+                       {/* 요약 내용 */}
+                       <div className="content-section">
+                         <h3 className="content-title">📝 상세 내용</h3>
+                         <div 
+                           className="summary-text"
+                           dangerouslySetInnerHTML={{
+                             __html: convertMarkdownToHtml(summary)
+                           }}
+                         />
+                       </div>
                       
                       {/* 추가 정보 */}
                       <div className="summary-footer">

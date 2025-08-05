@@ -682,8 +682,8 @@ body {
 }
 
 .summary-text {
-  color: #333333;
-  line-height: 1.75;
+  color: var(--slate-700);
+  line-height: 1.8;
   font-size: 1rem;
   white-space: pre-wrap;
 }
@@ -732,7 +732,12 @@ body {
 }
 
 .summary-text p {
-  margin: var(--space) 0;
+  margin: var(--space-md) 0;
+  line-height: 1.7;
+}
+
+.summary-text p:last-child {
+  margin-bottom: 0;
 }
 
 .summary-text strong {
@@ -1209,6 +1214,36 @@ body {
   padding: var(--space-lg);
 }
 
+/* 키워드 및 콘텐츠 섹션 스타일 */
+.keyword-section {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.keyword-title,
+.content-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin: 0 0 var(--space-md) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.content-section {
+  margin-top: var(--space-md);
+}
+
+/* 해시태그 칩 스타일 개선 */
+.hashtag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
 /* 핵심 포인트 및 구조화된 요약 스타일 */
 .key-points-section {
   background: linear-gradient(135deg, #fef7f0 0%, #fff7ed 100%);
@@ -1619,6 +1654,17 @@ body {
     width: 18px;
     height: 18px;
     font-size: 0.7rem;
+  }
+  
+  /* 키워드 및 콘텐츠 섹션 모바일 최적화 */
+  .keyword-title,
+  .content-title {
+    font-size: 0.9rem;
+  }
+  
+  .keyword-section {
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-md);
   }
 }
 
