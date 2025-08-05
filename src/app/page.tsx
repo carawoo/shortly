@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'enhanced-markdown-parser-flexible-spacing-' + Date.now();
+const CACHE_BUSTER = 'fix-typescript-null-error-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -66,7 +66,7 @@ export default function Home() {
           result.push('<ul>' + currentList.join('') + '</ul>');
           currentList = [];
         }
-        const hashCount = line.match(/^#+/)[0].length;
+        const hashCount = line.match(/^#+/)?.[0].length || 2;
         const title = line.replace(/^#+\s*/, '').trim();
         const tag = hashCount === 1 ? 'h1' : hashCount === 2 ? 'h2' : 'h3';
         result.push(`<${tag}>${title}</${tag}>`);
