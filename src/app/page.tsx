@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fix-hero-description-text-' + Date.now();
+const CACHE_BUSTER = 'improved-markdown-parser-with-emojis-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -33,6 +33,63 @@ export default function Home() {
     const hashtagRegex = /#[가-힣a-zA-Z0-9_]+/g;
     const hashtags = text.match(hashtagRegex);
     return hashtags ? hashtags.slice(0, 8) : []; // 최대 8개
+  };
+
+  // 마크다운을 HTML로 변환하는 함수
+  const convertMarkdownToHtml = (text: string): string => {
+    // 해시태그 섹션 제거
+    let html = text.replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '');
+    
+    // 해시태그 라인 제거
+    html = html.replace(/#[가-힣a-zA-Z0-9_\s]+/g, '');
+    
+    // 줄바꿈을 기준으로 분할
+    const lines = html.split('\n');
+    const result = [];
+    let currentList = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      if (!line) {
+        // 빈 줄이면 현재 리스트 닫기
+        if (currentList.length > 0) {
+          result.push('<ul>' + currentList.join('') + '</ul>');
+          currentList = [];
+        }
+        continue;
+      }
+      
+      if (line.startsWith('## ')) {
+        // 제목 처리
+        if (currentList.length > 0) {
+          result.push('<ul>' + currentList.join('') + '</ul>');
+          currentList = [];
+        }
+        const title = line.replace('## ', '');
+        result.push(`<h2>${title}</h2>`);
+      } else if (line.startsWith('- ')) {
+        // 리스트 항목 처리
+        const item = line.replace('- ', '');
+        const boldItem = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        currentList.push(`<li>${boldItem}</li>`);
+      } else {
+        // 일반 텍스트 처리
+        if (currentList.length > 0) {
+          result.push('<ul>' + currentList.join('') + '</ul>');
+          currentList = [];
+        }
+        const boldText = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        result.push(`<p>${boldText}</p>`);
+      }
+    }
+    
+    // 마지막에 남은 리스트 처리
+    if (currentList.length > 0) {
+      result.push('<ul>' + currentList.join('') + '</ul>');
+    }
+    
+    return result.join('');
   };
 
   // 로컬 스토리지 키
@@ -223,8 +280,8 @@ export default function Home() {
               YouTube AI 요약
             </h1>
             <p className="hero-description">
-              AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다.<br />
-              복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
+              🤖 AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다.<br />
+              ✨ 복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
             </p>
           </div>
 
@@ -363,30 +420,7 @@ export default function Home() {
                      <div 
                        className="summary-text"
                        dangerouslySetInnerHTML={{
-                         __html: summary
-                           // 해시태그 섹션 제거 (🏷️ 핵심 키워드 섹션 전체 제거)
-                           .replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '')
-                           // 해시태그 라인만 제거하는 방식으로 대체
-                           .replace(/#[가-힣a-zA-Z0-9_\s]+/g, '')
-                           // 먼저 ## 제목을 h2로 변환
-                           .replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>')
-                           // - 리스트를 li로 변환 (줄바꿈 고려)
-                           .replace(/^- (.*)$/gm, '<li>$1</li>')
-                           // ** 볼드 텍스트 변환
-                           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                           // 연속된 li들을 ul로 감싸기
-                           .replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/g, function(match) {
-                             return '<ul>' + match + '</ul>';
-                           })
-                           // 나머지 텍스트를 p 태그로 변환 (빈 줄 기준으로 분할)
-                           .split('\n\n')
-                           .map(paragraph => {
-                             const trimmed = paragraph.trim();
-                             if (!trimmed) return '';
-                             if (trimmed.startsWith('<h2>') || trimmed.startsWith('<ul>')) return trimmed;
-                             return `<p>${trimmed}</p>`;
-                           })
-                           .join('')
+                         __html: convertMarkdownToHtml(summary)
                        }}
                      />
                     
