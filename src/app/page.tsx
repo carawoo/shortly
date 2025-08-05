@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'improved-markdown-parser-with-emojis-' + Date.now();
+const CACHE_BUSTER = 'fix-text-colors-white-on-dark-bg-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
