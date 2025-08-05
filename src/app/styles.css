@@ -1148,6 +1148,48 @@ body {
   }
 }
 
+/* 통일된 요약 카드 스타일 */
+.summary-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 0;
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.summary-card-title {
+  background: var(--slate-50);
+  border-bottom: 1px solid var(--slate-200);
+  padding: var(--space-md) var(--space-lg);
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--slate-700);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.card-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-500);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.summary-card-content {
+  padding: var(--space-lg);
+}
+
 /* 핵심 포인트 및 구조화된 요약 스타일 */
 .key-points-section {
   background: linear-gradient(135deg, #fef7f0 0%, #fff7ed 100%);
@@ -1178,9 +1220,15 @@ body {
   align-items: flex-start;
   gap: var(--space-sm);
   padding: var(--space-sm);
-  background: white;
+  background: var(--slate-50);
   border-radius: var(--radius-md);
-  border: 1px solid #fed7aa;
+  border: 1px solid var(--slate-200);
+}
+
+/* 카드 내부의 키포인트 아이템 스타일 조정 */
+.summary-card .key-point-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
 }
 
 .key-point-number {
@@ -1189,7 +1237,7 @@ body {
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: #f59e0b;
+  background: var(--primary-500);
   color: white;
   border-radius: 50%;
   font-size: 0.8rem;
@@ -1226,12 +1274,18 @@ body {
 }
 
 .section-item {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
+  background: var(--slate-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
   border: 1px solid var(--slate-200);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   transition: all 0.2s ease;
+}
+
+/* 카드 내부의 섹션 아이템 스타일 조정 */
+.summary-card .section-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  box-shadow: none;
 }
 
 .section-item:hover {
@@ -1550,6 +1604,22 @@ body {
   
   .expand-toggle-container {
     margin-top: var(--space-sm);
+  }
+  
+  /* 카드 스타일 모바일 최적화 */
+  .summary-card-title {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+  }
+  
+  .summary-card-content {
+    padding: var(--space-md);
+  }
+  
+  .card-number {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
   }
 }
 

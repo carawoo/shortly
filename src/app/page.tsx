@@ -570,57 +570,63 @@ export default function Home() {
                     </div>
                   )}
                   
-                  {/* 비디오 정보 카드 */}
+                  {/* 영상 정보 */}
                   {videoInfo && (
-                    <div className="video-info-card">
-                      <div className="video-info-main">
-                        <h3 className="video-title">{videoInfo.title}</h3>
-                        <div className="video-channel">
-                          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                          </svg>
-                          {videoInfo.channelName}
+                    <div className="summary-card">
+                      <h3 className="summary-card-title">
+                        <span className="card-number">1</span>
+                        **영상 정보**
+                      </h3>
+                      <div className="summary-card-content">
+                        <div className="video-info-main">
+                          <h4 className="video-title">{videoInfo.title}</h4>
+                          <div className="video-channel">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            {videoInfo.channelName}
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div className="video-stats">
-                        {videoInfo.viewCount && (
-                          <div className="video-stat">
-                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-                            </svg>
-                            조회수 {formatViewCount(videoInfo.viewCount)}회
-                          </div>
-                        )}
                         
-                        {videoInfo.duration && (
-                          <div className="video-stat">
-                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-                              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                            </svg>
-                            {formatDuration(videoInfo.duration)}
-                          </div>
-                        )}
-                        
-                        {videoInfo.uploadDate && (
-                          <div className="video-stat">
-                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
-                            </svg>
-                            {formatUploadDate(videoInfo.uploadDate)}
-                          </div>
-                        )}
-                      </div>
-                      
-                      {videoInfo.description && (
-                        <div className="video-description">
-                          <p>{videoInfo.description.length > 150 ? 
-                            `${videoInfo.description.substring(0, 150)}...` : 
-                            videoInfo.description}
-                          </p>
+                        <div className="video-stats">
+                          {videoInfo.viewCount && (
+                            <div className="video-stat">
+                              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                              </svg>
+                              조회수 {formatViewCount(videoInfo.viewCount)}회
+                            </div>
+                          )}
+                          
+                          {videoInfo.duration && (
+                            <div className="video-stat">
+                              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                                <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                              </svg>
+                              {formatDuration(videoInfo.duration)}
+                            </div>
+                          )}
+                          
+                          {videoInfo.uploadDate && (
+                            <div className="video-stat">
+                              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                              </svg>
+                              {formatUploadDate(videoInfo.uploadDate)}
+                            </div>
+                          )}
                         </div>
-                      )}
+                        
+                        {videoInfo.description && (
+                          <div className="video-description">
+                            <p>{videoInfo.description.length > 150 ? 
+                              `${videoInfo.description.substring(0, 150)}...` : 
+                              videoInfo.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                   
@@ -637,20 +643,20 @@ export default function Home() {
                   {(() => {
                     const keyPoints = extractKeyPoints(summary);
                     return keyPoints.length > 0 ? (
-                      <div className="key-points-section">
-                        <h3 className="key-points-title">
-                          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                          </svg>
-                          🎯 핵심 포인트
+                      <div className="summary-card">
+                        <h3 className="summary-card-title">
+                          <span className="card-number">2</span>
+                          **핵심 포인트의 특징**: 조회수를 폭발적으로 올리는 영상의 공통적인 특징을 분석해요.
                         </h3>
-                        <div className="key-points-list">
-                          {keyPoints.map((point, index) => (
-                            <div key={index} className="key-point-item">
-                              <span className="key-point-number">{index + 1}</span>
-                              <span className="key-point-text">{point}</span>
-                            </div>
-                          ))}
+                        <div className="summary-card-content">
+                          <div className="key-points-list">
+                            {keyPoints.map((point, index) => (
+                              <div key={index} className="key-point-item">
+                                <span className="key-point-number">{index + 1}</span>
+                                <span className="key-point-text">{point}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     ) : null;
@@ -660,93 +666,99 @@ export default function Home() {
                   {(() => {
                     const sections = parseSummaryIntoSections(summary);
                     return sections.length > 0 ? (
-                      <div className="sections-container">
-                        <h3 className="sections-title">
-                          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                          </svg>
-                          📚 섹션별 내용
+                      <div className="summary-card">
+                        <h3 className="summary-card-title">
+                          <span className="card-number">3</span>
+                          **콘텐츠 제작 팁**: 이러한 트렌드를 활용해 자신의 콘텐츠를 효과적으로 제작하는 방법을 알려드려요.
                         </h3>
-                        <div className="sections-list">
-                          {sections.map((section, index) => (
-                            <div key={index} className={`section-item ${section.isKeySection ? 'key-section' : ''}`}>
-                              <div className="section-header">
-                                <h4 className="section-title">{section.title}</h4>
-                                {section.timestamps.length > 0 && (
-                                  <span className="timestamps-count">
-                                    {section.timestamps.length}개 구간
-                                  </span>
-                                )}
-                              </div>
-                              
-                              {section.timestamps.length > 0 && (
-                                <div className="timestamps-list">
-                                  {section.timestamps.map((ts, tsIndex) => (
-                                    <div key={tsIndex} className="timestamp-item">
-                                      <button
-                                        className="timestamp-link"
-                                        onClick={() => window.open(getYouTubeTimestampUrl(currentVideoId, ts.seconds), '_blank')}
-                                        title="YouTube에서 해당 구간 보기"
-                                      >
-                                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                                          <path d="M8 5v14l11-7z"/>
-                                        </svg>
-                                        {ts.timestamp}
-                                      </button>
-                                      <span className="timestamp-content">{ts.content}</span>
-                                    </div>
-                                  ))}
+                        <div className="summary-card-content">
+                          <div className="sections-list">
+                            {sections.map((section, index) => (
+                              <div key={index} className={`section-item ${section.isKeySection ? 'key-section' : ''}`}>
+                                <div className="section-header">
+                                  <h4 className="section-title">{section.title}</h4>
+                                  {section.timestamps.length > 0 && (
+                                    <span className="timestamps-count">
+                                      {section.timestamps.length}개 구간
+                                    </span>
+                                  )}
                                 </div>
-                              )}
-                              
-                              <div className="section-content">
-                                <p>{section.content.replace(/\d{1,2}:\d{2}(?::\d{2})?\s*[-–—]?\s*.+/g, '').trim()}</p>
+                                
+                                {section.timestamps.length > 0 && (
+                                  <div className="timestamps-list">
+                                    {section.timestamps.map((ts, tsIndex) => (
+                                      <div key={tsIndex} className="timestamp-item">
+                                        <button
+                                          className="timestamp-link"
+                                          onClick={() => window.open(getYouTubeTimestampUrl(currentVideoId, ts.seconds), '_blank')}
+                                          title="YouTube에서 해당 구간 보기"
+                                        >
+                                          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                          </svg>
+                                          {ts.timestamp}
+                                        </button>
+                                        <span className="timestamp-content">{ts.content}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                                
+                                <div className="section-content">
+                                  <p>{section.content.replace(/\d{1,2}:\d{2}(?::\d{2})?\s*[-–—]?\s*.+/g, '').trim()}</p>
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
                         </div>
                       </div>
                     ) : null;
                   })()}
 
-                  <div className="summary-content">
-                     {/* 해시태그 칩 표시 */}
-                     {(() => {
-                       const hashtags = extractHashtags(summary);
-                       return hashtags.length > 0 ? (
-                         <div className="hashtag-chips">
-                           {hashtags.map((hashtag, index) => (
-                             <span key={index} className="hashtag-chip">
-                               {hashtag}
-                             </span>
-                           ))}
-                         </div>
-                       ) : null;
-                     })()}
-                     
-                     <div 
-                       className="summary-text"
-                       dangerouslySetInnerHTML={{
-                         __html: convertMarkdownToHtml(summary)
-                       }}
-                     />
-                    
-                    {/* 추가 정보 */}
-                    <div className="summary-footer">
-                      <div>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {new Date().toLocaleString('ko-KR')}
-                      </div>
-                      <div>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                        AI 생성
+                  {/* 전체 요약 내용 */}
+                  <div className="summary-card">
+                    <h3 className="summary-card-title">
+                      <span className="card-number">4</span>
+                      **해외 SNS에서 인기 있는 영상은 주로 짧고 강렬한 메시지를 전달하는 콘텐츠예요.**
+                    </h3>
+                    <div className="summary-card-content">
+                       {/* 해시태그 칩 표시 */}
+                       {(() => {
+                         const hashtags = extractHashtags(summary);
+                         return hashtags.length > 0 ? (
+                           <div className="hashtag-chips">
+                             {hashtags.map((hashtag, index) => (
+                               <span key={index} className="hashtag-chip">
+                                 {hashtag}
+                               </span>
+                             ))}
+                           </div>
+                         ) : null;
+                       })()}
+                       
+                       <div 
+                         className="summary-text"
+                         dangerouslySetInnerHTML={{
+                           __html: convertMarkdownToHtml(summary)
+                         }}
+                       />
+                      
+                      {/* 추가 정보 */}
+                      <div className="summary-footer">
+                        <div>
+                          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {new Date().toLocaleString('ko-KR')}
+                        </div>
+                        <div>
+                          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                          </svg>
+                          AI 생성
+                        </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               )}
