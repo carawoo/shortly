@@ -19,7 +19,9 @@ export async function POST(req: Request) {
     console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "✅ 존재" : "❌ 없음");
     console.log("OPENAI_API_KEY 길이:", process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0);
     console.log("SUPABASE_URL:", process.env.SUPABASE_URL ? "✅ 존재" : "❌ 없음");
+    console.log("SUPABASE_URL 값:", process.env.SUPABASE_URL);
     console.log("SUPABASE_SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✅ 존재" : "❌ 없음");
+    console.log("SUPABASE_SERVICE_ROLE_KEY 길이:", process.env.SUPABASE_SERVICE_ROLE_KEY ? process.env.SUPABASE_SERVICE_ROLE_KEY.length : 0);
     
     const body = await req.json();
     const { url: youtubeUrl } = body;
@@ -36,11 +38,13 @@ export async function POST(req: Request) {
     }
 
     // 2. 유튜브 영상 정보 추출 (여기선 dummy 사용)
-    const dummyTranscript = `이 영상은 AI 서비스에 대한 설명입니다. 
+    const transcript = `이 영상은 AI 서비스에 대한 설명입니다. 
     사용자들이 AI를 활용하여 다양한 작업을 수행할 수 있도록 도와주는 서비스입니다. 
     특히 자연어 처리와 이미지 생성 기능이 뛰어나며, 많은 기업과 개인들이 활용하고 있습니다. 
     이 서비스는 지속적으로 업데이트되어 더욱 강력한 기능을 제공하고 있습니다.`;
 
+    console.log("YouTube URL:", youtubeUrl);
+    console.log("Transcript:", transcript);
     console.log('[POST] 더미 트랜스크립트 생성 완료');
 
     // 3. GPT로 요약 요청
@@ -62,7 +66,7 @@ export async function POST(req: Request) {
           },
           {
             role: "user",
-            content: dummyTranscript,
+            content: transcript,
           },
         ],
       }),
@@ -87,6 +91,7 @@ export async function POST(req: Request) {
     console.log('[POST] OpenAI API 응답 데이터:', data);
     
     const summary = data.choices?.[0]?.message?.content || "요약 실패";
+    console.log("Summary:", summary);
     console.log('[POST] 추출된 요약 결과:', summary);
 
     // 4. 메모리에 결과 저장
@@ -107,24 +112,44 @@ export async function POST(req: Request) {
     // 5. Supabase에 결과 저장
     try {
       console.log('[POST] Supabase 저장 시작...');
+      console.log('[POST] Supabase INSERT 실행 전 - URL:', youtubeUrl);
+      console.log('[POST] Supabase INSERT 실행 전 - Summary:', summary);
+      console.log('[POST] Supabase URL 확인:', process.env.SUPABASE_URL);
+      console.log('[POST] Supabase Key 존재 여부:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+      
+      const insertData = { 
+        url: youtubeUrl, 
+        summary: summary, 
+        status: 'done'
+        // created_at은 자동으로 설정되도록 제거
+      };
+      
+      console.log('[POST] INSERT할 데이터:', insertData);
+      
       const { data, error } = await supabase
         .from('summaries')
-        .insert([
-          { 
-            url: youtubeUrl, 
-            summary: summary, 
-            status: 'done',
-            created_at: new Date().toISOString()
-          }
-        ]);
+        .insert([insertData])
+        .select(); // 삽입된 데이터를 반환받기 위해 select() 추가
 
+      console.log('[POST] Supabase INSERT 실행 완료');
+      console.log('[POST] Supabase 응답 data:', data);
+      console.log('[POST] Supabase 응답 error:', error);
+      
       if (error) {
+        console.error("Supabase insert error:", error);
         console.error('[POST] Supabase 저장 오류:', error);
+        console.error('[POST] Supabase 오류 코드:', error.code);
+        console.error('[POST] Supabase 오류 메시지:', error.message);
+        console.error('[POST] Supabase 오류 상세:', error.details);
       } else {
         console.log('[POST] Supabase 저장 성공:', data);
+        console.log('[POST] Supabase INSERT 성공 - 저장된 데이터:', data);
       }
     } catch (supabaseError) {
       console.error('[POST] Supabase 저장 중 예외 발생:', supabaseError);
+      console.error("Supabase insert exception:", supabaseError);
+      console.error('[POST] 예외 타입:', typeof supabaseError);
+      console.error('[POST] 예외 메시지:', supabaseError instanceof Error ? supabaseError.message : 'Unknown error');
     }
 
     console.timeEnd('trigger-summarize');
@@ -149,6 +174,27 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
+  // Supabase 연결 테스트
+  let supabaseTest = null;
+  try {
+    const { data, error } = await supabase
+      .from('summaries')
+      .select('count')
+      .limit(1);
+    
+    supabaseTest = {
+      success: !error,
+      error: error ? error.message : null,
+      data: data
+    };
+  } catch (e) {
+    supabaseTest = {
+      success: false,
+      error: e instanceof Error ? e.message : 'Unknown error',
+      data: null
+    };
+  }
+
   return NextResponse.json({
     message: 'YouTube 요약 API',
     version: '1.0.0',
@@ -157,6 +203,7 @@ export async function GET() {
     openai_key_exists: !!process.env.OPENAI_API_KEY,
     openai_key_length: process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0,
     supabase_url_exists: !!process.env.SUPABASE_URL,
-    supabase_key_exists: !!process.env.SUPABASE_SERVICE_ROLE_KEY
+    supabase_key_exists: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+    supabase_test: supabaseTest
   });
 } 
