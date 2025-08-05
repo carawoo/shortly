@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'v3-pure-css-' + Date.now();
+const CACHE_BUSTER = 'v4-enhanced-ux-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -112,7 +112,7 @@ export default function Home() {
             <div>
               <h1 className="app-title">Shortly</h1>
               <p className="app-subtitle">AI YouTube 요약</p>
-              <p className="app-version">Material 3 v3 (Pure CSS)</p>
+                             <p className="app-version">Material 3 v4 (Enhanced UX)</p>
             </div>
           </div>
           <div className="online-status">
@@ -134,10 +134,10 @@ export default function Home() {
             <h1 className="hero-title">
               YouTube AI 요약
             </h1>
-            <div className="status-badge">
-              <span className="status-badge-dot"></span>
-              Material 3 디자인 적용됨 (Pure CSS)
-            </div>
+                         <div className="status-badge">
+               <span className="status-badge-dot"></span>
+               Enhanced UX Material 3 디자인 ✨
+             </div>
             <p className="hero-description">
               AI를 사용하여 YouTube 영상을 빠르고 정확하게 요약합니다. 
               복잡한 내용을 간단하고 이해하기 쉽게 만들어드립니다.
@@ -323,9 +323,9 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
           </button>
-          <div className="floating-button-badge">
-            <span className="floating-button-badge-text">v3</span>
-          </div>
+                     <div className="floating-button-badge">
+             <span className="floating-button-badge-text">v4</span>
+           </div>
         </div>
       </div>
     </div>
