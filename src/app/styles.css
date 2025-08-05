@@ -456,6 +456,36 @@ body {
   color: var(--gray-500);
 }
 
+.url-input-error {
+  border-color: var(--error) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.url-input-error:focus {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+.url-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--error);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space);
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--error);
+  animation: slideInDown 0.3s ease-out;
+}
+
+.url-warning svg {
+  flex-shrink: 0;
+}
+
 .url-input:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -543,17 +573,19 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Error message */
+/* Error message - Enhanced visibility */
 .error-message {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.15);
+  border: 2px solid rgba(239, 68, 68, 0.4);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  margin-bottom: var(--space-xl);
+  margin: 0 var(--space) var(--space-lg) var(--space);
   backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   gap: var(--space);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+  animation: errorShake 0.5s ease-in-out;
 }
 
 .error-icon {
@@ -565,7 +597,9 @@ body {
 
 .error-text {
   color: var(--error);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 /* Summary result */
@@ -779,6 +813,23 @@ body {
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes slideInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
 

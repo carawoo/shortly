@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'light-mode-only-clean-' + Date.now();
+const CACHE_BUSTER = 'youtube-url-validation-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -11,10 +11,23 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [recentSummaries, setRecentSummaries] = useState<Array<{url: string, summary: string, timestamp: string}>>([]);
+  const [urlValid, setUrlValid] = useState(true);
+
+  // 유튜브 URL 검증 함수
+  const isValidYouTubeUrl = (url: string): boolean => {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/i;
+    return youtubeRegex.test(url.trim());
+  };
 
   const handleSummarize = async () => {
     if (!url.trim()) {
       setError('YouTube URL을 입력해주세요.');
+      return;
+    }
+
+    // 유튜브 URL 검증
+    if (!isValidYouTubeUrl(url)) {
+      setError('올바른 YouTube 영상 URL을 입력해주세요. (예: https://www.youtube.com/watch?v=...)');
       return;
     }
 
@@ -158,17 +171,37 @@ export default function Home() {
                       id="url"
                       type="text"
                       value={url}
-                      onChange={(e) => setUrl(e.target.value)}
+                      onChange={(e) => {
+                        const newUrl = e.target.value;
+                        setUrl(newUrl);
+                        // 실시간 URL 검증
+                        if (newUrl.trim() && !isValidYouTubeUrl(newUrl)) {
+                          setUrlValid(false);
+                        } else {
+                          setUrlValid(true);
+                          setError(''); // 올바른 URL이면 에러 메시지 제거
+                        }
+                      }}
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className="url-input"
+                      className={`url-input ${!urlValid ? 'url-input-error' : ''}`}
                       disabled={loading}
                     />
                   </div>
                 </div>
+
+                {/* URL 검증 인라인 경고 */}
+                {url.trim() && !urlValid && (
+                  <div className="url-warning">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    유효한 YouTube URL을 입력해주세요
+                  </div>
+                )}
                 
                 <button 
                   onClick={handleSummarize} 
-                  disabled={loading || !url.trim()}
+                  disabled={loading || !url.trim() || !urlValid}
                   className="submit-button"
                 >
                   {loading ? (
