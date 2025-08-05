@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'blue-tone-on-tone-' + Date.now();
+const CACHE_BUSTER = 'enhanced-summary-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -210,10 +210,24 @@ export default function Home() {
                       AI 요약 결과
                     </h2>
                   </div>
-                  <div className="summary-content">
-                    <div className="summary-text">
-                      {summary}
-                    </div>
+                                     <div className="summary-content">
+                     <div 
+                       className="summary-text"
+                       dangerouslySetInnerHTML={{
+                         __html: summary
+                           .replace(/## (.*)/g, '<h2>$1</h2>')
+                           .replace(/- (.*)/g, '<li>$1</li>')
+                           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                           .replace(/\n\n/g, '</p><p>')
+                           .replace(/^(.)/g, '<p>$1')
+                           .replace(/(.)$/g, '$1</p>')
+                           .replace(/<p><h2>/g, '<h2>')
+                           .replace(/<\/h2><\/p>/g, '</h2>')
+                           .replace(/<p><li>/g, '<ul><li>')
+                           .replace(/<\/li><\/p>/g, '</li></ul>')
+                           .replace(/<\/ul><ul>/g, '')
+                       }}
+                     />
                     
                     {/* 추가 정보 */}
                     <div className="summary-footer">
