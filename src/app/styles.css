@@ -1720,6 +1720,25 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* 상단 키워드 섹션 */
+.top-keywords-section {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+}
+
+.keywords-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin: 0 0 var(--space-sm) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
 /* 모바일 저장 버튼 최적화 */
 @media (max-width: 768px) {
   .summary-header {

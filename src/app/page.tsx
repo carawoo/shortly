@@ -748,6 +748,24 @@ export default function Home() {
 
                   {/* 저장할 요약 콘텐츠 영역 */}
                   <div id="summary-content" className="summary-content-wrapper">
+                    
+                    {/* 핵심 키워드 (한 번만 최상단에 표시) */}
+                    {(() => {
+                      const hashtags = summary.match(/#[가-힣a-zA-Z0-9_]+/g) || [];
+                      const uniqueHashtags = [...new Set(hashtags)];
+                      return uniqueHashtags.length > 0 ? (
+                        <div className="top-keywords-section">
+                          <h3 className="keywords-title">🏷️ 핵심 키워드</h3>
+                          <div className="hashtag-chips">
+                            {uniqueHashtags.map((hashtag, index) => (
+                              <span key={index} className="hashtag-chip">
+                                {hashtag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null;
+                    })()}
                     {/* 영상 정보 카드 */}
                     {videoInfo && (
                       <div className="summary-card">
@@ -793,7 +811,7 @@ export default function Home() {
                       <div className="summary-card">
                         <h3 className="summary-card-title">
                           <span className="card-number">2</span>
-                          **핵심 포인트의 특징**: 조회수를 폭발적으로 올리는 영상의 공통적인 특징을 분석해요.
+                          **핵심 포인트**
                         </h3>
                         <div className="summary-card-content">
                           <div className="key-points-list">
@@ -816,7 +834,7 @@ export default function Home() {
                       <div className="summary-card">
                         <h3 className="summary-card-title">
                           <span className="card-number">3</span>
-                          **콘텐츠 제작 팁**: 이러한 트렌드를 활용해 자신의 콘텐츠를 효과적으로 제작하는 방법을 알려드려요.
+                          **섹션별 내용**
                         </h3>
                         <div className="summary-card-content">
                           <div className="sections-list">
@@ -866,27 +884,10 @@ export default function Home() {
                   <div className="summary-card">
                     <h3 className="summary-card-title">
                       <span className="card-number">4</span>
-                      **해외 SNS에서 인기 있는 영상은 주로 짧고 강렬한 메시지를 전달하는 콘텐츠예요.**
+                      **상세 요약**
                     </h3>
                     <div className="summary-card-content">
-                       {/* 핵심 키워드 섹션 */}
-                       {(() => {
-                         const hashtags = extractHashtags(summary);
-                         return hashtags.length > 0 ? (
-                           <div className="keyword-section">
-                             <h3 className="keyword-title">🏷️ 핵심 키워드</h3>
-                             <div className="hashtag-chips">
-                               {hashtags.map((hashtag, index) => (
-                                 <span key={index} className="hashtag-chip">
-                                   {hashtag}
-                                 </span>
-                               ))}
-                             </div>
-                           </div>
-                         ) : null;
-                       })()}
-                       
-                       {/* 요약 내용 */}
+                       {/* 요약 내용 (키워드 중복 제거됨) */}
                        <div className="content-section">
                          <h3 className="content-title">📝 상세 내용</h3>
                          <div 
