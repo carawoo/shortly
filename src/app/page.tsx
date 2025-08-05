@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'real-youtube-content-' + Date.now();
+const CACHE_BUSTER = 'advanced-features-thumbnails-timestamps-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -12,11 +12,19 @@ export default function Home() {
   const [error, setError] = useState('');
   const [recentSummaries, setRecentSummaries] = useState<Array<{url: string, summary: string, timestamp: string}>>([]);
   const [urlValid, setUrlValid] = useState(true);
+  const [currentVideoId, setCurrentVideoId] = useState('');
 
   // 유튜브 URL 검증 함수
   const isValidYouTubeUrl = (url: string): boolean => {
     const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/i;
     return youtubeRegex.test(url.trim());
+  };
+
+  // YouTube Video ID 추출 함수
+  const extractVideoId = (url: string): string | null => {
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[7].length === 11) ? match[7] : null;
   };
 
   const handleSummarize = async () => {
@@ -29,6 +37,12 @@ export default function Home() {
     if (!isValidYouTubeUrl(url)) {
       setError('올바른 YouTube 영상 URL을 입력해주세요. (예: https://www.youtube.com/watch?v=...)');
       return;
+    }
+
+    // Video ID 추출 및 저장
+    const videoId = extractVideoId(url);
+    if (videoId) {
+      setCurrentVideoId(videoId);
     }
 
     setLoading(true);
@@ -235,6 +249,32 @@ export default function Home() {
               {/* 요약 결과 */}
               {summary && (
                 <div className="summary-result">
+                  {/* 썸네일 표시 */}
+                  {currentVideoId && (
+                    <div 
+                      className="video-thumbnail"
+                      onClick={() => window.open(`https://www.youtube.com/watch?v=${currentVideoId}`, '_blank')}
+                      title="YouTube에서 영상 보기"
+                    >
+                      <img 
+                        src={`https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg`}
+                        alt="YouTube 썸네일"
+                        className="thumbnail-image"
+                        onError={(e) => {
+                          // 고품질 썸네일이 없으면 기본 썸네일로 대체
+                          e.currentTarget.src = `https://img.youtube.com/vi/${currentVideoId}/mqdefault.jpg`;
+                        }}
+                      />
+                      <div className="thumbnail-overlay">
+                        <div className="play-button">
+                          <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="summary-header">
                     <h2 className="summary-title">
                       <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -8,7 +8,70 @@ function extractVideoId(url: string): string | null {
   return (match && match[7].length === 11) ? match[7] : null;
 }
 
-// YouTube 비디오 데이터 가져오기 함수 (YouTube Data API 사용)
+// YouTube 자막 가져오기 함수
+async function fetchYouTubeCaptions(videoId: string): Promise<string[]> {
+  try {
+    // YouTube 자막 트랙 정보 가져오기
+    const captionResponse = await fetch(`https://www.youtube.com/watch?v=${videoId}`);
+    const pageHtml = await captionResponse.text();
+    
+    // 자막 트랙 URL 추출 (한국어 우선, 영어 대체)
+    const captionTracksMatch = pageHtml.match(/"captionTracks":\[(.*?)\]/);
+    if (!captionTracksMatch) {
+      return ['자막 정보를 찾을 수 없습니다'];
+    }
+    
+    const captionTracksData = captionTracksMatch[1];
+    
+    // 한국어 자막 URL 찾기
+    let captionUrlMatch = captionTracksData.match(/"languageCode":"ko".*?"baseUrl":"([^"]*)"/) || 
+                         captionTracksData.match(/"languageCode":"en".*?"baseUrl":"([^"]*)"/) ||
+                         captionTracksData.match(/"baseUrl":"([^"]*)"/);
+    
+    if (!captionUrlMatch) {
+      return ['자막을 가져올 수 없습니다'];
+    }
+    
+    const captionUrl = captionUrlMatch[1].replace(/\\u0026/g, '&');
+    
+    // 자막 XML 데이터 가져오기
+    const captionXmlResponse = await fetch(captionUrl);
+    if (!captionXmlResponse.ok) {
+      return ['자막 데이터를 가져올 수 없습니다'];
+    }
+    
+    const captionXml = await captionXmlResponse.text();
+    
+    // XML에서 자막 텍스트와 타임스탬프 추출
+    const textMatches = captionXml.match(/<text start="([^"]*)"[^>]*>([^<]*)</g);
+    if (!textMatches) {
+      return ['자막을 파싱할 수 없습니다'];
+    }
+    
+    const captions = textMatches.map(match => {
+      const startMatch = match.match(/start="([^"]*)"/);
+      const textMatch = match.match(/>([^<]*)</);
+      
+      if (startMatch && textMatch) {
+        const startTime = parseFloat(startMatch[1]);
+        const minutes = Math.floor(startTime / 60);
+        const seconds = Math.floor(startTime % 60);
+        const text = textMatch[1].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        
+        return `[${minutes}:${seconds.toString().padStart(2, '0')}] ${text}`;
+      }
+      return '';
+    }).filter(caption => caption.length > 0);
+    
+    return captions.slice(0, 20); // 최대 20개 자막만 반환
+    
+  } catch (error) {
+    console.error('자막 가져오기 실패:', error);
+    return ['자막을 가져올 수 없습니다'];
+  }
+}
+
+// YouTube 비디오 데이터 가져오기 함수 (썸네일 + 메타데이터)
 async function fetchYouTubeVideoData(videoId: string) {
   try {
     // YouTube Data API가 없는 경우 oEmbed API를 사용하여 기본 정보 가져오기
@@ -34,13 +97,29 @@ async function fetchYouTubeVideoData(videoId: string) {
     const titleMatch = pageHtml.match(/<meta property="og:title" content="([^"]*)">/);
     const descriptionMatch = pageHtml.match(/<meta property="og:description" content="([^"]*)">/);
     const channelMatch = pageHtml.match(/"ownerChannelName":"([^"]*)"/) || pageHtml.match(/"author":"([^"]*)"/);
+    const durationMatch = pageHtml.match(/"lengthSeconds":"([^"]*)"/);
+    const viewCountMatch = pageHtml.match(/"viewCount":"([^"]*)"/);
+    
+    // 썸네일 URL 생성 (YouTube 표준 패턴)
+    const thumbnails = {
+      default: `https://img.youtube.com/vi/${videoId}/default.jpg`,
+      medium: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
+      high: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+      standard: `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
+      maxres: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+    };
+    
+    // 자막 정보 가져오기
+    const captions = await fetchYouTubeCaptions(videoId);
     
     return {
       title: titleMatch ? titleMatch[1] : oembedData.title || '제목을 가져올 수 없습니다',
       description: descriptionMatch ? descriptionMatch[1] : '설명을 가져올 수 없습니다',
       channelTitle: channelMatch ? channelMatch[1] : oembedData.author_name || '채널명을 가져올 수 없습니다',
-      duration: '정보 없음',
-      viewCount: '정보 없음'
+      duration: durationMatch ? `${Math.floor(parseInt(durationMatch[1]) / 60)}분 ${parseInt(durationMatch[1]) % 60}초` : '정보 없음',
+      viewCount: viewCountMatch ? parseInt(viewCountMatch[1]).toLocaleString() : '정보 없음',
+      thumbnails,
+      captions
     };
     
   } catch (error) {
@@ -102,14 +181,19 @@ export async function POST(req: Request) {
       // YouTube 영상 메타데이터 가져오기
       const videoData = await fetchYouTubeVideoData(videoId);
       
-      // 영상 제목과 설명을 조합하여 컨텐츠 생성
+      // 영상 제목, 설명, 썸네일, 자막을 조합하여 컨텐츠 생성
       videoContent = `제목: ${videoData.title}
 
 설명: ${videoData.description}
 
 채널: ${videoData.channelTitle}
 길이: ${videoData.duration}
-조회수: ${videoData.viewCount}`;
+조회수: ${videoData.viewCount}
+
+썸네일: ${videoData.thumbnails.high}
+
+타임스탬프별 내용 (자막 기반):
+${videoData.captions.join('\n')}`;
 
       console.log('[POST] YouTube 메타데이터 추출 완료');
       console.log('[POST] 제목:', videoData.title);
@@ -145,26 +229,33 @@ export async function POST(req: Request) {
         messages: [
           {
             role: "system",
-            content: `당신은 YouTube 영상 요약 전문가입니다. 아래 영상 내용을 다음 구조로 상세하게 요약해주세요:
+            content: `당신은 YouTube 영상 요약 전문가입니다. 제공된 영상 정보(제목, 설명, 자막 타임스탬프)를 활용하여 다음 구조로 상세하게 요약해주세요:
+
+## 🖼️ 영상 정보
+- 제목, 채널, 길이, 조회수 등 기본 정보 요약
 
 ## 📝 전체 내용 요약
 영상의 주요 내용과 메시지를 3-4문장으로 요약
 
-## 🎯 주제별 내용 정리
-영상에서 다룬 주요 주제들을 시간순/논리순으로 나열
-- 주제 1: 간단한 설명
-- 주제 2: 간단한 설명
-- 주제 3: 간단한 설명
-(필요에 따라 더 추가)
+## ⏰ 타임스탬프별 주요 내용
+자막 정보가 제공된 경우, 시간대별로 중요한 내용 정리
+- [시간] 주요 내용
+- [시간] 주요 내용
+- [시간] 주요 내용
+(자막이 없는 경우 제목과 설명 기반으로 주제별 정리)
 
-## ⭐ 중요 내용 하이라이트
-- 핵심 포인트나 인사이트 3-5개
+## 🎯 핵심 포인트
+- 영상에서 다룬 주요 주제와 메시지
 - 구체적인 수치, 예시, 방법론 등이 있다면 포함
 
-## 💡 결론 및 시사점
-영상의 핵심 메시지와 시청자가 얻을 수 있는 인사이트
+## ⭐ 중요 내용 하이라이트  
+- 핵심 인사이트나 액션 아이템 3-5개
+- 시청자가 기억해야 할 중요한 점들
 
-한국어로 작성하되, 원본 내용의 뉘앙스와 맥락을 최대한 살려서 요약해주세요.`,
+## 💡 결론 및 시사점
+영상의 핵심 메시지와 시청자가 얻을 수 있는 가치
+
+한국어로 작성하되, 타임스탬프 정보를 최대한 활용하여 시간 흐름에 따른 내용 변화를 반영해주세요.`,
           },
           {
             role: "user",
