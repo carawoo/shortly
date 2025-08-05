@@ -1355,3 +1355,41 @@ body {
   }
 }
 
+/* 번역 정보 스타일 */
+.translation-info {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-left: 4px solid #22c55e;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-top: var(--space-lg);
+  font-size: 0.9rem;
+  color: #166534;
+}
+
+.translation-info strong {
+  color: #15803d;
+  font-weight: 600;
+}
+
+/* 다국어 지원 표시 */
+.language-support-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color: #1e40af;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: var(--space-sm);
+}
+
+/* 요약 결과에서 번역 정보 구분선 스타일 */
+.summary-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #e5e7eb 20%, #e5e7eb 80%, transparent 100%);
+  margin: var(--space-lg) 0;
+}
+
