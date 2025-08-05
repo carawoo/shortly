@@ -12,12 +12,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
@@ -58,16 +53,7 @@ body {
   background: rgba(148, 163, 184, 0.5);
 }
 
-/* 다크 모드 스크롤바 */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-thumb {
-    background: rgba(71, 85, 105, 0.3);
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(71, 85, 105, 0.5);
-  }
-}
+
 
 /* Line clamp utilities */
 .line-clamp-1 {

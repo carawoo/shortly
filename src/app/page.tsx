@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'fixed-card-width-readability-' + Date.now();
+const CACHE_BUSTER = 'light-mode-only-clean-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
