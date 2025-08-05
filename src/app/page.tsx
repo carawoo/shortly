@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'perfect-readability-' + Date.now();
+const CACHE_BUSTER = 'clean-purple-ui-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -301,24 +301,7 @@ export default function Home() {
                 </div>
               )}
 
-              {/* 기능 안내 */}
-              <div className="sidebar-card" style={{ background: 'linear-gradient(135deg, var(--blue-100), var(--primary-indigo))', borderColor: 'rgba(59, 130, 246, 0.3)' }}>
-                <h3 className="sidebar-title">기능</h3>
-                <div className="features-list">
-                  <div className="feature-item">
-                    <div className="feature-dot blue"></div>
-                    <span className="feature-text">AI 기반 요약</span>
-                  </div>
-                  <div className="feature-item">
-                    <div className="feature-dot green"></div>
-                    <span className="feature-text">실시간 처리</span>
-                  </div>
-                  <div className="feature-item">
-                    <div className="feature-dot purple"></div>
-                    <span className="feature-text">다크 모드 지원</span>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>

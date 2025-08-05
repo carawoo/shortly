@@ -34,7 +34,7 @@
   /* Babytalk Style Gradients */
   --gradient-main: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #ddd6fe 100%);
   --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-  --gradient-button: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  --gradient-button: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
   --gradient-accent: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
   
   /* Shadows */
@@ -479,7 +479,7 @@ body {
   gap: var(--space-sm);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
 }
 
 .submit-button::before {
@@ -742,34 +742,7 @@ body {
   margin-top: var(--space-sm);
 }
 
-/* Features */
-.features-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space);
-}
 
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space);
-}
-
-.feature-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-}
-
-.feature-dot.blue { background: var(--primary-purple); }
-.feature-dot.green { background: var(--primary-emerald); }
-.feature-dot.purple { background: var(--primary-teal); }
-
-.feature-text {
-  font-size: 0.875rem;
-  color: var(--text-dark);
-  font-weight: var(--font-weight-medium);
-}
 
 /* Floating action button - REMOVED */
 .floating-button {
@@ -891,9 +864,7 @@ body {
     color: var(--gray-500) !important;
   }
   
-  .feature-text {
-    color: var(--text-dark) !important;
-  }
+
   
   .hero-description {
     color: rgba(255, 255, 255, 0.9) !important;
