@@ -53,6 +53,12 @@ export default function Home() {
     return hashtags ? hashtags.slice(0, 8) : []; // 최대 8개
   };
 
+  // 텍스트에서 해시태그 제거 함수
+  const removeHashtags = (text: string): string => {
+    const hashtagRegex = /#[가-힣a-zA-Z0-9_]+/g;
+    return text.replace(hashtagRegex, '').replace(/\s+/g, ' ').trim();
+  };
+
   // 시간 포맷팅 함수 (초를 시:분:초로 변환)
   const formatDuration = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
@@ -739,7 +745,7 @@ export default function Home() {
                          <div 
                            className="summary-text"
                            dangerouslySetInnerHTML={{
-                             __html: convertMarkdownToHtml(summary)
+                             __html: convertMarkdownToHtml(removeHashtags(summary))
                            }}
                          />
                        </div>
