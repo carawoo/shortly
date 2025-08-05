@@ -1,12 +1,14 @@
 /* Enhanced UX Material 3 Design - Pure CSS */
 
-/* CSS Variables for Modern Design */
+/* CSS Variables for Babytalk Style Design */
 :root {
-  /* Modern Color Palette */
-  --primary-purple: #6366f1;
-  --primary-teal: #06b6d4;
-  --primary-emerald: #10b981;
-  --primary-orange: #f59e0b;
+  /* Babytalk App Color Palette */
+  --primary-purple: #8b5cf6;
+  --secondary-purple: #a78bfa;
+  --light-purple: #ddd6fe;
+  --accent-green: #34d399;
+  --accent-pink: #f472b6;
+  --accent-blue: #60a5fa;
   
   /* Neutral Colors */
   --white: #ffffff;
@@ -27,10 +29,11 @@
   --error: #ef4444;
   --info: #3b82f6;
   
-  /* Modern Gradients */
-  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-teal: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+  /* Babytalk Style Gradients */
+  --gradient-main: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #ddd6fe 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+  --gradient-button: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  --gradient-accent: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -140,17 +143,14 @@ body {
   color: var(--gray-900);
 }
 
-/* Main container */
+/* Main container - Babytalk Style */
 .app-container {
   min-height: 100vh;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+  background: var(--gradient-main);
   background-attachment: fixed;
   position: relative;
   overflow-x: hidden;
+  padding: 0;
 }
 
 /* Enhanced background pattern */
@@ -169,17 +169,15 @@ body {
   50% { transform: translateY(-10px) rotate(1deg); }
 }
 
-/* Header */
+/* Header - Babytalk Style */
 .header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding: var(--space) 0;
+  background: var(--primary-purple);
+  padding: var(--space-lg) var(--space);
   transition: all 0.3s var(--ease-out);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
 }
 
 .header::before {
@@ -211,12 +209,12 @@ body {
 .logo-container {
   width: 2.5rem;
   height: 2.5rem;
-  background: var(--gradient-purple);
-  border-radius: var(--radius-md);
+  background: var(--white);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: relative;
   transition: all 0.3s var(--ease-out);
 }
@@ -244,18 +242,18 @@ body {
 .logo-icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: white;
+  color: var(--primary-purple);
 }
 
 .app-title {
   font-size: 1.25rem;
   font-weight: var(--font-weight-bold);
-  color: var(--gray-900);
+  color: var(--white);
 }
 
 .app-subtitle {
   font-size: 0.875rem;
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .online-status {
@@ -285,7 +283,7 @@ body {
 
 .status-text {
   font-size: 0.875rem;
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: var(--font-weight-medium);
 }
 
@@ -299,13 +297,13 @@ body {
   100% { transform: scale(2); opacity: 0; }
 }
 
-/* Main content */
+/* Main content - Babytalk Style */
 .main-content {
   position: relative;
   z-index: 10;
   min-height: 100vh;
-  padding: var(--space-lg);
-  padding-top: var(--space-xl);
+  padding: var(--space-xl) var(--space);
+  padding-top: 0;
 }
 
 .main-container {
@@ -313,46 +311,45 @@ body {
   margin: 0 auto;
 }
 
-/* Hero section */
+/* Hero section - Babytalk Style */
 .hero-section {
   text-align: center;
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
+  padding: var(--space-xl) 0;
 }
 
 .hero-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 5rem;
-  height: 5rem;
-  background: var(--gradient-purple);
-  border-radius: var(--radius-xl);
-  margin-bottom: var(--space-xl);
-  box-shadow: var(--shadow-2xl);
+  width: 4rem;
+  height: 4rem;
+  background: var(--white);
+  border-radius: var(--radius-2xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
 .hero-icon svg {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: white;
+  width: 2rem;
+  height: 2rem;
+  color: var(--primary-purple);
 }
 
 .hero-title {
-  font-size: 3.75rem;
+  font-size: 2.5rem;
   font-weight: var(--font-weight-bold);
-  background: var(--gradient-purple);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: var(--space-lg);
+  color: var(--white);
+  margin-bottom: var(--space);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .hero-description {
-  font-size: 1.25rem;
-  color: var(--gray-600);
-  max-width: 48rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 32rem;
   margin: 0 auto;
-  line-height: 1.75;
+  line-height: 1.6;
 }
 
 /* Grid layout */
@@ -368,15 +365,14 @@ body {
   }
 }
 
-/* Input form */
+/* Input form - Babytalk Card Style */
 .input-form {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: var(--white);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-2xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   padding: var(--space-2xl);
-  margin-bottom: var(--space-xl);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 0 var(--space) var(--space-xl) var(--space);
+  border: none;
   position: relative;
   transition: all 0.3s var(--ease-out);
 }
@@ -462,15 +458,15 @@ body {
   cursor: not-allowed;
 }
 
-/* Button styles */
+/* Button styles - Babytalk Green Button */
 .submit-button {
   width: 100%;
-  background: var(--gradient-teal);
+  background: var(--gradient-button);
   color: white;
   font-weight: var(--font-weight-semibold);
-  padding: 1.25rem var(--space-xl);
+  padding: 1rem var(--space-xl);
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s var(--ease-out);
@@ -480,7 +476,7 @@ body {
   gap: var(--space-sm);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4);
 }
 
 .submit-button::before {
@@ -657,20 +653,20 @@ body {
   color: var(--gray-500);
 }
 
-/* Sidebar */
+/* Sidebar - Babytalk Cards */
 .sidebar {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+  margin: 0 var(--space);
 }
 
 .sidebar-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-radius: var(--radius-xl);
-  padding: var(--space-lg);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: var(--shadow-lg);
+  background: var(--white);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-xl);
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-title {
@@ -769,11 +765,11 @@ body {
   color: var(--gray-700);
 }
 
-/* Floating action button */
+/* Floating action button - Babytalk Style */
 .floating-button {
   position: fixed;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
+  bottom: var(--space-2xl);
+  right: var(--space);
   z-index: 50;
 }
 
@@ -784,10 +780,10 @@ body {
 .floating-button-main {
   width: 3.5rem;
   height: 3.5rem;
-  background: var(--gradient-purple);
+  background: var(--gradient-accent);
   border: none;
   border-radius: 50%;
-  box-shadow: var(--shadow-2xl);
+  box-shadow: 0 8px 25px rgba(244, 114, 182, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
