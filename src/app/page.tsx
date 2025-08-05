@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // 캐시 무효화를 위한 강제 변경사항
-const CACHE_BUSTER = 'hashtag-chips-keywords-' + Date.now();
+const CACHE_BUSTER = 'enhanced-recent-summaries-' + Date.now();
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -13,6 +13,7 @@ export default function Home() {
   const [recentSummaries, setRecentSummaries] = useState<Array<{url: string, summary: string, timestamp: string}>>([]);
   const [urlValid, setUrlValid] = useState(true);
   const [currentVideoId, setCurrentVideoId] = useState('');
+  const [expandedSummary, setExpandedSummary] = useState<number | null>(null);
 
   // 유튜브 URL 검증 함수
   const isValidYouTubeUrl = (url: string): boolean => {
@@ -384,12 +385,29 @@ export default function Home() {
                   <div className="recent-summaries">
                     {recentSummaries.map((item, index) => (
                       <div key={index} className="recent-item">
-                        <p className="recent-url">
+                        <p 
+                          className="recent-url"
+                          onClick={() => window.open(item.url, '_blank')}
+                          title="YouTube에서 영상 보기"
+                        >
                           {item.url}
                         </p>
-                        <p className="recent-summary">
-                          {item.summary}
-                        </p>
+                        <div className="recent-summary-container">
+                          <p className="recent-summary">
+                            {expandedSummary === index 
+                              ? item.summary 
+                              : `${item.summary.substring(0, 100)}${item.summary.length > 100 ? '...' : ''}`
+                            }
+                          </p>
+                          {item.summary.length > 100 && (
+                            <button 
+                              className="summary-toggle-btn"
+                              onClick={() => setExpandedSummary(expandedSummary === index ? null : index)}
+                            >
+                              {expandedSummary === index ? '접기' : '더보기'}
+                            </button>
+                          )}
+                        </div>
                         <p className="recent-timestamp">
                           {new Date(item.timestamp).toLocaleString('ko-KR')}
                         </p>

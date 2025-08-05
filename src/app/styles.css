@@ -845,8 +845,13 @@ body {
 
 .recent-item {
   padding: var(--space-lg);
-  background: var(--light-purple);
+  background: #eeeeee;
   border-radius: var(--radius-xl);
+  transition: all 0.2s var(--ease-out);
+}
+
+.recent-item:hover {
+  background: #e8e8e8;
 }
 
 .recent-url {
@@ -857,21 +862,46 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+}
+
+.recent-url:hover {
+  color: var(--secondary-purple);
+  text-decoration: underline;
+}
+
+.recent-summary-container {
+  margin-bottom: var(--space-sm);
 }
 
 .recent-summary {
   font-size: 0.875rem;
   color: var(--text-dark);
   line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-bottom: var(--space-xs);
+  word-wrap: break-word;
+}
+
+.summary-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--primary-purple);
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  padding: var(--space-xs) 0;
+  transition: all 0.2s var(--ease-out);
+}
+
+.summary-toggle-btn:hover {
+  color: var(--secondary-purple);
+  text-decoration: underline;
 }
 
 .recent-timestamp {
   font-size: 0.75rem;
-  color: var(--gray-500);
+  color: var(--gray-400);
   margin-top: var(--space-sm);
 }
 
