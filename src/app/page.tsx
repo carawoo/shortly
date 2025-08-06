@@ -1130,8 +1130,8 @@ export default function Home() {
                 <div className="sidebar-card">
                   <h3 className="sidebar-title">최근 요약</h3>
                   <div className={`recent-summaries ${isRecentSummariesExpanded ? 'expanded' : 'collapsed'}`}>
-                    {(isRecentSummariesExpanded ? recentSummaries : recentSummaries.slice(0, 3)).map((item, index) => (
-                      <div key={index} className={`recent-item ${!isRecentSummariesExpanded && index === 2 ? 'half-visible' : ''}`}>
+                    {(isRecentSummariesExpanded ? recentSummaries : recentSummaries.slice(0, 2)).map((item, index) => (
+                      <div key={index} className={`recent-item ${!isRecentSummariesExpanded && index === 1 ? 'half-visible' : ''}`}>
                         <p 
                           className="recent-url"
                           onClick={() => window.open(item.url, '_blank')}
@@ -1162,28 +1162,30 @@ export default function Home() {
                     ))}
                   </div>
                   
-                  {/* 더보기/접기 버튼 */}
-                  <div className="expand-toggle-container">
-                    <button 
-                      className="expand-toggle-btn-bottom"
-                      onClick={() => setIsRecentSummariesExpanded(!isRecentSummariesExpanded)}
-                      title={isRecentSummariesExpanded ? '접기' : '전체 보기'}
-                    >
-                      <svg 
-                        width="16" 
-                        height="16" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                        className={`expand-icon ${isRecentSummariesExpanded ? 'expanded' : ''}`}
+                  {/* 더보기/접기 버튼 - 3개 이상일 때만 표시 */}
+                  {recentSummaries.length >= 3 && (
+                    <div className="expand-toggle-container">
+                      <button 
+                        className="expand-toggle-btn-bottom"
+                        onClick={() => setIsRecentSummariesExpanded(!isRecentSummariesExpanded)}
+                        title={isRecentSummariesExpanded ? '접기' : '전체 보기'}
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                      <span className="expand-text">
-                        {isRecentSummariesExpanded ? '접기' : '더보기'}
-                      </span>
-                    </button>
-                  </div>
+                        <svg 
+                          width="16" 
+                          height="16" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          className={`expand-icon ${isRecentSummariesExpanded ? 'expanded' : ''}`}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <span className="expand-text">
+                          {isRecentSummariesExpanded ? '접기' : '더보기'}
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
