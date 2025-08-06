@@ -393,13 +393,13 @@ body {
   background: var(--white);
   border-radius: var(--radius-2xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-  padding: 20px; /* 기본 20px 패딩 */
+  padding: 16px; /* 기본 16px 패딩으로 통일 */
   margin: 0 0 var(--space-xl) 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   position: relative;
   transition: all 0.3s var(--ease-out);
   width: 100%; /* 가변 너비 */
-  max-width: 600px; /* 최대 너비 제한 */
+  max-width: 360px; /* 최대 너비 360px로 제한 */
   box-sizing: border-box; /* 패딩 포함 박스 사이징 */
 }
 
@@ -1082,11 +1082,11 @@ body {
   
   /* 입력 폼 */
   .input-form {
-    padding: 20px !important; /* 모든 디바이스에서 20px 패딩 통일 */
+    padding: 16px !important; /* 모든 디바이스에서 16px 패딩 통일 */
     margin: 12px 0 !important; /* 상하 12px로 줄임 */
     border-radius: var(--radius-md) !important;
     width: 100% !important; /* 가변 너비 */
-    max-width: 100% !important; /* 최대 너비 100% */
+    max-width: 360px !important; /* 최대 너비 360px로 제한 */
     box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
   }
   
@@ -1512,9 +1512,9 @@ body {
   }
   
   .input-form {
-    padding: 20px !important; /* 모든 디바이스에서 20px 패딩 통일 */
+    padding: 16px !important; /* 모든 디바이스에서 16px 패딩 통일 */
     width: 100% !important; /* 가변 너비 */
-    max-width: 100% !important; /* 최대 너비 100% */
+    max-width: 360px !important; /* 최대 너비 360px로 제한 */
     box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
   }
   
@@ -1557,10 +1557,10 @@ body {
   }
   
   .input-form {
-    padding: 16px !important; /* 아이폰 16 Pro에서는 16px로 줄여 여백 확보 */
+    padding: 16px !important; /* 모든 디바이스에서 16px 패딩 통일 */
     margin: 8px 0 !important; /* 상하 8px */
     width: 100% !important; /* 가변 너비 */
-    max-width: 100% !important; /* 최대 너비 100% */
+    max-width: 360px !important; /* 최대 너비 360px로 제한 */
     box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
   }
   
@@ -1624,9 +1624,9 @@ body {
   }
   
   .input-form {
-    padding: 20px !important; /* 모든 디바이스에서 20px 패딩 통일 */
+    padding: 16px !important; /* 모든 디바이스에서 16px 패딩 통일 */
     width: 100% !important; /* 가변 너비 */
-    max-width: 100% !important; /* 최대 너비 100% */
+    max-width: 360px !important; /* 최대 너비 360px로 제한 */
     box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
   }
   
@@ -1695,8 +1695,8 @@ body {
   }
   
   .input-form {
-    padding: 20px !important; /* 가로 모드에서도 20px 패딩 통일 */
-    max-width: 600px !important;
+    padding: 16px !important; /* 가로 모드에서도 16px 패딩 통일 */
+    max-width: 360px !important; /* 최대 너비 360px로 제한 */
     margin: 0 auto !important;
     width: 100% !important; /* 가변 너비 */
     box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
