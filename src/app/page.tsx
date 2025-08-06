@@ -489,24 +489,22 @@ export default function Home() {
 
       console.log('10. PDF에 이미지 추가 중...');
       try {
+        // 간단한 방식: 이미지 높이를 페이지에 맞게 조정
+        let finalImgWidth = imgWidth;
+        let finalImgHeight = imgHeight;
+        
+        // 이미지가 페이지보다 크면 비율을 유지하며 축소
         if (imgHeight > pageHeight - 20) {
-          // 이미지가 너무 크면 여러 페이지로 분할
-          let yPosition = 0;
-          const maxHeight = pageHeight - 20;
-          
-          while (yPosition < imgHeight) {
-            if (yPosition > 0) {
-              pdf.addPage();
-            }
-            
-            const currentHeight = Math.min(maxHeight, imgHeight - yPosition);
-            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, currentHeight, '', 'FAST');
-            yPosition += maxHeight;
-          }
-        } else {
-          // 한 페이지에 들어감
-          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight, '', 'FAST');
+          const ratio = (pageHeight - 20) / imgHeight;
+          finalImgWidth = imgWidth * ratio;
+          finalImgHeight = pageHeight - 20;
+          console.log('   - 이미지 크기 조정:', finalImgWidth, 'x', finalImgHeight, 'mm');
         }
+        
+        // 한 페이지에 맞춰서 추가 (비율 유지)
+        pdf.addImage(imgData, 'PNG', 10, 10, finalImgWidth, finalImgHeight, '', 'FAST');
+        console.log('   - PDF 이미지 추가 완료');
+        
       } catch (pdfError) {
         console.error('PDF 이미지 추가 오류:', pdfError);
         throw new Error(`PDF 이미지 추가 실패: ${pdfError instanceof Error ? pdfError.message : '알 수 없는 오류'}`);
