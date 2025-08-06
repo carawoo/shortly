@@ -675,7 +675,10 @@ body {
   box-shadow: var(--shadow-2xl);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  margin: 0 0 var(--space-xl) 0;
+  margin: 0 auto var(--space-xl) auto; /* 중앙 정렬 */
+  width: 100%; /* 100% 너비 */
+  max-width: 100%; /* 최대 너비 제한 */
+  box-sizing: border-box; /* 패딩 포함 계산 */
 }
 
 .summary-header {
@@ -1286,7 +1289,10 @@ body {
   
   /* 요약 결과 섹션 */
   .summary-result {
-    margin: 32px 0 0 0 !important; /* 상단 12px로 줄임 */
+    margin: 32px auto 0 auto !important; /* 중앙 정렬 유지 */
+    width: 100% !important; /* 100% 너비 */
+    max-width: 100% !important; /* 최대 너비 제한 */
+    box-sizing: border-box !important; /* 패딩 포함 계산 */
   }
   
   .ai-summary-result {
@@ -2457,6 +2463,7 @@ body {
 .input-form,
 .sidebar-card,
 .summary-card,
+.summary-result,
 .video-info-card,
 .recent-item,
 .ai-summary-result,
@@ -2502,6 +2509,7 @@ body {
   .input-form,
   .sidebar-card,
   .summary-card,
+  .summary-result,
   .video-info-card,
   .recent-item,
   .ai-summary-result,
@@ -2509,6 +2517,11 @@ body {
     border-radius: var(--radius-xl) !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
   }
   
   /* 모든 카드형 UI padding 20px 통일 */
