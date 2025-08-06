@@ -1162,8 +1162,8 @@ export default function Home() {
                     ))}
                   </div>
                   
-                  {/* 더보기/접기 버튼 - 3개 이상일 때만 표시 */}
-                  {recentSummaries.length >= 3 && (
+                  {/* 더보기/접기 버튼 - 2개 이상일 때 표시 */}
+                  {recentSummaries.length >= 2 && (
                     <div className="expand-toggle-container">
                       <button 
                         className="expand-toggle-btn-bottom"

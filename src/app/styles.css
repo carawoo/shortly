@@ -336,14 +336,19 @@ body {
   position: relative;
   z-index: 10;
   min-height: auto; /* 100vh 제거하여 자동 높이로 변경 */
-  padding: var(--space) 28px; /* 좌우 28px 적용 */
-  padding-top: var(--space-3xl);
-  margin-bottom: 0px; /* 하단 마진 0px 설정 */
+  padding: var(--space-3xl) 0 0 0; /* 상단 패딩만 유지, 좌우 패딩 제거 */
+  margin: 0; /* 모든 마진 제거 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .main-container {
-  max-width: 72rem;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Hero section - Babytalk Style */
@@ -393,11 +398,21 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media (min-width: 1024px) {
   .content-grid {
     grid-template-columns: 2fr 1fr;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 }
 
@@ -1182,10 +1197,13 @@ body {
   }
   
   .main-content {
-    padding: 16px 28px !important; /* 상하 16px, 좌우 28px */
+    padding: 16px 0 !important; /* 상하 16px, 좌우 패딩 제거 */
     margin: 0 !important; /* 모든 마진 0 */
     min-height: auto !important; /* 고정 높이 제거 */
     overflow-y: visible !important; /* 세로 스크롤 허용 */
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .header-content {
