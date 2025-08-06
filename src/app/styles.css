@@ -1298,9 +1298,12 @@ body {
   .ai-summary-result {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important; /* 중앙 정렬 */
-    padding: 0 20px !important; /* 내부 패딩으로 좌우 여백 처리 */
+    margin: 0 !important; /* 마진 완전 제거 */
+    padding: 0 !important; /* 패딩 완전 제거 */
     box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important; /* 자식 요소들이 100% 너비 차지 */
   }
   
   /* 상단 키워드 섹션 */
@@ -1683,9 +1686,12 @@ body {
   .ai-summary-result {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important; /* 중앙 정렬 */
-    padding: 0 12px !important; /* 소형 모바일에서 좌우 패딩 12px */
+    margin: 0 !important; /* 마진 완전 제거 */
+    padding: 0 !important; /* 패딩 완전 제거 */
     box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 }
 
@@ -1735,9 +1741,12 @@ body {
   .ai-summary-result {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important; /* 중앙 정렬 */
-    padding: 0 6px !important; /* 최소형 모바일에서 좌우 패딩 6px */
+    margin: 0 !important; /* 마진 완전 제거 */
+    padding: 0 !important; /* 패딩 완전 제거 */
     box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
   
   .form-label {
@@ -1817,9 +1826,12 @@ body {
   .ai-summary-result {
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important; /* 중앙 정렬 */
-    padding: 0 8px !important; /* 375px 모바일에서 좌우 패딩 8px */
+    margin: 0 !important; /* 마진 완전 제거 */
+    padding: 0 !important; /* 패딩 완전 제거 */
     box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
   
   .summary-card {
@@ -2436,13 +2448,16 @@ body {
   margin: 0;
 }
 
-/* AI 요약 결과 영역 - 중앙 정렬 + 100% 너비 */
+/* AI 요약 결과 영역 - 완전 100% 좌우 정렬 */
 .ai-summary-result {
   width: 100%;
   max-width: 100%;
-  margin: 0 auto; /* 중앙 정렬 */
-  padding: 0 20px; /* 내부 패딩으로 좌우 여백 처리 */
+  margin: 0; /* 마진 완전 제거 */
+  padding: 0; /* 패딩 완전 제거 */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* 자식 요소들이 100% 너비 차지 */
 }
 
 /* 상단 키워드 섹션 */
@@ -2469,7 +2484,7 @@ body {
 
 /* 중복 제거됨 - 통합 모바일 미디어 쿼리로 이동 */
 
-/* 모든 카드 UI radius 통일 + margin 제거 + PC에서 100% 적용 */
+/* 모든 카드 UI radius 통일 + 카드간 20px 간격 + PC에서 100% 적용 */
 .input-form,
 .sidebar-card,
 .summary-card,
@@ -2479,8 +2494,10 @@ body {
 .ai-summary-result,
 .top-keywords-section {
   border-radius: var(--radius-xl) !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 20px !important; /* 카드 간 간격 20px */
   margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   max-width: 100% !important;
   width: 100% !important;
 }
@@ -2519,7 +2536,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 모든 카드 UI radius를 URL 카드와 동일하게 통일 + margin 완전 제거 */
+  /* 모든 카드 UI radius 통일 + 카드간 20px 간격 */
   .input-form,
   .sidebar-card,
   .summary-card,
@@ -2529,12 +2546,12 @@ body {
   .ai-summary-result,
   .top-keywords-section {
     border-radius: var(--radius-xl) !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 20px !important; /* 카드 간 간격 20px */
     margin-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
     box-sizing: border-box !important;
   }
   
