@@ -447,7 +447,7 @@ body {
 }
 
 .form-group {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xs);
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
@@ -1021,6 +1021,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.clear-all-btn svg {
+  display: block;
+  margin: auto;
 }
 
 .clear-all-btn:hover {
@@ -1197,7 +1204,7 @@ body {
   .hero-description {
     font-size: 0.9rem !important;
     line-height: 1.5 !important;
-    margin: 0 0 16px 0 !important; /* 하단 16px로 줄임 */
+    margin: 0 0 40px 0 !important; /* 하단 16px로 줄임 */
   }
   
   /* 입력 폼 */
@@ -1334,7 +1341,7 @@ body {
   }
   
   .summary-card-content {
-    padding: 20px !important; /* 내부 20px로 확대 */
+    padding: 0px !important; /* 내부 20px로 확대 */
   }
   
   /* 비디오 정보 카드 */
@@ -1955,7 +1962,7 @@ body {
 }
 
 .summary-card-title {
-  background: var(--slate-50);
+  background: var(--white);
   border-bottom: 1px solid var(--slate-200);
   padding: var(--space-md) 20px !important; /* 좌우 20px 강제 적용 */
   margin: 0;
@@ -1982,7 +1989,7 @@ body {
 }
 
 .summary-card-content {
-  padding: var(--space-lg) 20px !important; /* 좌우 20px 강제 적용 */
+  padding: var(--space-lg) 0px !important; /* 좌우 20px 강제 적용 */
 }
 
 /* 키워드 및 콘텐츠 섹션 스타일 */
@@ -2254,7 +2261,7 @@ body {
   background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
   color: white;
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-full);
   padding: var(--space-md);
   font-size: 0.9rem;
   font-weight: 500;
