@@ -170,7 +170,8 @@ body {
   background: var(--gradient-main);
   background-attachment: fixed;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: hidden; /* 가로 스크롤만 숨김 */
+  overflow-y: auto; /* 세로 스크롤 허용 */
   padding: 0;
 }
 
@@ -322,7 +323,7 @@ body {
 .main-content {
   position: relative;
   z-index: 10;
-  min-height: 100vh;
+  min-height: auto; /* 100vh 제거하여 자동 높이로 변경 */
   padding: var(--space) 28px; /* 좌우 28px 적용 */
   padding-top: var(--space-2xl);
   margin-bottom: 0px; /* 하단 마진 0px 설정 */
@@ -1047,15 +1048,26 @@ body {
 
 /* 🔧 통합된 모바일 최적화 - 완전한 반응형 디자인 */
 @media (max-width: 768px) {
+  /* 📱 모바일 스크롤 최적화 */
+  html, body {
+    overflow-x: hidden !important; /* 가로 스크롤만 숨김 */
+    overflow-y: auto !important; /* 세로 스크롤 허용 */
+    height: auto !important; /* 자동 높이 */
+    -webkit-overflow-scrolling: touch !important; /* iOS 스크롤 최적화 */
+  }
+  
   /* 📱 모바일 기본 레이아웃 - 외부 20px, 내부 16px 통일 */
   .container {
     padding: 0 20px !important; /* 외부 좌우 마진 20px 고정 */
     max-width: 100% !important;
+    overflow-y: visible !important; /* 세로 스크롤 허용 */
   }
   
   .main-content {
     padding: 16px 28px !important; /* 상하 16px, 좌우 28px */
     margin: 0 !important; /* 모든 마진 0 */
+    min-height: auto !important; /* 고정 높이 제거 */
+    overflow-y: visible !important; /* 세로 스크롤 허용 */
   }
   
   .header-content {
@@ -1550,6 +1562,8 @@ body {
     margin: 0 !important; /* 모든 마진 0 */
     box-sizing: border-box !important; /* 박스 사이징 확실히 */
     width: 100% !important; /* 전체 너비 활용 */
+    min-height: auto !important; /* 고정 높이 제거 */
+    overflow-y: visible !important; /* 세로 스크롤 허용 */
   }
   
   .hero-section {
