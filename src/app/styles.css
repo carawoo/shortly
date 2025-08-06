@@ -1290,7 +1290,11 @@ body {
   }
   
   .ai-summary-result {
-    margin: 0 20px !important; /* 외부 좌우 20px, 상하 0px로 수정 */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important; /* 중앙 정렬 */
+    padding: 0 20px !important; /* 내부 패딩으로 좌우 여백 처리 */
+    box-sizing: border-box !important;
   }
   
   /* 상단 키워드 섹션 */
@@ -1668,7 +1672,11 @@ body {
   }
   
   .ai-summary-result {
-    margin: 8px 12px !important; /* 소형 모바일에서 좌우 마진 12px로 조정 */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important; /* 중앙 정렬 */
+    padding: 0 12px !important; /* 소형 모바일에서 좌우 패딩 12px */
+    box-sizing: border-box !important;
   }
 }
 
@@ -1716,7 +1724,11 @@ body {
   }
   
   .ai-summary-result {
-    margin: 4px 6px !important; /* 외부 좌우 6px, 상하 4px */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important; /* 중앙 정렬 */
+    padding: 0 6px !important; /* 최소형 모바일에서 좌우 패딩 6px */
+    box-sizing: border-box !important;
   }
   
   .form-label {
@@ -1794,7 +1806,11 @@ body {
   }
   
   .ai-summary-result {
-    margin: 6px 8px !important; /* 외부 좌우 8px, 상하 6px */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important; /* 중앙 정렬 */
+    padding: 0 8px !important; /* 375px 모바일에서 좌우 패딩 8px */
+    box-sizing: border-box !important;
   }
   
   .summary-card {
@@ -2407,9 +2423,13 @@ body {
   margin: 0;
 }
 
-/* AI 요약 결과 영역 - 20px 좌우 마진 */
+/* AI 요약 결과 영역 - 중앙 정렬 + 100% 너비 */
 .ai-summary-result {
-  margin: 0 20px; /* 상하 0px, 좌우 20px 마진 */
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto; /* 중앙 정렬 */
+  padding: 0 20px; /* 내부 패딩으로 좌우 여백 처리 */
+  box-sizing: border-box;
 }
 
 /* 상단 키워드 섹션 */
@@ -2510,7 +2530,7 @@ body {
   .recent-item,
   .ai-summary-result,
   .top-keywords-section {
-    max-width: 360px !important;
+    max-width: 100% !important;
   }
   
   /* 내부 모든 콘텐츠 좌우 fill 유지 */
