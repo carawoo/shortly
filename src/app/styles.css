@@ -392,16 +392,29 @@ body {
 /* Input form - Clean Light Style */
 .input-form {
   background: var(--white);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-  padding: 16px; /* 기본 16px 패딩으로 통일 */
+  padding: 16px;
   margin: 0 0 var(--space-xl) 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   position: relative;
   transition: all 0.3s var(--ease-out);
-  width: 100%; /* 가변 너비 */
-  max-width: 360px; /* 최대 너비 360px로 제한 */
-  box-sizing: border-box; /* 패딩 포함 박스 사이징 */
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-form * {
+  text-align: center !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .input-form::before {
@@ -443,7 +456,7 @@ body {
 
 .url-input {
   width: 100%;
-  padding: 1.25rem var(--space); /* 좌측 패딩을 일반 패딩으로 변경 */
+  padding: 1.25rem var(--space);
   background: var(--light-gray);
   border: 2px solid var(--light-purple);
   border-radius: var(--radius-xl);
@@ -452,6 +465,30 @@ body {
   transition: all 0.3s var(--ease-out);
   font-weight: var(--font-weight-medium);
   line-height: 1.5;
+  text-align: center;
+  box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
+}
+
+.url-input::placeholder {
+  text-align: center;
+}
+
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .url-input:hover {
@@ -466,10 +503,6 @@ body {
   background: var(--white);
   color: var(--text-dark);
   transform: translateY(-1px);
-}
-
-.url-input::placeholder {
-  color: var(--gray-500);
 }
 
 .url-input-error {
@@ -853,21 +886,45 @@ body {
   flex-direction: column;
   gap: var(--space-lg);
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
 }
 
 .sidebar-card {
   background: var(--white);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-xl);
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+  padding: 16px;
+  margin: 0 0 var(--space-xl) 0;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.sidebar-title {
-  font-size: 1.25rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--text-dark);
+.sidebar-card * {
+  text-align: center !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.sidebar-title,
+.form-label,
+.summary-title {
+  font-size: 24px !important; /* 18pt = 24px */
+  font-weight: 700 !important;
+  color: var(--primary-purple);
   margin-bottom: var(--space);
+  line-height: 1.2;
 }
 
 /* Stats */
@@ -1094,12 +1151,22 @@ body {
   
   /* 입력 폼 */
   .input-form {
-    padding: 16px !important; /* 모든 디바이스에서 16px 패딩 통일 */
-    margin: 12px 0 !important; /* 상하 12px로 줄임 */
-    border-radius: var(--radius-md) !important;
-    width: 100% !important; /* 가변 너비 */
-    max-width: 360px !important; /* 최대 너비 360px로 제한 */
-    box-sizing: border-box !important; /* 패딩 포함 박스 사이징 */
+    border-radius: var(--radius-xl) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  .input-form * {
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   .form-label {
@@ -1122,7 +1189,11 @@ body {
   /* 사이드바 */
   .sidebar {
     margin: 12px 0 !important; /* 상하 12px로 줄임 */
-    border-radius: var(--radius-md) !important;
+    border-radius: var(--radius-xl) !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    width: 100% !important;
   }
   
   .sidebar-header {
