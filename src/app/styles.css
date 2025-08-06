@@ -483,36 +483,40 @@ body {
   }
   
   .container {
-    padding: 0 !important; /* 모바일과 동일하게 패딩 제거 */
-    margin: 0 !important; /* 모바일과 동일하게 마진 제거 */
+    padding: 0 28px !important; /* PC에서 좌우 28px 패딩 추가 */
+    margin: 0 !important;
     width: 100% !important;
     max-width: 100vw !important; /* 뷰포트 너비로 제한 */
     overflow-x: hidden !important; /* 가로 스크롤 차단 */
+    box-sizing: border-box !important; /* 패딩 포함 계산 */
   }
   
   .main-content {
-    padding: 16px 0 !important; /* 모바일과 동일 - 상하 16px, 좌우 패딩 제거 */
+    padding: 16px 28px !important; /* PC에서 상하 16px, 좌우 28px 패딩 */
     margin: 0 !important;
     width: 100% !important;
     max-width: 100vw !important; /* 뷰포트 너비로 제한 */
     overflow-x: hidden !important; /* 가로 스크롤 차단 */
+    box-sizing: border-box !important; /* 패딩 포함 계산 */
   }
   
   .header-content {
-    padding: 0 !important; /* 모바일과 동일하게 패딩 제거 */
+    padding: 0 28px !important; /* PC에서 좌우 28px 패딩 추가 */
     margin: 0 !important;
     width: 100% !important;
     max-width: 100vw !important; /* 뷰포트 너비로 제한 */
     overflow-x: hidden !important; /* 가로 스크롤 차단 */
+    box-sizing: border-box !important; /* 패딩 포함 계산 */
   }
   
   .hero-section {
-    padding: 0 !important; /* 모바일과 동일하게 패딩 제거 */
+    padding: 0 28px !important; /* PC에서 좌우 28px 패딩 추가 */
     margin: 0 !important;
     text-align: center !important;
     width: 100% !important;
     max-width: 100vw !important; /* 뷰포트 너비로 제한 */
     overflow-x: hidden !important; /* 가로 스크롤 차단 */
+    box-sizing: border-box !important; /* 패딩 포함 계산 */
   }
   
   .content-grid {
