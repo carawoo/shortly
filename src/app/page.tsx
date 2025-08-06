@@ -1128,7 +1128,7 @@ export default function Home() {
               {/* 최근 요약 */}
               {recentSummaries.length > 0 && (
                 <div className="sidebar-card">
-                  <h3 className="sidebar-title">최근 요약</h3>
+                  <h3 className="sidebar-title" style={{ paddingBottom: '16px' }}>최근 요약</h3>
                   <div className={`recent-summaries ${isRecentSummariesExpanded ? 'expanded' : 'collapsed'}`}>
                     {(isRecentSummariesExpanded ? recentSummaries : recentSummaries.slice(0, 2)).map((item, index) => (
                       <div key={index} className={`recent-item ${!isRecentSummariesExpanded && index === 1 ? 'half-visible' : ''}`}>
