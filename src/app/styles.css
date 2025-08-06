@@ -1084,6 +1084,10 @@ body {
     border-radius: var(--radius-md) !important;
   }
   
+  .form-label {
+    font-size: 32px !important; /* 24pt = 32px 모바일 제목 크기 */
+  }
+  
   .url-input {
     font-size: 1rem !important;
     padding: 16px !important; /* 내부 16px 통일 */
@@ -1108,7 +1112,7 @@ body {
   }
   
   .sidebar-title {
-    font-size: 1rem !important;
+    font-size: 32px !important; /* 24pt = 32px 모바일 제목 크기 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
   }
   
@@ -1375,6 +1379,12 @@ body {
   .expand-toggle-btn-bottom {
     padding: var(--space-sm) var(--space-md) !important;
     font-size: 0.85rem !important;
+    min-height: 44px !important; /* 터치 친화적 최소 높이 */
+    touch-action: manipulation !important; /* 터치 최적화 */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1) !important; /* 탭 하이라이트 */
+    position: relative !important;
+    z-index: 10 !important; /* 클릭 가능하도록 z-index 확보 */
+    cursor: pointer !important; /* 커서 포인터 */
   }
   
   .recent-item.half-visible {
@@ -1511,6 +1521,55 @@ body {
   
   .ai-summary-result {
     margin: 8px 12px !important; /* 소형 모바일에서 좌우 마진 12px로 조정 */
+  }
+}
+
+/* 🔧 중소형 모바일 화면 최적화 (360px 전용) */
+@media (max-width: 360px) {
+  /* 360px에서 우측 잘림 방지 */
+  .container {
+    padding: 0 6px !important; /* 외부 좌우 마진 6px로 더 줄임 */
+    min-width: 320px !important; /* 최소 너비 보장 */
+    max-width: 100% !important; /* 최대 너비 제한 */
+    overflow-x: hidden !important; /* 가로 스크롤 방지 */
+  }
+  
+  .main-content {
+    padding: 8px 20px !important; /* 상하 8px, 좌우 20px로 줄임 */
+    min-width: 0 !important; /* 너비 제한 해제 */
+    margin: 0 !important; /* 모든 마진 0 */
+    box-sizing: border-box !important; /* 박스 사이징 확실히 */
+  }
+  
+  .hero-section {
+    padding: 10px 6px !important; /* 상하 10px, 좌우 6px */
+  }
+  
+  .input-form {
+    padding: 6px !important; /* 내부 6px */
+    margin: 8px 0 !important; /* 상하 8px */
+  }
+  
+  .url-input {
+    font-size: 0.8rem !important; /* 입력 폰트 더 줄임 */
+    padding: 8px !important; /* 패딩 8px */
+  }
+  
+  .submit-button {
+    padding: 8px !important; /* 패딩 8px */
+    font-size: 0.8rem !important; /* 버튼 텍스트 더 줄임 */
+  }
+  
+  .ai-summary-result {
+    margin: 4px 6px !important; /* 외부 좌우 6px, 상하 4px */
+  }
+  
+  .form-label {
+    font-size: 28px !important; /* 360px에서는 28px로 약간 줄임 */
+  }
+  
+  .sidebar-title {
+    font-size: 28px !important; /* 360px에서는 28px로 약간 줄임 */
   }
 }
 
