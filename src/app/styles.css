@@ -922,7 +922,7 @@ body {
   justify-content: flex-start;
   text-align: left;
   width: 100%;
-  max-width: 360px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2433,7 +2433,7 @@ body {
 
 /* 중복 제거됨 - 통합 모바일 미디어 쿼리로 이동 */
 
-/* 모든 카드 UI radius를 URL 카드와 동일하게 통일 + bottom margin 제거 */
+/* 모든 카드 UI radius 통일 + margin 제거 + PC에서 100% 적용 */
 .input-form,
 .sidebar-card,
 .summary-card,
@@ -2444,6 +2444,8 @@ body {
   border-radius: var(--radius-xl) !important;
   margin-bottom: 0 !important;
   margin-top: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 /* 모든 카드형 UI padding 20px 통일 */
@@ -2500,8 +2502,14 @@ body {
     padding: 20px !important;
   }
   
-  /* 모바일에서 input-form 크기 제한 */
-  .input-form {
+  /* 모바일에서 모든 카드 크기 제한 */
+  .input-form,
+  .sidebar-card,
+  .summary-card,
+  .video-info-card,
+  .recent-item,
+  .ai-summary-result,
+  .top-keywords-section {
     max-width: 360px !important;
   }
   
