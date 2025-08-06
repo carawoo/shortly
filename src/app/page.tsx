@@ -299,7 +299,7 @@ export default function Home() {
     return result.join('');
   };
 
-  // 이미지로 저장하는 함수
+  // 이미지로 저장하는 함수 (개선된 디버깅)
   const saveAsImage = async () => {
     const element = document.getElementById('summary-content');
     if (!element) {
@@ -307,28 +307,56 @@ export default function Home() {
       return;
     }
 
+    // 요소 내용 확인
+    console.log('저장할 요소:', element);
+    console.log('요소 크기:', element.offsetWidth, 'x', element.offsetHeight);
+    console.log('요소 내용 길이:', element.innerHTML.length);
+
+    if (element.offsetWidth === 0 || element.offsetHeight === 0) {
+      alert('저장할 내용이 화면에 보이지 않습니다. 요약을 먼저 생성해주세요.');
+      return;
+    }
+
+    if (element.innerHTML.trim().length < 100) {
+      alert('저장할 내용이 충분하지 않습니다. 요약을 먼저 생성해주세요.');
+      return;
+    }
+
     try {
+      // 저장 중 표시
+      const originalText = element.innerHTML;
+      element.style.border = '2px solid #8b5cf6';
+      
       const canvas = await html2canvas(element, {
         backgroundColor: '#ffffff',
         scale: 2, // 고화질을 위해 스케일 2배
         useCORS: true,
         allowTaint: true,
         foreignObjectRendering: true,
-        logging: false
+        logging: true, // 디버깅을 위해 로깅 활성화
+        width: element.scrollWidth,
+        height: element.scrollHeight
       });
+
+      // 테두리 제거
+      element.style.border = '';
+
+      console.log('캔버스 크기:', canvas.width, 'x', canvas.height);
 
       // 캔버스를 이미지로 변환하여 다운로드
       const link = document.createElement('a');
       link.download = `YouTube_요약_${new Date().toISOString().slice(0, 10)}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
+      
+      alert('이미지 저장이 완료되었습니다!');
     } catch (error) {
       console.error('이미지 저장 오류:', error);
-      alert('이미지 저장 중 오류가 발생했습니다.');
+      alert(`이미지 저장 중 오류가 발생했습니다: ${error.message}`);
     }
   };
 
-  // PDF로 저장하는 함수
+  // PDF로 저장하는 함수 (개선된 디버깅)
   const saveAsPDF = async () => {
     const element = document.getElementById('summary-content');
     if (!element) {
@@ -336,15 +364,40 @@ export default function Home() {
       return;
     }
 
+    // 요소 내용 확인
+    console.log('PDF 저장 - 요소:', element);
+    console.log('PDF 저장 - 요소 크기:', element.offsetWidth, 'x', element.offsetHeight);
+    console.log('PDF 저장 - 요소 내용 길이:', element.innerHTML.length);
+
+    if (element.offsetWidth === 0 || element.offsetHeight === 0) {
+      alert('저장할 내용이 화면에 보이지 않습니다. 요약을 먼저 생성해주세요.');
+      return;
+    }
+
+    if (element.innerHTML.trim().length < 100) {
+      alert('저장할 내용이 충분하지 않습니다. 요약을 먼저 생성해주세요.');
+      return;
+    }
+
     try {
+      // 저장 중 표시
+      element.style.border = '2px solid #ef4444';
+
       const canvas = await html2canvas(element, {
         backgroundColor: '#ffffff',
         scale: 2,
         useCORS: true,
         allowTaint: true,
         foreignObjectRendering: true,
-        logging: false
+        logging: true, // 디버깅을 위해 로깅 활성화
+        width: element.scrollWidth,
+        height: element.scrollHeight
       });
+
+      // 테두리 제거
+      element.style.border = '';
+
+      console.log('PDF - 캔버스 크기:', canvas.width, 'x', canvas.height);
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
@@ -354,29 +407,30 @@ export default function Home() {
       });
 
       // A4 크기에 맞게 이미지 크기 조정
-      const imgWidth = 210; // A4 너비 (mm)
-      const pageHeight = 297; // A4 높이 (mm)
+      const imgWidth = 190; // A4 너비에서 여백 고려 (mm)
+      const pageHeight = 277; // A4 높이에서 여백 고려 (mm)
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
 
-      let position = 0;
+      let position = 10; // 상단 여백
 
       // 첫 페이지에 이미지 추가
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       // 여러 페이지가 필요한 경우 페이지 추가
       while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
+        position = heightLeft - imgHeight + 10; // 여백 고려
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
 
       pdf.save(`YouTube_요약_${new Date().toISOString().slice(0, 10)}.pdf`);
+      alert('PDF 저장이 완료되었습니다!');
     } catch (error) {
       console.error('PDF 저장 오류:', error);
-      alert('PDF 저장 중 오류가 발생했습니다.');
+      alert(`PDF 저장 중 오류가 발생했습니다: ${error.message}`);
     }
   };
 
