@@ -1215,7 +1215,7 @@ body {
 .summary-card-title {
   background: var(--slate-50);
   border-bottom: 1px solid var(--slate-200);
-  padding: var(--space-md) 20px; /* 좌우 20px로 통일 */
+  padding: var(--space-md) 20px !important; /* 좌우 20px 강제 적용 */
   margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
@@ -1240,7 +1240,7 @@ body {
 }
 
 .summary-card-content {
-  padding: var(--space-lg) 20px;
+  padding: var(--space-lg) 20px !important; /* 좌우 20px 강제 적용 */
 }
 
 /* 키워드 및 콘텐츠 섹션 스타일 */
@@ -1739,11 +1739,11 @@ body {
   margin: 0;
 }
 
-/* 저장할 콘텐츠 영역 스타일 */
+/* 저장할 콘텐츠 영역 스타일 - v3.0 좌우 20px 여백 */
 .summary-content-wrapper {
   background: white;
   border-radius: var(--radius-lg);
-  padding: var(--space-lg) 20px; /* 좌우 20px 고정 */
+  padding: var(--space-lg) 20px !important; /* 좌우 20px 강제 적용 */
   margin: var(--space-md) 0;
   border: 1px solid var(--slate-200);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -1752,7 +1752,7 @@ body {
 /* 상단 키워드 섹션 */
 .top-keywords-section {
   margin-bottom: var(--space-lg);
-  padding: var(--space-md) 20px; /* 좌우 20px로 통일 */
+  padding: var(--space-md) 20px !important; /* 좌우 20px 강제 적용 */
   background: var(--slate-50);
   border: 1px solid var(--slate-200);
   border-radius: var(--radius-md);
@@ -1788,7 +1788,7 @@ body {
   }
   
   .summary-content-wrapper {
-    padding: var(--space-md) 20px; /* 모바일에서도 좌우 20px 유지 */
+    padding: var(--space-md) 20px !important; /* 모바일에서도 좌우 20px 강제 적용 */
   }
 }
 
