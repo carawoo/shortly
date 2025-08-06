@@ -450,6 +450,9 @@ body {
 
 .form-group {
   margin-bottom: var(--space-lg);
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .form-label {
@@ -462,6 +465,9 @@ body {
 
 .input-container {
   position: relative;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* input-icon 제거됨 - 화살표 아이콘 없음 */
@@ -2443,12 +2449,15 @@ body {
 .summary-card > *,
 .video-info-card > *,
 .recent-item > *,
+.form-group,
+.input-container,
 .stats-grid,
 .stat-item,
 .recent-summaries,
 .url-input,
 .submit-button {
   width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
@@ -2470,12 +2479,15 @@ body {
   .summary-card > *,
   .video-info-card > *,
   .recent-item > *,
+  .form-group,
+  .input-container,
   .stats-grid,
   .stat-item,
   .recent-summaries,
   .url-input,
   .submit-button {
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
   }
 }
