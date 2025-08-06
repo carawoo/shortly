@@ -224,7 +224,7 @@ export default function Home() {
     return keyPoints.slice(0, 5); // 최대 5개 핵심 포인트
   };
 
-  // 마크다운을 HTML로 변환하는 함수
+  // 마크다운을 HTML로 변환하는 함수 (개선된 제목 계층구조)
   const convertMarkdownToHtml = (text: string): string => {
     // 해시태그 섹션 제거
     let html = text.replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '');
@@ -236,6 +236,7 @@ export default function Home() {
     const lines = html.split('\n');
     const result = [];
     let currentList = [];
+    let isFirstTitle = true; // 첫 번째 제목인지 확인
     
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -250,14 +251,29 @@ export default function Home() {
       }
       
       if (/^#{1,3}\s*/.test(line)) {
-        // 제목 처리 (#, ##, ### 지원, 띄어쓰기 유연하게 처리)
+        // 제목 처리 - 스마트 제목 계층구조
         if (currentList.length > 0) {
           result.push('<ul>' + currentList.join('') + '</ul>');
           currentList = [];
         }
-        const hashCount = line.match(/^#+/)?.[0].length || 2;
+        
         const title = line.replace(/^#+\s*/, '').trim();
-        const tag = hashCount === 1 ? 'h1' : hashCount === 2 ? 'h2' : 'h3';
+        let tag = 'h2'; // 기본값
+        
+        // 제목 중요도에 따른 스마트 분류
+        if (isFirstTitle || 
+            title.includes('개요') || title.includes('요약') || title.includes('결론') || 
+            title.includes('핵심') || title.includes('주요') || title.includes('중요')) {
+          tag = 'h1'; // 가장 중요한 제목
+          isFirstTitle = false;
+        } else if (title.includes('세부') || title.includes('상세') || title.includes('추가') ||
+                   title.includes('부가') || title.includes('참고') || title.includes('기타') ||
+                   /\d+\.\s/.test(title) || /^\w+\./.test(title)) {
+          tag = 'h3'; // 세부 제목
+        } else {
+          tag = 'h2'; // 일반 제목
+        }
+        
         result.push(`<${tag}>${title}</${tag}>`);
       } else if (/^[-*+]\s*/.test(line)) {
         // 리스트 항목 처리 (-, *, + 지원, 띄어쓰기 유연하게 처리)
