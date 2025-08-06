@@ -224,7 +224,7 @@ export default function Home() {
     return keyPoints.slice(0, 5); // 최대 5개 핵심 포인트
   };
 
-  // 마크다운을 HTML로 변환하는 함수 (개선된 제목 계층구조)
+  // 마크다운을 HTML로 변환하는 함수 (단순하고 정확한 계층구조)
   const convertMarkdownToHtml = (text: string): string => {
     // 해시태그 섹션 제거
     let html = text.replace(/## 🏷️ 핵심 키워드[\s\S]*?(?=## |$)/g, '');
@@ -236,7 +236,6 @@ export default function Home() {
     const lines = html.split('\n');
     const result = [];
     let currentList = [];
-    let isFirstTitle = true; // 첫 번째 제목인지 확인
     
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -250,37 +249,33 @@ export default function Home() {
         continue;
       }
       
-      if (/^#{1,3}\s*/.test(line)) {
-        // 제목 처리 - 스마트 제목 계층구조
+      // 제목 처리 - 마크다운 그대로 따라가기
+      if (/^###\s+/.test(line)) {
+        // H3 제목
         if (currentList.length > 0) {
           result.push('<ul>' + currentList.join('') + '</ul>');
           currentList = [];
         }
-        
-        const title = line.replace(/^#+\s*/, '').trim();
-        let tag = 'h2'; // 기본값
-        
-        // 더 강력한 제목 분류 로직
-        if (isFirstTitle || 
-            title.includes('개요') || title.includes('요약') || title.includes('결론') || 
-            title.includes('핵심') || title.includes('주요') || title.includes('중요') ||
-            title.includes('전체') || title.includes('종합') || title.includes('총정리') ||
-            title.length > 30) { // 긴 제목은 대제목으로
-          tag = 'h1'; // 가장 중요한 제목
-          isFirstTitle = false;
-        } else if (title.includes('세부') || title.includes('상세') || title.includes('추가') ||
-                   title.includes('부가') || title.includes('참고') || title.includes('기타') ||
-                   title.includes('예시') || title.includes('사례') ||
-                   /\d+\.\s/.test(title) || /^\w+\./.test(title) ||
-                   title.length < 10) { // 짧은 제목은 소제목으로
-          tag = 'h3'; // 세부 제목
-        } else {
-          tag = 'h2'; // 일반 제목
+        const title = line.replace(/^###\s+/, '').trim();
+        result.push(`<h3>${title}</h3>`);
+      } else if (/^##\s+/.test(line)) {
+        // H2 제목  
+        if (currentList.length > 0) {
+          result.push('<ul>' + currentList.join('') + '</ul>');
+          currentList = [];
         }
-        
-        result.push(`<${tag}>${title}</${tag}>`);
+        const title = line.replace(/^##\s+/, '').trim();
+        result.push(`<h2>${title}</h2>`);
+      } else if (/^#\s+/.test(line)) {
+        // H1 제목
+        if (currentList.length > 0) {
+          result.push('<ul>' + currentList.join('') + '</ul>');
+          currentList = [];
+        }
+        const title = line.replace(/^#\s+/, '').trim();
+        result.push(`<h1>${title}</h1>`);
       } else if (/^[-*+]\s*/.test(line)) {
-        // 리스트 항목 처리 (-, *, + 지원, 띄어쓰기 유연하게 처리)
+        // 리스트 항목 처리 (-, *, + 지원)
         const item = line.replace(/^[-*+]\s*/, '').trim();
         const boldItem = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         currentList.push(`<li>${boldItem}</li>`);
