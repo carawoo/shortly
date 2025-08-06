@@ -303,26 +303,45 @@ export default function Home() {
     return result.join('');
   };
 
-  // 이미지로 저장하는 함수 (개선된 디버깅)
+  // 이미지로 저장하는 함수 (강화된 디버깅)
   const saveAsImage = async () => {
+    // 1. 요소 찾기
     const element = document.getElementById('summary-content');
+    console.log('=== 이미지 저장 디버깅 시작 ===');
+    console.log('1. 요소 찾기:', element ? '✅ 발견' : '❌ 없음');
+    
     if (!element) {
-      alert('저장할 내용을 찾을 수 없습니다.');
+      alert('❌ summary-content 요소를 찾을 수 없습니다.');
       return;
     }
 
-    // 요소 내용 확인
-    console.log('저장할 요소:', element);
-    console.log('요소 크기:', element.offsetWidth, 'x', element.offsetHeight);
-    console.log('요소 내용 길이:', element.innerHTML.length);
+    // 2. 요소 정보 상세 확인
+    console.log('2. 요소 정보:');
+    console.log('   - 크기:', element.offsetWidth, 'x', element.offsetHeight);
+    console.log('   - innerHTML 길이:', element.innerHTML.length);
+    console.log('   - textContent 길이:', element.textContent?.length || 0);
+    console.log('   - 첫 100자:', element.innerHTML.substring(0, 100));
 
-    if (element.offsetWidth === 0 || element.offsetHeight === 0) {
-      alert('저장할 내용이 화면에 보이지 않습니다. 요약을 먼저 생성해주세요.');
+    // 3. 요약 상태 확인
+    console.log('3. 상태 확인:');
+    console.log('   - summary 변수:', summary ? '✅ 있음' : '❌ 없음');
+    console.log('   - summary 길이:', summary?.length || 0);
+
+    // 4. 저장 가능 여부 확인
+    const isVisible = element.offsetWidth > 0 && element.offsetHeight > 0;
+    const hasContent = element.innerHTML.trim().length >= 100;
+    
+    console.log('4. 저장 가능성:');
+    console.log('   - 화면에 보임:', isVisible ? '✅' : '❌');
+    console.log('   - 충분한 내용:', hasContent ? '✅' : '❌');
+
+    if (!isVisible) {
+      alert('❌ 저장할 내용이 화면에 보이지 않습니다.\n요약을 먼저 생성해주세요.');
       return;
     }
 
-    if (element.innerHTML.trim().length < 100) {
-      alert('저장할 내용이 충분하지 않습니다. 요약을 먼저 생성해주세요.');
+    if (!hasContent) {
+      alert('❌ 저장할 내용이 충분하지 않습니다.\n요약을 먼저 생성해주세요.');
       return;
     }
 
@@ -361,26 +380,45 @@ export default function Home() {
     }
   };
 
-  // PDF로 저장하는 함수 (개선된 디버깅)
+  // PDF로 저장하는 함수 (강화된 디버깅)
   const saveAsPDF = async () => {
+    // 1. 요소 찾기
     const element = document.getElementById('summary-content');
+    console.log('=== PDF 저장 디버깅 시작 ===');
+    console.log('1. 요소 찾기:', element ? '✅ 발견' : '❌ 없음');
+    
     if (!element) {
-      alert('저장할 내용을 찾을 수 없습니다.');
+      alert('❌ summary-content 요소를 찾을 수 없습니다.');
       return;
     }
 
-    // 요소 내용 확인
-    console.log('PDF 저장 - 요소:', element);
-    console.log('PDF 저장 - 요소 크기:', element.offsetWidth, 'x', element.offsetHeight);
-    console.log('PDF 저장 - 요소 내용 길이:', element.innerHTML.length);
+    // 2. 요소 정보 상세 확인
+    console.log('2. 요소 정보:');
+    console.log('   - 크기:', element.offsetWidth, 'x', element.offsetHeight);
+    console.log('   - innerHTML 길이:', element.innerHTML.length);
+    console.log('   - textContent 길이:', element.textContent?.length || 0);
+    console.log('   - 첫 100자:', element.innerHTML.substring(0, 100));
 
-    if (element.offsetWidth === 0 || element.offsetHeight === 0) {
-      alert('저장할 내용이 화면에 보이지 않습니다. 요약을 먼저 생성해주세요.');
+    // 3. 요약 상태 확인
+    console.log('3. 상태 확인:');
+    console.log('   - summary 변수:', summary ? '✅ 있음' : '❌ 없음');
+    console.log('   - summary 길이:', summary?.length || 0);
+
+    // 4. 저장 가능 여부 확인
+    const isVisible = element.offsetWidth > 0 && element.offsetHeight > 0;
+    const hasContent = element.innerHTML.trim().length >= 100;
+    
+    console.log('4. 저장 가능성:');
+    console.log('   - 화면에 보임:', isVisible ? '✅' : '❌');
+    console.log('   - 충분한 내용:', hasContent ? '✅' : '❌');
+
+    if (!isVisible) {
+      alert('❌ 저장할 내용이 화면에 보이지 않습니다.\n요약을 먼저 생성해주세요.');
       return;
     }
 
-    if (element.innerHTML.trim().length < 100) {
-      alert('저장할 내용이 충분하지 않습니다. 요약을 먼저 생성해주세요.');
+    if (!hasContent) {
+      alert('❌ 저장할 내용이 충분하지 않습니다.\n요약을 먼저 생성해주세요.');
       return;
     }
 
