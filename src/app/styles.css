@@ -323,8 +323,9 @@ body {
   position: relative;
   z-index: 10;
   min-height: 100vh;
-  padding: var(--space) var(--space);
+  padding: var(--space) 28px; /* 좌우 28px 적용 */
   padding-top: var(--space-2xl);
+  margin-bottom: 0px; /* 하단 마진 0px 설정 */
 }
 
 .main-container {
@@ -1050,8 +1051,8 @@ body {
   }
   
   .main-content {
-    padding: 16px !important; /* 내부 컨텐츠 16px 통일 */
-    margin: 0 !important;
+    padding: 16px 28px !important; /* 상하 16px, 좌우 28px */
+    margin: 0 !important; /* 모든 마진 0 */
   }
   
   .header-content {
@@ -1490,7 +1491,8 @@ body {
   }
   
   .main-content {
-    padding: 10px !important; /* 내부 컨텐츠 10px로 줄임 */
+    padding: 10px 28px !important; /* 상하 10px, 좌우 28px 유지 */
+    margin: 0 !important; /* 모든 마진 0 */
   }
   
   .input-form {
@@ -1521,8 +1523,9 @@ body {
   }
   
   .main-content {
-    padding: 8px !important; /* 내부 컨텐츠 8px */
+    padding: 8px 28px !important; /* 상하 8px, 좌우 28px 유지 */
     min-width: 0 !important; /* 너비 제한 해제 */
+    margin: 0 !important; /* 모든 마진 0 */
   }
   
   .hero-section {
