@@ -1189,11 +1189,14 @@ body {
     -webkit-overflow-scrolling: touch !important; /* iOS 스크롤 최적화 */
   }
   
-  /* 📱 모바일 기본 레이아웃 - 외부 20px, 내부 16px 통일 */
+  /* 📱 모바일 기본 레이아웃 - 완전 가변 시스템 */
   .container {
-    padding: 0 20px !important; /* 외부 좌우 마진 20px 고정 */
+    padding: 0 !important; /* 패딩 완전 제거 */
+    margin: 0 !important; /* 마진 완전 제거 */
+    width: 100% !important;
     max-width: 100% !important;
     overflow-y: visible !important; /* 세로 스크롤 허용 */
+    box-sizing: border-box !important;
   }
   
   .main-content {
@@ -1207,7 +1210,11 @@ body {
   }
   
   .header-content {
-    padding: 0 20px !important; /* 외부 좌우 마진 20px 고정 */
+    padding: 0 !important; /* 패딩 완전 제거 */
+    margin: 0 !important; /* 마진 완전 제거 */
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   /* 히어로 섹션 */
@@ -1274,7 +1281,7 @@ body {
   }
   
   .sidebar-header {
-    padding: 20px !important; /* 내부 20px로 확대 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
   }
   
   .sidebar-title {
@@ -1289,7 +1296,7 @@ body {
   
   /* 최근 요약 리스트 */
   .recent-item {
-    padding: 20px !important; /* 내부 20px로 확대 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
   }
   
@@ -1326,7 +1333,7 @@ body {
   
   /* 상단 키워드 섹션 */
   .top-keywords-section {
-    padding: 20px !important; /* 내부 20px로 확대 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
     border-radius: var(--radius-sm) !important;
   }
@@ -1358,7 +1365,7 @@ body {
   }
   
   .summary-card-title {
-    padding: 20px !important; /* 내부 20px로 확대 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
     font-size: 0.85rem !important;
     margin: 0 !important;
   }
@@ -1372,14 +1379,14 @@ body {
   }
   
   .summary-card-content {
-    padding: 20px !important; /* 완전 통일된 패딩 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
     margin: 0 !important;
     box-sizing: border-box !important;
   }
   
   /* 비디오 정보 카드 */
   .video-info-card {
-    padding: 20px !important; /* 20px 통일 */
+    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
     margin: 0 !important; /* 마진 제거 */
     border-radius: var(--radius-md) !important;
     box-sizing: border-box !important;
@@ -1862,7 +1869,7 @@ body {
   }
   
   .summary-card-content {
-    padding: 20px !important; /* 모바일에서도 20px 통일 */
+    padding: var(--space-xs) !important; /* 소형 모바일 가변 패딩 */
     margin: 0 !important;
     box-sizing: border-box !important;
   }
@@ -2021,7 +2028,7 @@ body {
 .summary-card-title {
   background: var(--white);
   border-bottom: 1px solid var(--slate-200);
-  padding: var(--space-md) 20px !important; /* 좌우 20px 강제 적용 */
+  padding: var(--space-md) !important; /* 통일된 패딩 */
   margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
@@ -2046,7 +2053,7 @@ body {
 }
 
 .summary-card-content {
-  padding: 20px !important; /* 완전 통일된 패딩 */
+  padding: var(--space-md) !important; /* 가변 패딩 */
   margin: 0 !important;
   box-sizing: border-box !important;
 }
@@ -2481,7 +2488,7 @@ body {
 /* 상단 키워드 섹션 */
 .top-keywords-section {
   margin: 0; /* 마진 완전 제거 */
-  padding: 20px; /* 통일된 패딩 */
+  padding: var(--space-md); /* 가변 패딩 */
   background: var(--slate-50);
   border: 1px solid var(--slate-200);
   border-radius: var(--radius-md);
@@ -2520,7 +2527,7 @@ body {
   width: 100% !important;
 }
 
-/* 모든 카드형 UI padding 20px 완전 통일 */
+/* 모든 카드형 UI 가변 패딩 시스템 */
 .input-form,
 .sidebar-card,
 .summary-card,
@@ -2529,7 +2536,7 @@ body {
 .recent-item,
 .ai-summary-result,
 .top-keywords-section {
-  padding: 20px !important;
+  padding: var(--space-md) !important; /* 가변 패딩 */
   margin-left: 0 !important;
   margin-right: 0 !important;
   box-sizing: border-box !important;
@@ -2573,7 +2580,7 @@ body {
     box-sizing: border-box !important;
   }
   
-  /* 모든 카드형 UI padding 20px 완전 통일 */
+  /* 모든 카드형 UI 가변 패딩 시스템 */
   .input-form,
   .sidebar-card,
   .summary-card,
@@ -2582,7 +2589,7 @@ body {
   .recent-item,
   .ai-summary-result,
   .top-keywords-section {
-    padding: 20px !important;
+    padding: var(--space-sm) !important; /* 모바일에서 작은 패딩 */
     margin-left: 0 !important;
     margin-right: 0 !important;
     box-sizing: border-box !important;
