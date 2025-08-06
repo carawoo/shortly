@@ -1351,14 +1351,17 @@ body {
   }
   
   .summary-card-content {
-    padding: 0px !important; /* 내부 20px로 확대 */
+    padding: 20px !important; /* 완전 통일된 패딩 */
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
   
   /* 비디오 정보 카드 */
   .video-info-card {
-    padding: 16px !important; /* 내부 16px 통일 */
-    margin: 0 0 16px 0 !important; /* 하단 16px */
+    padding: 20px !important; /* 20px 통일 */
+    margin: 0 !important; /* 마진 제거 */
     border-radius: var(--radius-md) !important;
+    box-sizing: border-box !important;
   }
   
   .video-title {
@@ -1829,7 +1832,9 @@ body {
   }
   
   .summary-card-content {
-    padding: 8px !important; /* 내부 8px */
+    padding: 20px !important; /* 모바일에서도 20px 통일 */
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
   
   .hashtag-chip {
@@ -2011,7 +2016,9 @@ body {
 }
 
 .summary-card-content {
-  padding: var(--space) 0px !important; /* 좌우 20px 강제 적용 */
+  padding: 20px !important; /* 완전 통일된 패딩 */
+  margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* 키워드 및 콘텐츠 섹션 스타일 */
@@ -2440,11 +2447,14 @@ body {
 
 /* 상단 키워드 섹션 */
 .top-keywords-section {
-  margin-bottom: var(--space-lg);
-  padding: var(--space-md) 20px !important; /* 좌우 20px 강제 적용 */
+  margin: 0; /* 마진 완전 제거 */
+  padding: 20px; /* 통일된 패딩 */
   background: var(--slate-50);
   border: 1px solid var(--slate-200);
   border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .keywords-title {
@@ -2475,15 +2485,19 @@ body {
   width: 100% !important;
 }
 
-/* 모든 카드형 UI padding 20px 통일 */
+/* 모든 카드형 UI padding 20px 완전 통일 */
 .input-form,
 .sidebar-card,
 .summary-card,
+.summary-result,
 .video-info-card,
 .recent-item,
 .ai-summary-result,
 .top-keywords-section {
   padding: 20px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* 내부 모든 콘텐츠 좌우 fill 유지 */
@@ -2524,15 +2538,19 @@ body {
     box-sizing: border-box !important;
   }
   
-  /* 모든 카드형 UI padding 20px 통일 */
+  /* 모든 카드형 UI padding 20px 완전 통일 */
   .input-form,
   .sidebar-card,
   .summary-card,
+  .summary-result,
   .video-info-card,
   .recent-item,
   .ai-summary-result,
   .top-keywords-section {
     padding: 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
   }
   
   /* 모바일에서 모든 카드 크기 제한 */
