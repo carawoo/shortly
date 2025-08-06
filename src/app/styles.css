@@ -407,7 +407,7 @@ body {
   border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
   padding: 16px;
-  margin: 0 0 var(--space-xl) 0;
+  margin: 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   position: relative;
   transition: all 0.3s var(--ease-out);
@@ -913,7 +913,7 @@ body {
   border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
   padding: 16px;
-  margin: 0 0 var(--space-xl) 0;
+  margin: 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
   display: flex;
@@ -1283,7 +1283,7 @@ body {
   }
   
   .ai-summary-result {
-    margin: 12px 20px !important; /* 외부 좌우 20px, 상하 12px로 줄임 */
+    margin: 0 20px !important; /* 외부 좌우 20px, 상하 0px로 수정 */
   }
   
   /* 상단 키워드 섹션 */
@@ -2402,7 +2402,7 @@ body {
 
 /* AI 요약 결과 영역 - 20px 좌우 마진 */
 .ai-summary-result {
-  margin: 24px 20px; /* 상하 24px, 좌우 20px 마진 */
+  margin: 0 20px; /* 상하 0px, 좌우 20px 마진 */
 }
 
 /* 상단 키워드 섹션 */
@@ -2426,7 +2426,7 @@ body {
 
 /* 중복 제거됨 - 통합 모바일 미디어 쿼리로 이동 */
 
-/* 모든 카드 UI radius를 URL 카드와 동일하게 통일 */
+/* 모든 카드 UI radius를 URL 카드와 동일하게 통일 + bottom margin 제거 */
 .input-form,
 .sidebar-card,
 .summary-card,
@@ -2435,6 +2435,8 @@ body {
 .ai-summary-result,
 .top-keywords-section {
   border-radius: var(--radius-xl) !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 
 /* 내부 모든 콘텐츠 좌우 fill 유지 */
@@ -2456,7 +2458,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 모든 카드 UI radius를 URL 카드와 동일하게 통일 */
+  /* 모든 카드 UI radius를 URL 카드와 동일하게 통일 + bottom margin 제거 */
   .input-form,
   .sidebar-card,
   .summary-card,
@@ -2465,6 +2467,8 @@ body {
   .ai-summary-result,
   .top-keywords-section {
     border-radius: var(--radius-xl) !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
   }
   
   /* 내부 모든 콘텐츠 좌우 fill 유지 */
