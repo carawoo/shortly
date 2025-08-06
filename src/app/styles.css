@@ -351,7 +351,7 @@ body {
   text-align: center;
   margin-top: 32px;
   margin-bottom: 10px;
-  padding: var(--space-2xl) 0;
+  padding: 0;
 }
 
 .hero-icon {
@@ -1184,7 +1184,7 @@ body {
 
   /* 히어로 섹션 */
   .hero-section {
-    padding: 16px 16px !important; /* 상하 16px로 줄임, 좌우 16px */
+    padding: 0 !important; /* padding 완전 제거 */
     text-align: center !important;
   }
   
@@ -1687,7 +1687,7 @@ body {
   }
   
   .hero-section {
-    padding: 10px 6px !important; /* 상하 10px, 좌우 6px */
+    padding: 0 !important; /* padding 완전 제거 */
   }
   
   .input-form {
@@ -1736,7 +1736,7 @@ body {
   }
   
   .hero-section {
-    padding: 12px 8px !important; /* 상하 12px, 좌우 8px */
+    padding: 0 !important; /* padding 완전 제거 */
   }
   
   .hero-title {
@@ -1821,7 +1821,7 @@ body {
 /* 🔧 가로 모드 모바일 최적화 */
 @media (max-width: 768px) and (orientation: landscape) {
   .hero-section {
-    padding: var(--space-md) var(--space-sm) !important;
+    padding: 0 !important; /* padding 완전 제거 */
   }
   
   .hero-title {
