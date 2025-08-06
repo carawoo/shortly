@@ -18,6 +18,9 @@ html {
   overflow-x: hidden; /* 가로 스크롤만 숨김 */
   overflow-y: auto; /* 세로 스크롤 허용 */
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 body {
@@ -27,9 +30,20 @@ body {
   overflow-x: hidden; /* 가로 스크롤만 숨김 */
   overflow-y: auto; /* 세로 스크롤 허용 */
   min-height: 100vh; /* 최소 높이만 설정 */
+  width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   -webkit-overflow-scrolling: touch; /* iOS 스크롤 최적화 */
+  -webkit-text-size-adjust: 100%; /* iOS 텍스트 크기 조정 방지 */
+  -ms-text-size-adjust: 100%; /* Windows Phone 텍스트 크기 조정 방지 */
+}
+
+/* 모든 요소에 box-sizing과 max-width 적용 */
+*, *:before, *:after {
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 /* 배경 패턴 */

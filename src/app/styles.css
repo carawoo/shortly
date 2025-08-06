@@ -129,13 +129,70 @@ html, body, .app-container, .container, .main-content {
   min-height: 100vh !important;
 }
 
+/* iPhone 및 모바일 디바이스 최적화 */
 @media (max-width: 768px) {
-  html, body, .app-container, .container, .main-content {
-    overflow-y: auto !important;
+  /* 아이폰 viewport 최적화 */
+  html, body {
     overflow-x: hidden !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
     min-height: 100vh !important;
+    position: relative !important;
     -webkit-overflow-scrolling: touch !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+  
+  /* 모든 컨테이너 요소 최적화 */
+  .app-container, .container, .main-content {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* 모든 요소에 width 제한 적용 */
+  * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* 특정 요소들의 overflow 방지 */
+  .hero-section,
+  .input-form,
+  .url-input,
+  .submit-button,
+  .sidebar,
+  .sidebar-card,
+  .summary-result,
+  .ai-summary-result,
+  .summary-card,
+  .video-info-card,
+  .top-keywords-section,
+  .hashtag-chips,
+  .hashtag-chip {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* 텍스트 요소들의 overflow 방지 */
+  p, span, div, h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
   }
 }
 
@@ -487,6 +544,8 @@ body {
 
 .url-input {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 1.25rem var(--space);
   background: var(--light-gray);
   border: 2px solid var(--light-purple);
@@ -500,6 +559,13 @@ body {
   box-sizing: border-box;
   display: block;
   margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* iOS 최적화 */
+  -webkit-appearance: none;
+  -webkit-border-radius: var(--radius-xl);
+  -webkit-text-size-adjust: 100%;
 }
 
 .url-input::placeholder {
