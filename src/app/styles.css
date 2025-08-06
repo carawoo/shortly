@@ -681,40 +681,50 @@ body {
   transform: translateY(-1px);
 }
 
+/* 📖 문서 스타일 강제 적용 - v2.0 */
 .summary-text {
-  color: var(--slate-700);
-  line-height: 1.8;
-  font-size: 1rem;
-  white-space: pre-wrap;
+  color: var(--slate-700) !important;
+  line-height: 1.8 !important;
+  font-size: 1rem !important;
+  white-space: pre-wrap !important;
 }
 
-.summary-text h1 {
-  color: var(--slate-900);
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 2rem 0 1rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--primary-purple);
-  line-height: 1.3;
+.summary-text h1,
+.summary-card h1,
+.content-section h1 {
+  color: var(--slate-900) !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  margin: 2rem 0 1rem 0 !important;
+  padding-bottom: 0.75rem !important;
+  border-bottom: 2px solid var(--primary-purple) !important;
+  line-height: 1.3 !important;
+  display: block !important;
 }
 
-.summary-text h2 {
-  color: var(--slate-800);
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: 1.75rem 0 0.75rem 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--slate-200);
-  line-height: 1.4;
+.summary-text h2,
+.summary-card h2,
+.content-section h2 {
+  color: var(--slate-800) !important;
+  font-size: 1.35rem !important;
+  font-weight: 600 !important;
+  margin: 1.75rem 0 0.75rem 0 !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid var(--slate-200) !important;
+  line-height: 1.4 !important;
+  display: block !important;
 }
 
-.summary-text h3 {
-  color: var(--slate-700);
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 1.25rem 0 0.5rem 0;
-  padding-bottom: 0.25rem;
-  line-height: 1.4;
+.summary-text h3,
+.summary-card h3,
+.content-section h3 {
+  color: var(--slate-700) !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  margin: 1.25rem 0 0.5rem 0 !important;
+  padding-bottom: 0.25rem !important;
+  line-height: 1.4 !important;
+  display: block !important;
 }
 
 .summary-text h1:first-child,
@@ -736,25 +746,32 @@ body {
   color: #333333;
 }
 
-.summary-text p {
-  margin: 1rem 0;
-  line-height: 1.75;
-  color: var(--slate-700);
-  font-size: 1rem;
-  text-align: justify;
-  word-break: keep-all;
+.summary-text p,
+.summary-card p,
+.content-section p {
+  margin: 1rem 0 !important;
+  line-height: 1.75 !important;
+  color: var(--slate-700) !important;
+  font-size: 1rem !important;
+  text-align: justify !important;
+  word-break: keep-all !important;
+  display: block !important;
 }
 
-.summary-text p:last-child {
-  margin-bottom: 0;
+.summary-text p:last-child,
+.summary-card p:last-child,
+.content-section p:last-child {
+  margin-bottom: 0 !important;
 }
 
-.summary-text strong {
-  color: var(--primary-purple);
-  font-weight: 600;
-  background: rgba(139, 92, 246, 0.1);
-  padding: 0.15rem 0.3rem;
-  border-radius: 0.25rem;
+.summary-text strong,
+.summary-card strong,
+.content-section strong {
+  color: var(--primary-purple) !important;
+  font-weight: 600 !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  padding: 0.15rem 0.3rem !important;
+  border-radius: 0.25rem !important;
 }
 
 .summary-footer {

@@ -260,15 +260,19 @@ export default function Home() {
         const title = line.replace(/^#+\s*/, '').trim();
         let tag = 'h2'; // 기본값
         
-        // 제목 중요도에 따른 스마트 분류
+        // 더 강력한 제목 분류 로직
         if (isFirstTitle || 
             title.includes('개요') || title.includes('요약') || title.includes('결론') || 
-            title.includes('핵심') || title.includes('주요') || title.includes('중요')) {
+            title.includes('핵심') || title.includes('주요') || title.includes('중요') ||
+            title.includes('전체') || title.includes('종합') || title.includes('총정리') ||
+            title.length > 30) { // 긴 제목은 대제목으로
           tag = 'h1'; // 가장 중요한 제목
           isFirstTitle = false;
         } else if (title.includes('세부') || title.includes('상세') || title.includes('추가') ||
                    title.includes('부가') || title.includes('참고') || title.includes('기타') ||
-                   /\d+\.\s/.test(title) || /^\w+\./.test(title)) {
+                   title.includes('예시') || title.includes('사례') ||
+                   /\d+\.\s/.test(title) || /^\w+\./.test(title) ||
+                   title.length < 10) { // 짧은 제목은 소제목으로
           tag = 'h3'; // 세부 제목
         } else {
           tag = 'h2'; // 일반 제목
