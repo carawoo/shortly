@@ -406,7 +406,7 @@ body {
   background: var(--white);
   border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-  padding: 16px;
+  padding: 20px;
   margin: 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   position: relative;
@@ -912,7 +912,7 @@ body {
   background: var(--white);
   border-radius: var(--radius-xl);
   box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
-  padding: 16px;
+  padding: 20px;
   margin: 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
@@ -1246,7 +1246,7 @@ body {
   }
   
   .sidebar-header {
-    padding: 12px !important; /* 내부 12px로 줄임 */
+    padding: 20px !important; /* 내부 20px로 확대 */
   }
   
   .sidebar-title {
@@ -1261,7 +1261,7 @@ body {
   
   /* 최근 요약 리스트 */
   .recent-item {
-    padding: 12px !important; /* 내부 12px로 줄임 */
+    padding: 20px !important; /* 내부 20px로 확대 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
   }
   
@@ -1288,7 +1288,7 @@ body {
   
   /* 상단 키워드 섹션 */
   .top-keywords-section {
-    padding: 12px !important; /* 내부 12px로 줄임 */
+    padding: 20px !important; /* 내부 20px로 확대 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
     border-radius: var(--radius-sm) !important;
   }
@@ -1320,7 +1320,7 @@ body {
   }
   
   .summary-card-title {
-    padding: 12px !important; /* 내부 12px로 줄임 */
+    padding: 20px !important; /* 내부 20px로 확대 */
     font-size: 0.85rem !important;
     margin: 0 !important;
   }
@@ -1334,7 +1334,7 @@ body {
   }
   
   .summary-card-content {
-    padding: 12px !important; /* 내부 12px로 줄임 */
+    padding: 20px !important; /* 내부 20px로 확대 */
   }
   
   /* 비디오 정보 카드 */
@@ -2439,6 +2439,17 @@ body {
   margin-top: 0 !important;
 }
 
+/* 모든 카드형 UI padding 20px 통일 */
+.input-form,
+.sidebar-card,
+.summary-card,
+.video-info-card,
+.recent-item,
+.ai-summary-result,
+.top-keywords-section {
+  padding: 20px !important;
+}
+
 /* 내부 모든 콘텐츠 좌우 fill 유지 */
 .input-form > *,
 .sidebar-card > *,
@@ -2469,6 +2480,17 @@ body {
     border-radius: var(--radius-xl) !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
+  }
+  
+  /* 모든 카드형 UI padding 20px 통일 */
+  .input-form,
+  .sidebar-card,
+  .summary-card,
+  .video-info-card,
+  .recent-item,
+  .ai-summary-result,
+  .top-keywords-section {
+    padding: 20px !important;
   }
   
   /* 내부 모든 콘텐츠 좌우 fill 유지 */
