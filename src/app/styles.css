@@ -412,7 +412,7 @@ body {
   position: relative;
   transition: all 0.3s var(--ease-out);
   width: 100%;
-  max-width: 360px;
+  max-width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1258,7 +1258,7 @@ body {
   
   .sidebar-title {
     font-size: 27px !important; /* 20pt = 27px 모바일 제목 크기로 축소 */
-    margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
+    margin: 0 0 0 0 !important; /* 하단 12px로 줄임 */
   }
   
   .total-count {
@@ -2498,6 +2498,11 @@ body {
   .ai-summary-result,
   .top-keywords-section {
     padding: 20px !important;
+  }
+  
+  /* 모바일에서 input-form 크기 제한 */
+  .input-form {
+    max-width: 360px !important;
   }
   
   /* 내부 모든 콘텐츠 좌우 fill 유지 */
