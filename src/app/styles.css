@@ -1091,7 +1091,7 @@ body {
   }
   
   .form-label {
-    font-size: 32px !important; /* 24pt = 32px 모바일 제목 크기 */
+    font-size: 27px !important; /* 20pt = 27px 모바일 제목 크기로 축소 */
   }
   
   .url-input {
@@ -1118,7 +1118,7 @@ body {
   }
   
   .sidebar-title {
-    font-size: 32px !important; /* 24pt = 32px 모바일 제목 크기 */
+    font-size: 27px !important; /* 20pt = 27px 모바일 제목 크기로 축소 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
   }
   
@@ -1533,21 +1533,23 @@ body {
   }
 }
 
-/* 🔧 중소형 모바일 화면 최적화 (360px 전용) */
-@media (max-width: 360px) {
-  /* 360px에서 우측 잘림 방지 */
+/* 🔧 중소형 모바일 화면 최적화 (395px 이하 - 아이폰 16 Pro 포함) */
+@media (max-width: 395px) {
+  /* 아이폰 16 Pro (393px) 및 유사 디바이스 우측 잘림 방지 */
   .container {
-    padding: 0 6px !important; /* 외부 좌우 마진 6px로 더 줄임 */
+    padding: 0 4px !important; /* 외부 좌우 마진 4px로 최소화 */
     min-width: 320px !important; /* 최소 너비 보장 */
     max-width: 100% !important; /* 최대 너비 제한 */
     overflow-x: hidden !important; /* 가로 스크롤 방지 */
+    margin: 0 auto !important; /* 중앙 정렬 */
   }
   
   .main-content {
-    padding: 8px 20px !important; /* 상하 8px, 좌우 20px로 줄임 */
+    padding: 8px 16px !important; /* 상하 8px, 좌우 16px로 더 줄임 */
     min-width: 0 !important; /* 너비 제한 해제 */
     margin: 0 !important; /* 모든 마진 0 */
     box-sizing: border-box !important; /* 박스 사이징 확실히 */
+    width: 100% !important; /* 전체 너비 활용 */
   }
   
   .hero-section {
@@ -1555,7 +1557,7 @@ body {
   }
   
   .input-form {
-    padding: 20px !important; /* 모든 디바이스에서 20px 패딩 통일 */
+    padding: 16px !important; /* 아이폰 16 Pro에서는 16px로 줄여 여백 확보 */
     margin: 8px 0 !important; /* 상하 8px */
     width: 100% !important; /* 가변 너비 */
     max-width: 100% !important; /* 최대 너비 100% */
@@ -1577,11 +1579,11 @@ body {
   }
   
   .form-label {
-    font-size: 28px !important; /* 360px에서는 28px로 약간 줄임 */
+    font-size: 24px !important; /* 아이폰 16 Pro에서는 24px로 조정 */
   }
   
   .sidebar-title {
-    font-size: 28px !important; /* 360px에서는 28px로 약간 줄임 */
+    font-size: 24px !important; /* 아이폰 16 Pro에서는 24px로 조정 */
   }
 }
 
@@ -1611,6 +1613,14 @@ body {
   .hero-description {
     font-size: 0.8rem !important; /* 설명 텍스트 더 줄임 */
     line-height: 1.3 !important;
+  }
+  
+  .form-label {
+    font-size: 27px !important; /* 20pt = 27px 모바일 제목 크기로 축소 */
+  }
+  
+  .sidebar-title {
+    font-size: 27px !important; /* 20pt = 27px 모바일 제목 크기로 축소 */
   }
   
   .input-form {
@@ -1864,10 +1874,10 @@ body {
 }
 
 /* 해시태그 칩 스타일 개선 */
-.hashtag-chips {
+  .hashtag-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+    gap: var(--space-xs);
   margin-top: var(--space-sm);
 }
 
@@ -1921,7 +1931,7 @@ body {
   background: var(--primary-500);
   color: white;
   border-radius: 50%;
-  font-size: 0.8rem;
+    font-size: 0.8rem;
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -1997,7 +2007,7 @@ body {
   font-size: 0.8rem;
   color: var(--slate-500);
   background: var(--slate-100);
-  padding: var(--space-xs) var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-md);
 }
 
