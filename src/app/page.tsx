@@ -462,30 +462,60 @@ export default function Home() {
       }
 
       console.log('7. PDF 문서 생성 중...');
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png', 0.8); // 품질 지정
+      console.log('   - 이미지 데이터 길이:', imgData.length);
       
-      if (imgData === 'data:,') {
+      if (imgData === 'data:,' || imgData.length < 1000) {
         throw new Error('빈 캔버스가 생성되었습니다.');
       }
 
+      console.log('8. jsPDF 인스턴스 생성...');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
+        compress: false
       });
 
-      // A4 크기에 맞게 이미지 크기 조정 (더 간단하게)
-      const imgWidth = 180; // A4 너비에서 여백 고려 (mm)
+      // A4 크기에 맞게 이미지 크기 조정
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pageWidth - 20; // 좌우 여백 10mm씩
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      console.log('8. PDF에 이미지 추가 중...');
-      // 간단하게 한 페이지에만 추가
-      pdf.addImage(imgData, 'PNG', 15, 15, imgWidth, Math.min(imgHeight, 250));
+      console.log('9. PDF 크기 계산:');
+      console.log('   - 페이지:', pageWidth, 'x', pageHeight, 'mm');
+      console.log('   - 이미지:', imgWidth, 'x', imgHeight, 'mm');
 
-      console.log('9. PDF 다운로드 시작...');
+      console.log('10. PDF에 이미지 추가 중...');
+      try {
+        if (imgHeight > pageHeight - 20) {
+          // 이미지가 너무 크면 여러 페이지로 분할
+          let yPosition = 0;
+          const maxHeight = pageHeight - 20;
+          
+          while (yPosition < imgHeight) {
+            if (yPosition > 0) {
+              pdf.addPage();
+            }
+            
+            const currentHeight = Math.min(maxHeight, imgHeight - yPosition);
+            pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, currentHeight, '', 'FAST');
+            yPosition += maxHeight;
+          }
+        } else {
+          // 한 페이지에 들어감
+          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight, '', 'FAST');
+        }
+      } catch (pdfError) {
+        console.error('PDF 이미지 추가 오류:', pdfError);
+        throw new Error(`PDF 이미지 추가 실패: ${pdfError instanceof Error ? pdfError.message : '알 수 없는 오류'}`);
+      }
+
+      console.log('11. PDF 다운로드 시작...');
       pdf.save(`YouTube_요약_${new Date().toISOString().slice(0, 10)}.pdf`);
       
-      console.log('10. PDF 저장 완료! ✅');
+      console.log('12. PDF 저장 완료! ✅');
       alert('✅ PDF 저장이 완료되었습니다!');
     } catch (error) {
       console.error('❌ PDF 저장 오류:', error);
