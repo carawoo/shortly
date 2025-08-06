@@ -356,7 +356,8 @@ export default function Home() {
       alert('이미지 저장이 완료되었습니다!');
     } catch (error) {
       console.error('이미지 저장 오류:', error);
-      alert(`이미지 저장 중 오류가 발생했습니다: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류';
+      alert(`이미지 저장 중 오류가 발생했습니다: ${errorMessage}`);
     }
   };
 
@@ -434,7 +435,8 @@ export default function Home() {
       alert('PDF 저장이 완료되었습니다!');
     } catch (error) {
       console.error('PDF 저장 오류:', error);
-      alert(`PDF 저장 중 오류가 발생했습니다: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류';
+      alert(`PDF 저장 중 오류가 발생했습니다: ${errorMessage}`);
     }
   };
 
