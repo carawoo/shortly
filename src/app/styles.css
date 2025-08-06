@@ -935,7 +935,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   color: #333 !important;
   font-size: 18px !important;
@@ -2426,21 +2426,57 @@ body {
 
 /* 중복 제거됨 - 통합 모바일 미디어 쿼리로 이동 */
 
+/* 모든 카드 UI radius를 URL 카드와 동일하게 통일 */
 .input-form,
 .sidebar-card,
 .summary-card,
 .video-info-card,
-.recent-item {
+.recent-item,
+.ai-summary-result,
+.top-keywords-section {
   border-radius: var(--radius-xl) !important;
 }
 
+/* 내부 모든 콘텐츠 좌우 fill 유지 */
+.input-form > *,
+.sidebar-card > *,
+.summary-card > *,
+.video-info-card > *,
+.recent-item > *,
+.stats-grid,
+.stat-item,
+.recent-summaries,
+.url-input,
+.submit-button {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 @media (max-width: 768px) {
+  /* 모든 카드 UI radius를 URL 카드와 동일하게 통일 */
   .input-form,
   .sidebar-card,
   .summary-card,
   .video-info-card,
-  .recent-item {
+  .recent-item,
+  .ai-summary-result,
+  .top-keywords-section {
     border-radius: var(--radius-xl) !important;
+  }
+  
+  /* 내부 모든 콘텐츠 좌우 fill 유지 */
+  .input-form > *,
+  .sidebar-card > *,
+  .summary-card > *,
+  .video-info-card > *,
+  .recent-item > *,
+  .stats-grid,
+  .stat-item,
+  .recent-summaries,
+  .url-input,
+  .submit-button {
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
