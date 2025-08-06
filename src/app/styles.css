@@ -77,6 +77,7 @@
   --space-sm: 0.5rem;
   --space-md: 0.75rem;
   --space: 1rem;
+  --space-1: 1rem; /* 16px - 컨텐츠 내부 패딩용 */
   --space-lg: 1.5rem;
   --space-xl: 2rem;
   --space-2xl: 3rem;
@@ -785,7 +786,6 @@ body {
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
   padding-bottom: var(--space-lg);
-  border-bottom: 1px solid var(--gray-200);
 }
 
 .hashtag-chip {
@@ -1347,7 +1347,7 @@ body {
   }
   
   .sidebar-header {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
   }
   
   .sidebar-title {
@@ -1362,7 +1362,7 @@ body {
   
   /* 최근 요약 리스트 */
   .recent-item {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
   }
   
@@ -1399,7 +1399,7 @@ body {
   
   /* 상단 키워드 섹션 */
   .top-keywords-section {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
     margin: 0 0 12px 0 !important; /* 하단 12px로 줄임 */
     border-radius: var(--radius-sm) !important;
   }
@@ -1431,7 +1431,7 @@ body {
   }
   
   .summary-card-title {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
     font-size: 0.85rem !important;
     margin: 0 !important;
   }
@@ -1445,14 +1445,14 @@ body {
   }
   
   .summary-card-content {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
     margin: 0 !important;
     box-sizing: border-box !important;
   }
   
   /* 비디오 정보 카드 */
   .video-info-card {
-    padding: var(--space-sm) !important; /* 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 */
     margin: 0 !important; /* 마진 제거 */
     border-radius: var(--radius-md) !important;
     box-sizing: border-box !important;
@@ -1935,7 +1935,7 @@ body {
   }
   
   .summary-card-content {
-    padding: var(--space-xs) !important; /* 소형 모바일 가변 패딩 */
+    padding: var(--space-1) !important; /* 16px 패딩 유지 */
     margin: 0 !important;
     box-sizing: border-box !important;
   }
@@ -2094,7 +2094,7 @@ body {
 .summary-card-title {
   background: var(--white);
   border-bottom: 1px solid var(--slate-200);
-  padding: var(--space-md) !important; /* 통일된 패딩 */
+  padding: var(--space-1) !important; /* 16px 패딩 */
   margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
@@ -2119,7 +2119,7 @@ body {
 }
 
 .summary-card-content {
-  padding: var(--space-md) !important; /* 가변 패딩 */
+  padding: var(--space-1) !important; /* 16px 패딩 */
   margin: 0 !important;
   box-sizing: border-box !important;
 }
@@ -2554,7 +2554,7 @@ body {
 /* 상단 키워드 섹션 */
 .top-keywords-section {
   margin: 0; /* 마진 완전 제거 */
-  padding: var(--space-md); /* 가변 패딩 */
+  padding: var(--space-1); /* 16px 패딩 */
   background: var(--slate-50);
   border: 1px solid var(--slate-200);
   border-radius: var(--radius-md);
@@ -2593,7 +2593,7 @@ body {
   width: 100% !important;
 }
 
-/* 모든 카드형 UI 가변 패딩 시스템 */
+/* 모든 카드형 UI 16px 패딩 시스템 */
 .input-form,
 .sidebar-card,
 .summary-card,
@@ -2602,7 +2602,7 @@ body {
 .recent-item,
 .ai-summary-result,
 .top-keywords-section {
-  padding: var(--space-md) !important; /* 가변 패딩 */
+  padding: var(--space-1) !important; /* 16px 패딩 */
   margin-left: 0 !important;
   margin-right: 0 !important;
   box-sizing: border-box !important;
@@ -2646,7 +2646,7 @@ body {
     box-sizing: border-box !important;
   }
   
-  /* 모든 카드형 UI 가변 패딩 시스템 */
+  /* 모든 카드형 UI 16px 패딩 시스템 (모바일 유지) */
   .input-form,
   .sidebar-card,
   .summary-card,
@@ -2655,7 +2655,7 @@ body {
   .recent-item,
   .ai-summary-result,
   .top-keywords-section {
-    padding: var(--space-sm) !important; /* 모바일에서 작은 패딩 */
+    padding: var(--space-1) !important; /* 모바일에서도 16px 패딩 유지 */
     margin-left: 0 !important;
     margin-right: 0 !important;
     box-sizing: border-box !important;
