@@ -911,8 +911,8 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* 저장할 요약 콘텐츠 영역 */}
-                  <div id="summary-content" className="summary-content-wrapper">
+                  {/* AI 요약 결과 영역 - 20px 좌우 마진 */}
+                  <div id="summary-content" className="ai-summary-result">
                     
                     {/* 핵심 키워드 (한 번만 최상단에 표시) */}
                     {(() => {
@@ -1080,7 +1080,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  </div> {/* summary-content-wrapper 끝 */}
+                  </div> {/* ai-summary-result 끝 */}
                 </div>
               )}
 

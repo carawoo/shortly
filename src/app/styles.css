@@ -647,9 +647,7 @@ body {
   gap: var(--space);
 }
 
-.summary-content {
-  padding: var(--space-xl);
-}
+/* summary-content 클래스 제거됨 - ai-summary-result로 대체 */
 
 /* Hashtag chips */
 .hashtag-chips {
@@ -1147,10 +1145,8 @@ body {
     margin-top: var(--space-md) !important;
   }
   
-  .summary-content-wrapper {
-    padding: var(--space-md) var(--space-sm) !important;
-    margin: var(--space-sm) 0 !important;
-    border-radius: var(--radius-md) !important;
+  .ai-summary-result {
+    margin: var(--space-md) var(--space-sm) !important; /* 모바일에서 좌우 마진 조정 */
   }
   
   /* 상단 키워드 섹션 */
@@ -1502,9 +1498,8 @@ body {
     font-size: 0.9rem !important;
   }
   
-  .summary-content-wrapper {
-    padding: var(--space-sm) var(--space-xs) !important;
-    margin: var(--space-xs) 0 !important;
+  .ai-summary-result {
+    margin: var(--space-xs) var(--space-xs) !important; /* 소형 모바일에서 좌우 마진 조정 */
   }
   
   .summary-card-title {
@@ -1581,7 +1576,7 @@ body {
     overflow-y: auto !important;
   }
   
-  .summary-content-wrapper {
+  .ai-summary-result {
     max-height: 400px !important;
     overflow-y: auto !important;
   }
@@ -2140,14 +2135,9 @@ body {
   margin: 0;
 }
 
-/* 저장할 콘텐츠 영역 스타일 - v3.0 좌우 20px 여백 */
-.summary-content-wrapper {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg) 20px !important; /* 좌우 20px 강제 적용 */
-  margin: var(--space-md) 0;
-  border: 1px solid var(--slate-200);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+/* AI 요약 결과 영역 - 20px 좌우 마진 */
+.ai-summary-result {
+  margin: var(--space-md) 20px; /* 좌우 20px 마진 */
 }
 
 /* 상단 키워드 섹션 */
